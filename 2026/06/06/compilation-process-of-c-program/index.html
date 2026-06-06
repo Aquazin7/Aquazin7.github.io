@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>C语言程序的编译过程 - Aquazin的博客</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="Aquazin7,"> 
+    <meta name="description" content="我是Aquazin（柒水锌），一名在忙碌学业中偷闲的大学生。兴趣多样，涉猎广泛，记录学习路上的思考与杂谈。,C语言程序的编译过程从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：预处理、编译、汇编、链接。每个阶段都可以用 GCC 的特定选项单独观察。
+假设源文件为 hello.c：
+
+1.,"> 
+    <meta name="author" content="Aquazin"> 
+    <link rel="alternative" href="atom.xml" title="Aquazin的博客" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+    
+    
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="C语言程序的编译过程 - Aquazin的博客"/>
+    <meta name="twitter:description" content="我是Aquazin（柒水锌），一名在忙碌学业中偷闲的大学生。兴趣多样，涉猎广泛，记录学习路上的思考与杂谈。,C语言程序的编译过程从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：预处理、编译、汇编、链接。每个阶段都可以用 GCC 的特定选项单独观察。
+假设源文件为 hello.c：
+
+1.,"/>
+    
+    
+    
+    
+    <meta property="og:site_name" content="Aquazin的博客"/>
+    <meta property="og:type" content="object"/>
+    <meta property="og:title" content="C语言程序的编译过程 - Aquazin的博客"/>
+    <meta property="og:description" content="我是Aquazin（柒水锌），一名在忙碌学业中偷闲的大学生。兴趣多样，涉猎广泛，记录学习路上的思考与杂谈。,C语言程序的编译过程从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：预处理、编译、汇编、链接。每个阶段都可以用 GCC 的特定选项单独观察。
+假设源文件为 hello.c：
+
+1.,"/>
+    
+<link rel="stylesheet" href="/css/diaspora.css">
+
+    <script>window.searchDbPath = "/search.xml";</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body class="loading">
+    <span id="config-title" style="display:none">Aquazin的博客</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://example.com"></a>
+    <div title="播放/暂停" class="iconfont icon-play"></div>
+    <h3 class="subtitle">C语言程序的编译过程</h3>
+    <div class="social">
+        <div>
+            <div class="share">
+                <a title="获取二维码" class="iconfont icon-scan" href="javascript:;"></a>
+            </div>
+            <div id="qr"></div>
+        </div>
+    </div>
+    <div class="scrollbar"></div>
+</div>
+
+    <div class="section">
+        <div class="article">
+    <div class='main'>
+        <h1 class="title">C语言程序的编译过程</h1>
+        <div class="stuff">
+            <span>六月 06, 2026</span>
+            
+  <ul class="post-tags-list" itemprop="keywords"><li class="post-tags-list-item"><a class="post-tags-list-link" href="/tags/C/" rel="tag">C</a></li></ul>
+
+
+        </div>
+        <div class="content markdown">
+            <h1 id="C语言程序的编译过程"><a href="#C语言程序的编译过程" class="headerlink" title="C语言程序的编译过程"></a>C语言程序的编译过程</h1><p>从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：<strong>预处理</strong>、<strong>编译</strong>、<strong>汇编</strong>、<strong>链接</strong>。每个阶段都可以用 GCC 的特定选项单独观察。</p>
+<p>假设源文件为 <code>hello.c</code>：</p>
+<hr>
+<h3 id="1-预处理-Preprocessing"><a href="#1-预处理-Preprocessing" class="headerlink" title="1. 预处理 (Preprocessing)"></a>1. 预处理 (Preprocessing)</h3><ul>
+<li><strong>任务</strong>：处理以 <code>#</code>​ 开头的指令（如 <code>#include</code>​、<code>#define</code>​、<code>#ifdef</code>），展开宏，删除注释，添加行号信息等。</li>
+<li><strong>命令</strong>：<code>gcc -E hello.c -o hello.i</code></li>
+<li><strong>输出</strong>：<code>.i</code> （文本形式，仍是 C 代码，但已经包含所有被包含的头文件和宏展开）。</li>
+</ul>
+<hr>
+<h3 id="2-编译-Compilation"><a href="#2-编译-Compilation" class="headerlink" title="2. 编译 (Compilation)"></a>2. 编译 (Compilation)</h3><ul>
+<li><strong>任务</strong>：将预处理后的 C 代码翻译成<strong>汇编语言</strong>（与具体 CPU 架构相关）。</li>
+<li><strong>命令</strong>：<code>gcc -S hello.i -o hello.s</code>​ （也可以从 <code>.c</code>​ 直接：<code>gcc -S hello.c</code>）</li>
+<li><strong>输出</strong>：<code>.s</code> 汇编文件。</li>
+</ul>
+<hr>
+<h3 id="3-汇编-Assembly"><a href="#3-汇编-Assembly" class="headerlink" title="3. 汇编 (Assembly)"></a>3. 汇编 (Assembly)</h3><ul>
+<li><strong>任务</strong>：将汇编代码转换成<strong>机器指令</strong>（目标文件，即 <code>.o</code>​ 或 <code>.obj</code> 文件），此时已是二进制格式，但尚未链接库或解析外部符号。</li>
+<li><strong>命令</strong>：<code>gcc -c hello.s -o hello.o</code>​ （或 <code>gcc -c hello.c</code>）</li>
+<li><strong>输出</strong>：<code>.o</code> 目标文件（可重定位对象）。</li>
+</ul>
+<p><strong>查看内容</strong>：<code>objdump -d hello.o</code> 可见二进制指令。</p>
+<hr>
+<h3 id="4-链接-Linking"><a href="#4-链接-Linking" class="headerlink" title="4. 链接 (Linking)"></a>4. 链接 (Linking)</h3><ul>
+<li><strong>任务</strong>：将一个或多个目标文件与所需的静态&#x2F;动态库合并，解析符号地址（如 <code>printf</code> 的地址），生成最终可在操作系统上运行的可执行文件。</li>
+<li><strong>命令</strong>：<code>gcc hello.o -o hello</code>​ （可同时指定多个 <code>.o</code> 文件和库）</li>
+<li><strong>输出</strong>：可执行文件（Linux&#x2F;Unix 下默认 <code>a.out</code>​ 或通过 <code>-o</code> 指定名称）。</li>
+</ul>
+<p><strong>链接细节</strong>：</p>
+<ul>
+<li>对于 <code>printf</code>​，GCC 默认会链接 C 标准库（<code>-lc</code>​），实际链接器（<code>ld</code>​）会找到 <code>libc.so</code>​（动态链接）或 <code>libc.a</code>（静态链接）。</li>
+<li>运行时动态链接还需要加载器（如 <code>ld-linux.so</code>）。</li>
+</ul>
+<hr>
+<h3 id="全流程单条命令"><a href="#全流程单条命令" class="headerlink" title="全流程单条命令"></a>全流程单条命令</h3><ul>
+<li>直接执行 <code>gcc hello.c -o hello</code> 等价于依次完成上述四步，并自动删除中间文件。</li>
+</ul>
+<hr>
+<h3 id="查看各阶段中间文件"><a href="#查看各阶段中间文件" class="headerlink" title="查看各阶段中间文件"></a>查看各阶段中间文件</h3><p>可以使用 <code>-save-temps</code> 选项保留所有中间产物：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -save-temps hello.c -o hello</span><br></pre></td></tr></table></figure>
+
+<p>目录下会出现 <code>hello.i</code>​、<code>hello.s</code>​、<code>hello.o</code>​ 和 <code>hello</code>。</p>
+<hr>
+<h3 id="总结流程图"><a href="#总结流程图" class="headerlink" title="总结流程图"></a>总结流程图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hello.c (C源文件)</span><br><span class="line">   │</span><br><span class="line">   ├─ 预处理 (gcc -E) → hello.i (展开后的C代码)</span><br><span class="line">   │</span><br><span class="line">   ├─ 编译   (gcc -S) → hello.s (汇编代码)</span><br><span class="line">   │</span><br><span class="line">   ├─ 汇编   (gcc -c) → hello.o (目标文件，机器码)</span><br><span class="line">   │</span><br><span class="line">   └─ 链接   (gcc   ) → hello   (可执行文件)</span><br></pre></td></tr></table></figure>
+
+<p>‍</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+                <ul id="audio-list" style="display:none">
+                    
+                        
+                            <li title="0" data-url="http://music.163.com/song/media/outer/url?id=29137875.mp3"></li>
+                        
+                    
+                </ul>
+            
+        </div>
+        
+        
+    <div id="gitalk-container" class="comment link"
+		data-enable="true"
+        data-ae="false"
+        data-ci=""
+        data-cs=""
+        data-r=""
+        data-o=""
+        data-a=""
+        data-d="false"
+    >查看评论</div>
+
+
+    </div>
+    
+        <div class="side">
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#C%E8%AF%AD%E8%A8%80%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">C语言程序的编译过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A2%84%E5%A4%84%E7%90%86-Preprocessing"><span class="toc-number">1.1.</span> <span class="toc-text">1. 预处理 (Preprocessing)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%BC%96%E8%AF%91-Compilation"><span class="toc-number">1.2.</span> <span class="toc-text">2. 编译 (Compilation)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%B1%87%E7%BC%96-Assembly"><span class="toc-number">1.3.</span> <span class="toc-text">3. 汇编 (Assembly)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%93%BE%E6%8E%A5-Linking"><span class="toc-number">1.4.</span> <span class="toc-text">4. 链接 (Linking)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E6%B5%81%E7%A8%8B%E5%8D%95%E6%9D%A1%E5%91%BD%E4%BB%A4"><span class="toc-number">1.5.</span> <span class="toc-text">全流程单条命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E5%90%84%E9%98%B6%E6%AE%B5%E4%B8%AD%E9%97%B4%E6%96%87%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">查看各阶段中间文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.7.</span> <span class="toc-text">总结流程图</span></a></li></ol></li></ol>
+        </div>
+    
+</div>
+
+
+    </div>
+</div>
+</body>
+
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<script src="//lib.baomitu.com/jquery/1.8.3/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/typed.js"></script>
+<script src="/js/diaspora.js"></script>
+
+
+<link rel="stylesheet" href="/photoswipe/photoswipe.css">
+<link rel="stylesheet" href="/photoswipe/default-skin/default-skin.css">
+
+
+<script src="/photoswipe/photoswipe.min.js"></script>
+<script src="/photoswipe/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+
+</html>
