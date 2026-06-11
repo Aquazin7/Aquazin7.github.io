@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2026/05/21/hello-world/</url>
-    <content><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
-
-More info: Writing
-Run server$ hexo server
-
-More info: Server
-Generate static files$ hexo generate
-
-More info: Generating
-Deploy to remote sites$ hexo deploy
-
-More info: Deployment
-]]></content>
-  </entry>
-  <entry>
     <title>C++中的左值右值和引用</title>
     <url>/2026/06/05/cpp-lvalue-rvalue-reference/</url>
     <content><![CDATA[C++中的左值右值和引用左值(lvalue) 和右值(rvalue) 的概念在C++11之前还比较边缘，平常写代码也不怎么用到。但是在C++11引入移动语义和生命周期管理等机制后，想写出高性能的C++代码，这个概念不得不先理解清楚，理解左值和右值的概念是掌握移动语义和生命周期管理的前提。
@@ -156,5 +138,23 @@ gcc -save-temps hello.c -o hello
       <tags>
         <tag>C</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2026/05/21/hello-world/</url>
+    <content><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
+
+More info: Writing
+Run server$ hexo server
+
+More info: Server
+Generate static files$ hexo generate
+
+More info: Generating
+Deploy to remote sites$ hexo deploy
+
+More info: Deployment
+]]></content>
   </entry>
 </search>
