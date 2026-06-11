@@ -87,6 +87,24 @@
       </tags>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2026/05/21/hello-world/</url>
+    <content><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
+
+More info: Writing
+Run server$ hexo server
+
+More info: Server
+Generate static files$ hexo generate
+
+More info: Generating
+Deploy to remote sites$ hexo deploy
+
+More info: Deployment
+]]></content>
+  </entry>
+  <entry>
     <title>C语言程序的编译过程</title>
     <url>/2026/06/06/compilation-process-of-c-program/</url>
     <content><![CDATA[C语言程序的编译过程从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：预处理、编译、汇编、链接。每个阶段都可以用 GCC 的特定选项单独观察。
@@ -138,23 +156,5 @@ gcc -save-temps hello.c -o hello
       <tags>
         <tag>C</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2026/05/21/hello-world/</url>
-    <content><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
-
-More info: Writing
-Run server$ hexo server
-
-More info: Server
-Generate static files$ hexo generate
-
-More info: Generating
-Deploy to remote sites$ hexo deploy
-
-More info: Deployment
-]]></content>
   </entry>
 </search>
