@@ -166,4 +166,26 @@ Deploy to remote sites$ hexo deploy
 More info: Deployment
 ]]></content>
   </entry>
+  <entry>
+    <title>C++智能指针</title>
+    <url>/2026/06/17/cpp-smart-pointer/</url>
+    <content><![CDATA[智能指针 在C++里用于自动管理动态分配对象的生命周期，是资源获取即初始化 (RAII) 的重要部分。
+智能指针定义在头文件里，属于模板类。
+智能指针本身是一个栈上对象，在自身构造函数中绑定分配的资源，在自身析构函数中自动释放资源。
+在现代C++中，推荐使用智能指针来管理动态分配的内存，而避免使用new&#x2F;delete。减少内存泄漏，重复释放，悬垂指针等问题。
+下面主要介绍C++11正式引入的三种智能指针。
+
+三种智能指针1. std::unique_ptr(独占所有权)独占所有权的意思是：一个对象，同一个时刻，只能有唯一一个unique_ptr指针指向它，
+所以unique_ptr不能复制，不能拷贝，只能通过std::move转让所有权。
+在超出作用域时会自动释放对象，同时将自身置空。性能开销基本和普通指针一样。
+常用于：工厂函数返回值，管理容器元素。
+auto unp = std::make_unque&lt;int&gt;(42);]]></content>
+      <categories>
+        <category>Cpp</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>Modern C++</tag>
+      </tags>
+  </entry>
 </search>
