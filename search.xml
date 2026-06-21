@@ -201,4 +201,29 @@ auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2
         <tag>Modern C++</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Verilog快速上手</title>
+    <url>/2026/06/21/FPGA-Verilog/</url>
+    <content><![CDATA[介绍Verilog是一种HDL(Hardware Design Language)，即硬件设计语言。
+与C&#x2F;C++,Java,Python等编程语言不同，HDL所描述的是电路结构和行为，最终综合得到的产物是可以直接映射到实际的电路结构上的。
+Verilog描述硬件电路有两种方式：结构级描述和行为级描述。
+1.1模块模块(module)​是Verilog的基本结构。模块就像集成电路芯片，一个电路就是一个模块，而一个模块内部可以由若干个小模块组成，这些小模块内部也可以由更小的模块组成。实现功能的电路结构一定要包裹在module &lt;模块名&gt;(&lt;输入输出端口列表&gt;)...endmodule里。
+比如一个1位半加器：
+module half_adder( 	input a, 	input b,	output sum, 	output cy	)assign sum = a ^ b; //和assign cy = a &amp; b;// 进位endmodule
+
+上面的Verilog代码模块对应的就是下面这个方框里的电路，这个方框就是我们定义的半加器模块。
+
+
+‍
+1.2 assign语句assign语句用于标记一个节点
+module example(a,b,c,d,o)	input a,b,c,d;	output o;	wire ab, cd;	assign ab = a &amp; b;	assign cd = c ^ d;	assign o = ~(ab | cd);endmodule]]></content>
+      <categories>
+        <category>FPGA</category>
+      </categories>
+      <tags>
+        <tag>FPGA</tag>
+        <tag>Verilog</tag>
+        <tag>HDL</tag>
+      </tags>
+  </entry>
 </search>
