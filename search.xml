@@ -411,7 +411,7 @@ module half_adder( 	input a, 	input b,	output sum, 	output cy	)assign sum = a ^ 
 
 
 ‍
-1.2 assign语句assign语句用于标记一个节点
+1.2 assign语句assign语句用于标记一个节点，等号相当于“连接”，用一根导线将左右两边的输出相连
 module example(a,b,c,d,o)	input a,b,c,d;	output o;	wire ab, cd;	assign ab = a &amp; b;	assign cd = c ^ d;	assign o = ~(ab | cd);endmodule]]></content>
       <categories>
         <category>FPGA</category>
