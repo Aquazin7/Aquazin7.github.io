@@ -422,4 +422,16 @@ module example(a,b,c,d,o)	input a,b,c,d;	output o;	wire ab, cd;	assign ab = a &a
         <tag>HDL</tag>
       </tags>
   </entry>
+  <entry>
+    <title>HTML快速入门基础</title>
+    <url>/2026/07/02/HTML-primer/</url>
+    <content><![CDATA[HTML 全名“超文本标记语言”(Hypertext Markup Language)，是一种用来排版网页内容的标记语言。
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
 </search>
