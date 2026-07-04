@@ -414,6 +414,9 @@ auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2
 绝大部分标签是成对出现的：&lt;标签名&gt;内容&lt;标签名&gt; ，比如：&lt;p&gt;这是一段文字&lt;/p&gt;
 少部分标签是单个出现的，也叫自闭合：&lt;标签名 /&gt;，比如：&lt;br /&gt;（换行）
 
+2. 网页基本架构一个网页的HTML文件基本上都是下面这样的格式：
+&lt;!DOCTYPE html&gt;    &lt;!-- 声明文档类型，告诉浏览器这是HTML5 --&gt;&lt;html&gt;              &lt;!-- 网页的根，所有内容都写在里面 --&gt;    &lt;head&gt;          &lt;!-- 头部：给浏览器看的配置信息（标题、编码） --&gt;        &lt;meta charset=&quot;UTF-8&quot;&gt;   &lt;!-- 设置编码为UTF-8，防止乱码 --&gt;        &lt;title&gt;我的第一个网页&lt;/title&gt;  &lt;!-- 浏览器标签栏显示的标题 --&gt;    &lt;/head&gt;    &lt;body&gt;          &lt;!-- 主体：给用户看的所有内容（文字、图片、按钮） --&gt;        这里写用户能看到的一切内容！    &lt;/body&gt;&lt;/html&gt;
+
 ]]></content>
       <categories>
         <category>教程</category>
