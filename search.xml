@@ -351,8 +351,8 @@ Si
   <entry>
     <title>Verilog快速上手</title>
     <url>/2026/06/21/fpga-verilog-intro/</url>
-    <content><![CDATA[介绍Verilog是一种HDL(Hardware Design Language)，即硬件设计语言。
-与C&#x2F;C++,Java,Python等编程语言不同，HDL所描述的是电路结构和行为，最终综合得到的产物是可以直接映射到实际的电路结构上的。
+    <content><![CDATA[介绍Verilog是一种HDL(Hardware Description Language)，即硬件描述语言，用于设计和验证逻辑电路。
+与C&#x2F;C++,Java,Python等编程语言不同，HDL所描述的是电路结构和行为，相当于用结构化的语言来描述一个电路，这比电路图描述电路要更加自动化大规模化，最终综合得到的产物是可以直接映射到实际的电路结构上的。
 Verilog描述硬件电路有两种方式：结构级描述和行为级描述。
 1.1模块模块(module)​是Verilog的基本结构。模块就像集成电路芯片，一个电路就是一个模块，而一个模块内部可以由若干个小模块组成，这些小模块内部也可以由更小的模块组成。实现功能的电路结构一定要包裹在module &lt;模块名&gt;(&lt;输入输出端口列表&gt;)...endmodule里。
 比如一个1位半加器：
