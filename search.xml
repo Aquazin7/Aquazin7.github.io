@@ -416,34 +416,81 @@ auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2
 单个出现的：&lt;标签名 /&gt;，比如：&lt;br /&gt;（换行）
 
 用尖括号来标记标签类型，中间写展示的内容，结尾需要加斜杠/。
-2. HTML基本标签类型要展示的内容不同，所以需要用到不同类型的标签，这里只介绍几个常用的标签：
+2. HTML基本标签类型要展示的内容不同，所以需要用到不同类型的标签，这里只介绍一些常用的标签：
+内容排版类：
 
 
 
 内容类型
-标签格式
+标签
+描述
 例子
 
 
 
-文段
-&lt;p&gt;...&lt;/p&gt;
-&lt;p&gt;这是一句文段&lt;/p&gt;
-
-
 标题
-&lt;h1&gt;...&lt;/h1&gt;
+&lt;h1&gt; … &lt;h6&gt;
+定义标题大小、级别
 &lt;h1&gt;一级标题&lt;/h1&gt; &lt;h2&gt;二级标题&lt;/h2&gt;
 
 
-图片
-&lt;img src=.../&gt;
-&lt;img src=&quot;/images/logo.png&quot;/&gt;
+文段
+&lt;p&gt;
+定义一个文字段落
+&lt;p&gt;这是一句文段&lt;/p&gt;
 
 
-链接
-&lt;a href=...&gt;...&lt;/a&gt;
+换行
+&lt;br&gt;
+插入一个换行符
+第一行&lt;br&gt;第二行
+
+
+分割线
+&lt;hr&gt;
+插入一条水平分割线
+&lt;hr&gt;
+
+
+注释
+&lt;!-- ... --&gt;
+定义HTML代码的注释内容
+&lt;!-- 这是注释 --&gt;
+
+
+多媒体类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+超链接
+&lt;a&gt;
+定义超链接，点击可跳转
 &lt;a href=&quot;https://example.com&quot;&gt;这是一个链接&lt;/a&gt;
+
+
+图片
+&lt;img&gt;
+插入图片
+&lt;img src=&quot;图片文件路径或链接&quot;, alt=&quot;图片描述&quot;/&gt;
+
+
+音频
+audio
+插入音频
+&lt;audio src=&quot;音频文件路径或链接&quot; controls&gt;&lt;/audio&gt;
+
+
+视频
+video
+插入视频
+&lt;video src=&quot;视频文件路径或链接&quot; controls&gt;&lt;/video&gt;
 
 
 3. 标签的属性 标签的属性也叫做样式(style)，样式代码描述了标签的外观
