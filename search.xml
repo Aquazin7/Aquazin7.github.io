@@ -451,7 +451,7 @@ auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2
 换行
 &lt;br&gt;
 插入一个换行符
-第一行&lt;br&gt;第二行
+第一行&lt;br&gt;第二行或是&lt;br/&gt;
 
 
 分割线
@@ -501,6 +501,35 @@ video
 &lt;video src=&quot;视频文件路径或链接&quot; controls&gt;&lt;/video&gt;
 
 
+文本格式类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+黑体加粗
+&lt;strong&gt; &#x2F; &lt;b&gt;
+给文本加粗
+&lt;strong&gt;这一行加粗&lt;/strong&gt;
+
+
+斜体
+&lt;em&gt; &#x2F; &lt;i&gt;
+将文本显示为斜体
+&lt;em&gt;这行是斜体字&lt;/em&gt;
+
+
+下划线
+&lt;ins&gt; &#x2F; &lt;u&gt;
+给文本加下划线
+&lt;ins&gt;这行有下划线&lt;/&gt;
+
+
 3. 标签的属性 标签的属性也叫做样式(style)，样式代码描述了标签的外观
 4. 网页基本架构一个网页的HTML文件基本上都是下面这样的格式：
 &lt;!DOCTYPE html&gt;    &lt;!-- 声明文档类型，告诉浏览器这是HTML5 --&gt;&lt;html&gt;              &lt;!-- 网页的根，所有内容都写在里面 --&gt;    &lt;head&gt;          &lt;!-- 头部：给浏览器看的配置信息（标题、编码） --&gt;        &lt;meta charset=&quot;UTF-8&quot;&gt;   &lt;!-- 设置编码为UTF-8，防止乱码 --&gt;        &lt;title&gt;我的第一个网页&lt;/title&gt;  &lt;!-- 浏览器标签栏显示的标题 --&gt;    &lt;/head&gt;    &lt;body&gt;          &lt;!-- 身体：给用户看的所有内容（文字、图片、按钮） --&gt;        这里写用户能看到的一切内容！    &lt;/body&gt;&lt;/html&gt;
@@ -517,6 +546,7 @@ video
     <title>状态机模型的介绍</title>
     <url>/2026/07/09/finite-state-machine-intro/</url>
     <content><![CDATA[状态机是一种计算机领域经常用到的模型，状态机模型有很多种，这篇文章主要讲的是有限状态机（FSM）。
+状态机是什么？简单来说状态机就是描述一个系统如何在不同的状态之间切换的模型。人们将系统的状态切换抽象成一个方便理论演绎的数学模型。
 ]]></content>
       <categories>
         <category>计算机科学</category>
