@@ -529,6 +529,76 @@ video
 &lt;ins&gt;这行有下划线&lt;/&gt;
 
 
+框架类标签：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+
+&lt;!DOCTYPE html&gt;
+声明文档类型为HTML5，必须放在第一行。
+&lt;!DOCTYPE html&gt;
+
+
+
+&lt;html&gt;
+HTML文档的根元素。
+&lt;html&gt; ... &lt;/html&gt;
+
+
+头部分
+&lt;head&gt;
+包含文档的元数据（如标题、编码等），不显示在页面中。
+&lt;head&gt; ... &lt;/head&gt;
+
+
+标题部分
+&lt;title&gt;
+定义网页的标题，显示在浏览器标签栏上。
+&lt;title&gt;我的网页&lt;/title&gt;
+
+
+元数据
+&lt;meta&gt;
+提供页面的元信息，如字符编码、视口设置等。
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+
+
+身体部分
+&lt;body&gt;
+定义文档的主体，所有可见内容都写在这里。
+&lt;body&gt; ... &lt;/body&gt;
+
+
+布局类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+块
+&lt;div&gt;
+块级容器，用于对页面进行分区或布局，独占一行。
+&lt;div&gt; ... &lt;/div&gt;
+
+
+行
+&lt;span&gt;
+行内容器，用于包裹一小段文本或内联元素，无默认样式。
+&lt;span&gt;姓名：张三&lt;/span&gt;
+
+
 3. 标签的属性 标签的属性也叫做样式(style)，样式代码描述了标签的外观
 4. 网页基本架构一个网页的HTML文件基本上都是下面这样的格式：
 &lt;!DOCTYPE html&gt;    &lt;!-- 声明文档类型，告诉浏览器这是HTML5 --&gt;&lt;html&gt;              &lt;!-- 网页的根，所有内容都写在里面 --&gt;    &lt;head&gt;          &lt;!-- 头部：给浏览器看的配置信息（标题、编码） --&gt;        &lt;meta charset=&quot;UTF-8&quot;&gt;   &lt;!-- 设置编码为UTF-8，防止乱码 --&gt;        &lt;title&gt;我的第一个网页&lt;/title&gt;  &lt;!-- 浏览器标签栏显示的标题 --&gt;    &lt;/head&gt;    &lt;body&gt;          &lt;!-- 身体：给用户看的所有内容（文字、图片、按钮） --&gt;        这里写用户能看到的一切内容！    &lt;/body&gt;&lt;/html&gt;
