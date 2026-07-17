@@ -88,12 +88,13 @@ auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2
 转换（transition）：从一个状态到另一个状态的过程。它由事件触发，并可以附带条件（如“温度高于30度”）。
 动作（action）：在转换发生时或停留在某个状态时，系统执行的操作。比如“启动电机”、“显示错误信息”、“发送数据包”。
 
-两种主要类型根据有无输出，状态机常分为两类：
+两种主要类型状态机常分为两类：
 
 摩尔型（Moore 型）：输出只和当前状态有关。比如，只要处在“红灯状态”，就一直输出“停止”信号，和如何进入红灯状态无关。
 米利型（Mealy型）：输出和当前状态以及输入事件都有关。比如，当“关门状态”下收到“有人靠近”事件，输出“开门”动作。同一个“关门状态”收到“超时”事件，可能输出“报警”动作。
 
-状态转移图状态转移图可以看作状态机的图形化表示
+状态转换图状态转换图英文全称State transition diagram，缩写STD，简称状态图。状态转换图是状态机的图形化表示，直观展示了状态机的状态转换的过程，可以帮助我们在设计时发现漏洞缺陷。
+下面以引子的第三个例子为例：
 ]]></content>
       <categories>
         <category>计算机科学</category>
@@ -560,19 +561,31 @@ video
 黑体加粗
 &lt;strong&gt; &#x2F; &lt;b&gt;
 给文本加粗
-&lt;strong&gt;这一行加粗&lt;/strong&gt;
+&lt;b&gt;这一行加粗&lt;/b&gt;
 
 
 斜体
 &lt;em&gt; &#x2F; &lt;i&gt;
 将文本显示为斜体
-&lt;em&gt;这行是斜体字&lt;/em&gt;
+&lt;i&gt;这行是斜体字&lt;/i&gt;
 
 
 下划线
 &lt;ins&gt; &#x2F; &lt;u&gt;
 给文本加下划线
-&lt;ins&gt;这行有下划线&lt;/&gt;
+&lt;u&gt;这行有下划线&lt;/u&gt;
+
+
+上下标
+&lt;sup&gt; &#x2F; &lt;sub&gt;
+给文本加上下标
+H&lt;sub&gt;2&lt;/sub&gt;O &#x2F; x&lt;sup&gt;2&lt;/sup&gt;
+
+
+删除线
+&lt;del&gt; &#x2F; &lt;s&gt;
+给文本划上删除线
+&lt;del&gt;已删除内容&lt;/del&gt;
 
 
 框架类标签：
@@ -586,13 +599,13 @@ video
 
 
 
-
+声明类型
 &lt;!DOCTYPE html&gt;
 声明文档类型为HTML5，必须放在第一行。
 &lt;!DOCTYPE html&gt;
 
 
-
+根部分
 &lt;html&gt;
 HTML文档的根元素。
 &lt;html&gt; ... &lt;/html&gt;
@@ -643,6 +656,66 @@ HTML文档的根元素。
 &lt;span&gt;
 行内容器，用于包裹一小段文本或内联元素，无默认样式。
 &lt;span&gt;姓名：张三&lt;/span&gt;
+
+
+列表标签：
+
+
+
+标签
+描述
+示例
+
+
+
+&lt;ul&gt;
+定义无序列表，通常以项目符号呈现。
+&lt;ul&gt;&lt;li&gt;项目一&lt;/li&gt;&lt;/ul&gt;
+
+
+&lt;ol&gt;
+定义有序列表，通常以数字序号呈现。
+&lt;ol&gt;&lt;li&gt;第一步&lt;/li&gt;&lt;/ol&gt;
+
+
+&lt;dl&gt;
+定义描述列表，用于展示术语及其描述。
+&lt;dl&gt;&lt;dt&gt;术语&lt;/dt&gt;&lt;dd&gt;描述&lt;/dd&gt;&lt;/dl&gt;
+
+
+&lt;li&gt;
+定义列表项，用在 &lt;ul&gt; 或 &lt;ol&gt; 中。
+见上例
+
+
+表格标签：
+
+
+
+标签
+描述
+示例
+
+
+
+&lt;table&gt;
+定义一个表格。
+&lt;table&gt; ... &lt;/table&gt;
+
+
+&lt;tr&gt;
+定义表格中的一行。
+&lt;tr&gt; ... &lt;/tr&gt;
+
+
+&lt;td&gt;
+定义表格中的一个标准单元格。
+&lt;td&gt;数据&lt;/td&gt;
+
+
+&lt;th&gt;
+定义表格中的表头单元格，通常加粗居中。
+&lt;th&gt;表头&lt;/th&gt;
 
 
 3. 标签的属性 标签的属性也叫做样式(style)，样式代码描述了标签的外观
