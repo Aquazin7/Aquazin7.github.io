@@ -438,15 +438,13 @@ module half_adder( 	input a, 	input b,	output sum, 	output cy	)assign sum = a ^ 
 
 上面的Verilog代码模块对应的就是下面这个方框里的电路，这个方框就是我们定义的半加器模块。
 
-
-
-
+在half_adder的括号里定义的a,b,sum,cy就是端口，可以看到，综合出来相当于芯片的引脚。
 1.2 数据类型Verilog主要有两种数据类型：
 
-线网型（wire）：
-寄存器型（reg）:
+线网型（wire）：相当于导线，用于传导信号，连接各个端口和模块。
+寄存器型（reg）:  表示一个存储单元，与wire最大的区别就是有记忆存储功能，能保存当前状态。
 
-1.2 assign语句assign语句用于标记一个节点，等号相当于“连接”，用一根导线将左右两边的输出相连，例如下面这个模块：
+1.2 assign语句assign语句用于标记连续赋值的两端信号，等号相当于“连接”，用一根导线将左右两边的端点相连。例如下面这个模块：
 module example(a,b,c,d,o)	input a,b,c,d;	output o;	wire ab, cd;	assign ab = a &amp; b;	assign cd = c ^ d;	assign o = ~(ab | cd);endmodule
 
 ]]></content>
