@@ -858,4 +858,17 @@ int *pa;pa = &amp;a;*pa = 2;
         <tag>C</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Docker安装教程</title>
+    <url>/2026/07/26/docker-reinstall-course/</url>
+    <content><![CDATA[本文章讲的是如何在Windows系统(家庭版)上安装&#x2F;卸载Docker Desktop。
+Docker的官网：https://docker.com/
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
 </search>
