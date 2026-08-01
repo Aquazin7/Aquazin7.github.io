@@ -854,6 +854,16 @@ int *pa;pa = &amp;a;*pa = 2;
 gcc -o output.exe main.c -finput-charset=UTF-8 -fexec-charset=GBK
 
 这个命令告诉编译器，源文件是UTF-8编码，但生成的程序在运行时，其中的字符串常量使用GBK编码。这相当于把转换工作交给了编译器，但需要在每次编译时都加上这些参数，稍显繁琐。
+方案三：配置VS Code终端自动切换如果你不想修改代码，可以配置VS Code，让它在每次打开终端时自动执行 chcp 65001 命令，将终端编码临时切换为UTF-8。
+
+在VS Code中，按下 Ctrl + Shift + P，输入并选择 Preferences: Open Settings (JSON)，打开设置文件。
+在 settings.json 文件中，添加或修改以下配置：
+
+&#123;    &quot;terminal.integrated.defaultProfile.windows&quot;: &quot;PowerShell with UTF-8&quot;,    &quot;terminal.integrated.profiles.windows&quot;: &#123;        &quot;PowerShell with UTF-8&quot;: &#123;            &quot;path&quot;: &quot;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe&quot;,            &quot;args&quot;: [                &quot;-NoExit&quot;,                &quot;-Command&quot;,                &quot;chcp 65001 | Out-Null&quot;            ]        &#125;    &#125;&#125;
+
+
+注意：这个方案只对在VS Code内部打开的终端有效。如果你直接双击运行编译好的 .exe 文件，依然会出现乱码
+
 ]]></content>
       <categories>
         <category>C</category>
