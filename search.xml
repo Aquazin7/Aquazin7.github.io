@@ -864,7 +864,11 @@ gcc -o output.exe main.c -finput-charset=UTF-8 -fexec-charset=GBK
 
 注意：这个方案只对在VS Code内部打开的终端有效。如果你直接双击运行编译好的 .exe 文件，依然会出现乱码
 
-]]></content>
+方案四：结合 CMake在CLion里习惯改 CMakeLists.txt，那么在VS Code里完全可以保留这套工作流。
+
+在 CMakeLists.txt 中固定编译参数：
+
+cmake_minimum_required(VERSION 3.10)project(MyProject)add_compile_options(-fexec-charset=GBK -finput-charset=UTF-8)add_executable($&#123;PROJECT_NAME&#125; main.c)]]></content>
       <categories>
         <category>C</category>
       </categories>
