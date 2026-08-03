@@ -868,7 +868,17 @@ gcc -o output.exe main.c -finput-charset=UTF-8 -fexec-charset=GBK
 
 在 CMakeLists.txt 中固定编译参数：
 
-cmake_minimum_required(VERSION 3.10)project(MyProject)add_compile_options(-fexec-charset=GBK -finput-charset=UTF-8)add_executable($&#123;PROJECT_NAME&#125; main.c)]]></content>
+cmake_minimum_required(VERSION 3.10)project(MyProject)add_compile_options(-fexec-charset=GBK -finput-charset=UTF-8)add_executable($&#123;PROJECT_NAME&#125; main.c)
+
+
+
+方案五：修改VS Code文件编码为GBK (不推荐)这是一个“向下兼容”的方案，将源文件保存为终端认识的GBK格式。但这样做会丢失UTF-8的通用性，不推荐。
+
+点击VS Code右下角状态栏的编码标识（例如“UTF-8”）。
+在弹出的菜单中选择“通过编码保存” (Save with Encoding)。
+选择“GBK”或“简体中文(GB2312)”
+
+]]></content>
       <categories>
         <category>C</category>
       </categories>
