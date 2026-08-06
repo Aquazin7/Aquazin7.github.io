@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>CMake入门指南</title>
+      <link href="/2026/08/06/cmake-primer/"/>
+      <url>/2026/08/06/cmake-primer/</url>
+      
+        <content type="html"><![CDATA[<p><strong>CMake</strong>是一个<strong>跨平台的开源构建工具</strong>，用于C&#x2F;C++项目的构建</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 教程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker安装教程</title>
       <link href="/2026/07/26/docker-reinstall-course/"/>
       <url>/2026/07/26/docker-reinstall-course/</url>
