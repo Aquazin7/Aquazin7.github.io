@@ -8,7 +8,7 @@
       <link href="/2026/08/06/cmake-primer/"/>
       <url>/2026/08/06/cmake-primer/</url>
       
-        <content type="html"><![CDATA[<p><strong>CMake</strong>是一个<strong>跨平台的开源构建工具</strong>，用于C&#x2F;C++项目的构建</p>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>在开发C&#x2F;C++项目时，我们完成代码后需要对源文件进行编译，这个环节由编译器负责。但是在有多个源文件文件时，需要每次手动输入很长的编译命令，还需要把编译指令记录下来。这样很不方便项目的管理，所以需要一套工具帮我们“指挥”编译器完成编译任务。本文介绍的CMake就是这种工具。</p></blockquote><p><strong>CMake</strong>是一个跨平台的开源构建工具，和编译器不同，它并不是一个直接的“编译器”，而是一个**“构建系统的生成器”**，一般用于C&#x2F;C++项目的构建。使用CMake可以更加自动标准地完成C&#x2F;C++的项目编译和构建。这篇文章介绍一下CMake主要的基本用法，不会涉及太多进阶的内容。</p><p>在C&#x2F;C++项目的构建环节里各个工具的作用：</p><ul><li><strong>编译器（如GCC&#x2F;MSVC）</strong> &#x3D; 翻译官，负责把C++代码翻译成机器能懂的二进制程序。</li><li><strong>Make&#x2F;ninja</strong> &#x3D; 包工头，负责指挥翻译官先翻译哪个文件、后翻译哪个，并协调依赖关系。</li><li><strong>CMake</strong> &#x3D; 总建筑师，他不亲自干活，而是根据不同工地的规矩（Windows、Linux、macOS），生成相应的“施工方案”（Makefile或VS工程文件）。</li></ul>]]></content>
       
       
       <categories>
