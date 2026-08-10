@@ -903,14 +903,13 @@ Docker的官网：https://docker.com/
     <title>CMake基础指南</title>
     <url>/2026/08/06/cmake-primer/</url>
     <content><![CDATA[
-CMake我是在CLion上第一次见的，CLion里编译程序前都要在CMamkeLists.txt里写上下面这样的代码
+CMake我是在CLion上第一次用的，CLion里编译程序前都要在一个叫CMamkeLists.txt的文件夹里写下面这样的代码：
 cmake_minimum_required(VERSION 4.2)project(MyCpp)set(CMAKE_CXX_STANDARD 23)add_executable(MyCpp main.cpp)
 
+然后就可以运行编译了，VSCode里也是，安装上CMakeTools的插件，也是一样的流程。那这个CMake是个什么东西？用来做什么的？
 
-
-在开发C&#x2F;C++项目时，我们完成代码后需要对源文件进行编译，这个环节由编译器负责。但是在有多个源文件文件时，需要每次手动输入很长的编译命令，很容易写错，还需要把编译指令记录下来。这样很不方便项目的管理，所以需要一套工具根据我们的需求然后再指挥编译器完成编译任务。本文介绍的CMake工具链就是这种工具。
-
-CMake是一个跨平台的开源构建工具，和编译器不同，它并不是一个直接的“编译器”，而是一个**“构建系统的生成器”**，一般用于C&#x2F;C++项目的构建。使用CMake可以更加自动标准地完成C&#x2F;C++的项目编译和构建。这篇文章介绍一下CMake主要的基本用法，不会涉及太多进阶的内容。
+在开发C&#x2F;C++项目时，完成代码后需要对源文件进行编译，这个环节由编译器负责。那我手动输入编译命令不就行了吗？但是在有多个源文件或者引入了多个第三方库时，需要每次手动输入很长的编译命令，每个文件之间还有复杂的依赖关系，很容易写错，还需要把编译指令记录下来。这样很不方便项目的管理，所以需要一套工具根据我们的需求然后再指挥编译器完成编译任务。CMake就是这种工具。
+CMake是一个跨平台的开源构建工具，和编译器不同，它并不是一个直接的“编译器”，而是一个**“构建系统的生成器”**，一般用于C&#x2F;C++项目的构建。使用CMake可以更自动化更标准更方便地完成C&#x2F;C++的项目编译和构建。这篇文章介绍一下CMake主要的基本用法，不会涉及太多进阶的内容。
 先理一下在C&#x2F;C++项目的构建环节里各个工具的作用：
 
 编译器（如GCC&#x2F;MSVC）：负责把C++代码翻译成机器能懂的二进制程序。
@@ -942,10 +941,25 @@ cmake_minimum_required(VERSION 3.10) # 项目使用的CMake的最低版本要求
 下面解释一下基本的命令：
 1. 固定头三句（工具版本+项目名+语言标准）cmake_minimum_required(VERSION 3.10)  # 锁定最低版本project(MyProject)                    # 给工程命名set(CMAKE_CXX_STANDARD 17)            # 声明C++标准
 
+主要讲一下project()：
+语法是这样的：
+project(&lt;项目名称&gt; [&lt;使用编程语言&gt;...])project(&lt;项目名称&gt;        [VERSION &lt;主版本号&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;tweak&gt;]]]]        [DESCRIPTION &lt;project-description-string&gt;]        [HOMEPAGE_URL &lt;url-string&gt;]        [LANGUAGES &lt;language&gt;...])
 
 
-2. 生成库（多文件项目的关键）不要把所有的.c&#x2F;.cpp文件都塞进一个add_executable里。正确的做法是：把功能模块单独编成库，再让主程序去链接它。
-生成一个名为 module 的静态库，这个库只包含一个源文件：
+&lt;PROJECT-NAME&gt;：必需的工程名称，会赋值给变量 PROJECT_NAME。
+[LANGUAGES]：指定启用的编程语言（如 C, CXX, Fortran 等）。如果不指定，默认启用 C 和 CXX。
+[VERSION]：设置项目版本号，会生成 PROJECT_VERSION 等变量。
+[DESCRIPTION]：项目描述文本。
+[HOMEPAGE_URL]：项目主页 URL。
+
+示例：
+project(MyProject)                        # 仅名称，默认语言 C/C++project(MyProject VERSION 1.2.3 LANGUAGES CXX)  # 指定版本和语言project(MyProject DESCRIPTION &quot;My awesome project&quot; HOMEPAGE_URL &quot;https://example.com&quot;)
+
+
+注意：project 会设置一系列变量（如 PROJECT_SOURCE_DIR、CMAKE_PROJECT_NAME 等），并且会影响编译器的检查。
+
+2. 生成库（多文件项目的关键）不建议把所有的.c&#x2F;.cpp文件都塞进一个add_executable里。推荐的做法是：把功能模块单独编成库，再让主程序去链接它。
+比如生成一个名为 module 的静态库，这个库只包含一个源文件：
 add_library(module STATIC src/module.cpp)# 语法：add_library(&lt;库名&gt; &lt;库类型&gt; [EXCLUDE_FROM_ALL] [库文件路径列表...])
 
 库类型参数：
@@ -966,11 +980,11 @@ EXCLUDE_FROM_ALL（选填）：
 3. 生成可执行文件add_executable(app main.cpp)#语法：add_executable(&lt;可执行文件名称&gt; [源文件列表...])
 
 如果有多个源文件，直接全部列出来。
+ 源码文件很多怎么办？ 用变量临时存一下：
+set(SOURCES src/math.cpp src/other.cpp src/main.cpp)add_executable(app $&#123;SOURCES&#125;)
 
-源码文件很多怎么办？ 用变量临时存一下：
-&gt;set(SOURCES src/math.cpp src/other.cpp src/main.cpp)&gt;add_executable(app $&#123;SOURCES&#125;)
 
-一定要区分大小写：CMake命令不区分大小写（ADD_EXECUTABLE也行），但变量和路径严格区分。
+注意一定要区分大小写：CMake命令不区分大小写（ADD_EXECUTABLE也行），但变量和路径严格区分。
 
 4. 链接库可执行文件与库或者库与库之间可能会有调用依赖的关系，需要将它们链接到一起
 # 告诉 app：你依赖 module 这个库target_link_libraries(app PRIVATE module)# 语法：target_link_libraries(&lt;目标对象&gt; [&lt;作用域关键字&gt; [依赖库列表...]...])
@@ -989,14 +1003,13 @@ INTERFACE：依赖不用于该目标，只传递给依赖它的目标（常用�
 再举一个有多个依赖项的例子：
 target_link_libraries(my_lib    PUBLIC        core_api      # 外部用户也需要 core_api        interface_cv  # 外部用户也需要 OpenCV接口    PRIVATE        internal_utils # 仅 my_lib 内部编译链接用        logger         # 仅内部日志库    INTERFACE        header_only_lib # 仅头文件库，只影响外部接口)
 
-
-
+这有点像C++类的访问控制符分割字段
 5. 指定头文件路径让编译器找得到头文件，同时控制路径依赖的传播。
 # 告诉 module 这个目标：你的头文件在 $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include 目录下target_include_directories(module PUBLIC $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)# 语法：target_include_directories(&lt;目标对象&gt; [SYSTEM] [AFTER | BEFORE] [&lt;作用域关键字&gt; [目录路径列表...]...] )
 
 目标对象：由 add_executable() 或 add_library() 创建的目标名称。
-[SYSTEM]（可选）：加在作用域关键字之前。告诉编译器这些目录是系统级目录，编译器会抑制该目录下头文件的警告（比如第三方库的警告不再干扰你的编译输出）。
-[AFTER | BEFORE]（可选）：控制目录添加到编译器搜索路径的顺序（默认是 AFTER，即追加到列表末尾）。除非有特殊的覆盖需求，否则极少使用。
+SYSTEM（可选）：加在作用域关键字之前。告诉编译器这些目录是系统级目录，编译器会抑制该目录下头文件的警告（比如第三方库的警告不再干扰你的编译输出）。
+AFTER | BEFORE（可选）：控制目录添加到编译器搜索路径的顺序（默认是 AFTER，即追加到列表末尾）。除非有特殊的覆盖需求，否则极少使用。
 作用域关键字（必填，至少一个）：PRIVATE、PUBLIC、INTERFACE。注意，这三个关键字必须紧跟在目录列表前面。
 目录路径列表（必填）：要添加的目录路径。可以是绝对路径或相对路径。
 
@@ -1018,8 +1031,8 @@ target_include_directories(mylib    PUBLIC        $&#123;CMAKE_CURRENT_SOURCE_DI
 
 
 
-三. 总结以上就是CMake基础的一些内容，这些基础构建单文件或者多文件项目够用了，多敲几遍就记得了。我省略了部分内容，引入第三方库以及中大型项目分层，需要看进阶的内容。  
-更多详细的内容可以去查CMake的相关文档：
+三. 总结掌握了上面这些CMake基础内容，用来构建单文件或者多文件项目够用了，多敲几遍就记得了。引入第三方库以及中大型项目分层，看进阶的内容。  
+更多详细的内容可以去看CMake的相关文档：
 
 官方主页地址：https://cmake.org/
 
