@@ -1090,7 +1090,8 @@ std::string word;while (inFile &gt;&gt; word)  // 自动跳过空白符，直到
   <entry>
     <title>C++面向对象基础</title>
     <url>/2026/08/16/cpp-oop-primer/</url>
-    <content><![CDATA[**OOP（面向对象编程）**我是先用Python学的，我学的第一门编程语言是C，众所周知C是过程式编程语言没有原生的面向对象特性。而最初的C++就是C with class，额，现在看来C++已经不是C with class那么简单了。现在的C++发展成一门多范式编程语言了，不光有过程式，面向对象式，还有函数式，总是就是海纳百川 究极缝合怪 。
+    <content><![CDATA[**OOP（面向对象编程）**我是先用Python学的，我学的第一门编程语言是C，众所周知C是过程式编程语言没有原生的面向对象特性。而最初的C++就是C with class，现在看来C++已经不是C with class那么简单了。现在的C++发展成了一门多范式编程语言，不光有过程式，面向对象式，还有函数式等等，总是就是大杂烩 究极缝合怪 ……
+咳咳，说回正题。OOP三大基本特性：封装、继承、多态，C++该有的都有，而且也是比Python要更完善更严格。
 ]]></content>
       <categories>
         <category>C++</category>
