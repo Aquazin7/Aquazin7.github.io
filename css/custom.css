@@ -1,0 +1,5 @@
+/* 针对文章页面的顶部背景图 */
+#page-header.post-bg {
+  background-position: center 0% !important; 
+  height: 400px;
+}

@@ -1100,4 +1100,9 @@ std::string word;while (inFile &gt;&gt; word)  // 自动跳过空白符，直到
         <tag>C++</tag>
       </tags>
   </entry>
+  <entry>
+    <title>cmake-primer-2</title>
+    <url>/2026/08/18/cmake-primer-2/</url>
+    <content><![CDATA[]]></content>
+  </entry>
 </search>
