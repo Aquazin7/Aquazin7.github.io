@@ -991,19 +991,22 @@ target_link_libraries(my_lib    PUBLIC        core_api      # 外部用户也需
   <entry>
     <title>C++基础输入输出操作</title>
     <url>/2026/07/16/cpp-basic-io/</url>
-    <content><![CDATA[学习一门编程语言，第一个要掌握的就是**输入输出（Input Output）**操作，方便起见简称为IO操作。下面介绍C++中的最基本的IO操作。
-用到3个标准库：
+    <content><![CDATA[**输入输出（Input Output）**操作（简称为IO操作），入门编程一门编程语言第一个程序就是经典的输出HelloWorld，IO操作是程序里经常用到的：打印输出、读取用户输入、读写文件……。除了很常用的那几个函数写多几遍了也就记住了，但是比较细致的操作总是忘记怎么写，比如格式化输出，每次都要回去查，比较麻烦。我C++也是最近才学的，所以我在这里梳理一下C++中的最基本的IO操作。
+
+一些碎碎念：我之前学的C，一些小项目是直接用C的，写洛谷力扣也是用C，C比较简陋简单。学C++的契机是一次数学建模比赛吧（也不是正式的比赛，类似于那种上机考试而已）
+
+首先涉及IO操作就需要用到的3个标准库：
 
 &lt;iostream&gt;：控制台终端的输入输出等
 &lt;iomanip&gt;：控制输出格式（宽度，精度等）
 &lt;fstream&gt;：文件读写操作
 
-1. &lt;iostream&gt;1.1 控制台输出：std::coutcout（console output）搭配**插入运算符 &lt;&lt; **使用，可以连续输出不同数据类型。
+1. 标准输入输出&lt;iostream&gt;1.1 控制台输出：std::coutcout（console output）搭配**插入运算符 &lt;&lt; **使用，可以连续输出不同数据类型。
 #include &lt;iostream&gt;int main() &#123;    int age = 18;    double height = 1.75;    std::string name = &quot;小明&quot;;    std::cout &lt;&lt; &quot;姓名：&quot; &lt;&lt; name &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; &quot;年龄：&quot; &lt;&lt; age &lt;&lt; &quot; 岁\n&quot;;      std::cout &lt;&lt; &quot;身高：&quot; &lt;&lt; height &lt;&lt; &quot; 米&quot; &lt;&lt; std::endl;    return 0;&#125;
 
 
 \n 是换行符，std::endl 也换行并立即刷新缓冲区。
-初学者建议简单使用 \n 即可；需要立即显示且不影响性能时再用 std::endl。
+初学建议简单使用 \n 即可；需要立即显示且不影响性能时再用 std::endl。
 
 1.2 控制台输入：std::cincin（console input）搭配提取运算符 &gt;&gt;，默认以空格、Tab、换行作为分隔符。
 #include &lt;iostream&gt;#include &lt;string&gt;int main() &#123;    int age;    std::string name;    std::cout &lt;&lt; &quot;请输入姓名和年龄（用空格分开）：&quot;;    std::cin &gt;&gt; name &gt;&gt; age;        return 0;&#125;
@@ -1018,10 +1021,10 @@ int age;std::string name;std::cout &lt;&lt; &quot;年龄：&quot;;std::cin &gt;&
 
 
 
-1.4 错误与日志的输出：std::cerr与std::clog除了标准输出流还有其他用固定用途的输出流：
+1.4 错误与日志的输出：std::cerr与std::clog除了标准输出流还有其他用固定用途的输出流，比如标准错误流：
 
-std::cerr：标准错误流，无缓冲，立即显示错误信息。
-std::clog：标准日志流，带缓冲，一般用于记录日志。
+std::cerr：无缓冲的错误流，用立即显示错误信息。
+std::clog：带缓冲的错误流，一般用于日志信息输出。
 
 std::cerr &lt;&lt; &quot;[Error]: 这是一条错误信息&quot; &lt;&lt; std::endl;std::clog &lt;&lt; &quot;[Info]: 这是一条日志信息&quot; &lt;&lt; std::endl;
 
@@ -1052,7 +1055,7 @@ std::fixed
 std::cout &lt;&lt; std::fixed &lt;&lt; 3.14159;
 
 
-std::leftstd::right
+std::left&#x2F;std::right
 左&#x2F;右对齐
 std::cout &lt;&lt; std::left &lt;&lt; std::setw(10) &lt;&lt; &quot;hi&quot;;
 
@@ -1062,6 +1065,12 @@ std::cout &lt;&lt; std::left &lt;&lt; std::setw(10) &lt;&lt; &quot;hi&quot;;
 
 
 3. 文件IO操作&lt;fstream&gt;文件读写的基本流程就是：打开 → 读写 → 关闭。记得及时关闭那些已经不要使用了的文件资源，资源泄漏也是一种常见的程序错误。
+三个基本对象类型：
+
+fstream：可读可写
+ifstream：只读取
+ofstream：只写入
+
 写入：
 #include &lt;fstream&gt;#include &lt;iostream&gt;int main()&#123;    std::ofstream outFile(&quot;example.txt&quot;); //创建文件输出流对象，参数填入文件对象的路径，如果文件存在会直接清空覆盖    if (outFile.is_open())    &#123;        outFile &lt;&lt; &quot;Hello, File\n&quot;;        outFile &lt;&lt; &quot;第二行内容\n&quot;;        outFile.close(); //关闭文件    &#125;        return 0;&#125;
 
