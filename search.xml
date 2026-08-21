@@ -1,1124 +1,374 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>Hello World</title>
-    <url>/2026/05/21/hello-world/</url>
-    <content><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
-
-More info: Writing
-Run server$ hexo server
-
-More info: Server
-Generate static files$ hexo generate
-
-More info: Generating
-Deploy to remote sites$ hexo deploy
-
-More info: Deployment
-]]></content>
-  </entry>
-  <entry>
-    <title>C++中的左值右值与引用</title>
-    <url>/2026/06/05/cpp-lvalue-rvalue-reference/</url>
-    <content><![CDATA[左值(lvalue) 和右值(rvalue)，这两个术语我之前在学C语言时有所耳闻。第一层意思就是字面意思，赋值表达式里等号=左边的叫左值，只能出现在等号右边的叫右值；第二层意思是，可取地址的变量叫左值，不可取地址的变量叫右值。C语言里就这样划分，很简单，平时写代码也不需要彻底弄明白这个。但是但是，在C++里就不一样了，特别是在C++11后（称为现代C++起点），新增了移动语义，引用，生命周期管理这些特性后，C++的值类别就被分得更细了。要写出高性能的C++代码，就得使用引用和移动语义，弄清楚值类别概念是绕不开的，理解值类别概念是掌握移动语义和生命周期管理的前提。这篇文章我就讲解一下C++的值类别，还有如何在使用引用时应用这些概念。
-下面专门讨论C++中的值类别概念：
-一、传统定义（C++98&#x2F;03）：
-左值：可以出现在赋值运算符=​左边的表达式。左值对象具有持久的存储位置，可以取到地址
-右值：只能出现在赋值运算符=​右边的表达式。右值代表一个临时值，没有持久内存地址，不可以取地址（这是重点）
-
-例子：int a = 5; //这里的a就是左值对象，5是右值对象int* pa = &amp;a; //对a取地址，合法int* ptr = &amp;5; //绝对会报错error: lvalue required as unary &#x27;&amp;&#x27; operand，取地址操作符&amp;只能对左值对象使用，5是个右值int b = 0;a + b = 10; //报错error: lvalue required as left operand of assignment，a+b是个右值表达式，不能出现在=的左边int* p1 = &amp;(b++)//报错，b++是个右值表达式int f()&#123; int ret = 1; return ret;&#125;int* pf = &amp;f(); //报错，非引用类型的函数返回值也是右值
-
-通过上面这里例子（有些例子代码比较离谱，IDE检查不会放过这么低级的错误，直接就报错了），总结一下判断方法就是：能不能取地址，能就是左值，不能另外说（右值下面还有分类） 。
-‍
-二、C++11（现代C++）及之后的定义：在C++11之后，右值又被细分为纯右值(prvalue)、将亡值(xvalue)，划分依据是：**是否有身份(identity)，也就是能否取地址、视为独立对象。**可以这么理解，在C++里“身份”的定义是：表达式是否代表一个可访问且持久的内存地址（左值）。 汇编里内存地址就是身份
-
-在C++官方草案是这样分的：
-
-  A glvalue is an expression whose evaluation determines the identity of an object, function, non-static data member, or a direct base class relationship
-  A prvalue  is an expression whose evaluation initializes an object or computes the value of an operand of an operator, as specified by the context in which it appears, or an expression that has type cv void
-  An xvalue  is a glvalue that denotes an object whose resources can be reused (usually because it is near the end of its lifetime)
-  An lvalue is a glvalue that is not an xvalue
-  An rvalue is a prvalue or an xvalue
-
-这个图看上去还挺直观的
-1.纯右值：
-无身份：不能取地址，没有持久的内存地址。
-通常是临时值：比如字面量(42​,true​)，运算结果(a+b​)，返回非引用类型的函数调用(int f()​)，后自增&#x2F;自减(a++)，Lambda表达式等等。
-特性：生命周期在表达式结束后就结束
-
-‍
-2.将亡值：
-有身份：可以取地址
-
-可移动：它的资源可以被安全地移走，因为对象马上就要消亡。
-
-来源：
-
-转换：使用std::move(x)，将一个左值对象x，临时转换成将亡值
-调用返回右值引用的函数，例如 int&amp;&amp; f()。
-对将亡值对象的成员访问（如 xvalue.member​ 或 xvalue.*ptr）。
-
-
-
-划分对比表
-
-
-类别
-有身份？
-可移动？
-典型示例
-
-
-
-左值
-✅
-❌（通常）
-​int a;​、++a​、a = b​ 中的 a
-
-
-将亡值
-✅
-✅
-​std::move(a)​、static_cast&lt;int&amp;&amp;&gt;(a)
-
-
-纯右值
-❌
-✅（但无身份，不能直接移动）
-​42​、a+b​、int()​、a++
-
-
-
-注：纯右值本身没有身份，因此无法直接对其使用移动操作，但纯右值在初始化对象时会生成临时对象（C++17前是隐式临时对象，C++17后纯右值直接构造到目标，避免了临时对象）。
-
-‍
-总结将亡值专门用于告诉编译器“这个对象可以安全地移动”，而纯右值则代表纯粹的计算值。
-
-纯右值：没有身份，只有可移动的值（或根本没有对象，如字面量）。
-将亡值：有身份，并且明确表示其资源即将被转移。
-
-‍
-以下是我个人的理解：左值对象在内存空间里有自己的地址，这个地址是能长期存在的（生命周期长且可控），也就是持久且可访问的，这样取到的地址才有意义。
-而右值，它们是临时分配的，生命周期极短，基本上只在表达式语句内，用完就失效了，而且不可控。C&#x2F;C++设计上就把它们定义为没有身份的量，它们没有长期的稳定的地址，它们可能会被随时覆盖擦除。
-其次，C&#x2F;C++里传递对象的方式默认是 复制语义​。函数返回值是复制传递的临时对象（右值），这就解释了非引用类型的函数返回值不能取地址。同样，对于传入函数的非引用类型参数，在函数内部我们拿到的也是复制产生的对象而不是函数外部的原本对象，这就解释了要在函数内影响外部变量（不包括全局变量和静态变量），就要传递对象的指针（传地址）才能做到。另外这个传递的地址其实也是复制产生的，它们指向的对象是同一个。
-‍
-三、引用引用是C++新加入的一种特性，可以更方便地操作和传递对象。
-举个最基本的用法：
-int a = 1;int &amp;ra = a; ra = 2; //等价于a = 2;
-
-上面的例子说明，引用其实像是给原本的对象a起了一个别名ra，我们对ra进行的操作都等价于对a进行操作。这点和使用指针有点相似，指针的写法是下面这样的：
-int *pa = &amp;a;*pa = 2; //等价于a = 2;
-
-都是通过另一个对象来对原本的对象进行操作，对比一下，引用的语法比指针更方便一些。有一点最大的不同是：引用声明时必须初始化
-指针可以这样写：
-int *pa;pa = &amp;a;*pa = 2;
-
-变量声明和初始化可以分开，如果忘记初始化就出现了野指针&#x2F;空指针，因为是随机分配的，我们也不知道野指针之前会指向什么对象，有的内存地址是不能随意访问的，空指针是不能解引用的，于是解引用就有可能会造成段错误，程序崩溃。
-但是引用从声明时就要求一定要绑定一个对象，也就声明即初始化，这样从一开始就杜绝了像野指针空指针那样的解引用访问问题。
-引用分为左值引用T&amp;和右值引用T&amp;&amp;，因为引用对象的值属性分左值右值，所以引用也分为这两种。
-例子#include &lt;utility&gt;int f() &#123; return 10; &#125;          // f() 是纯右值int&amp;&amp; g() &#123; return 10; &#125;        // 错误示例，实际应返回静态局部变量等int main() &#123;    int x = 5;    int&amp;&amp; r = std::move(x);     // std::move(x) 将左值x临时转换成将亡值，绑定到右值引用 r    // 纯右值    int y = f();                // f() 纯右值    int z = x + 1;              // x+1 纯右值    // 将亡值    auto&amp;&amp; t1 = std::move(x);   // std::move(x) 将亡值    auto&amp;&amp; t2 = static_cast&lt;int&amp;&amp;&gt;(x);  // 也是将亡值    // 对将亡值的成员访问    struct S &#123; int a; &#125;;    S s1;    auto&amp;&amp; t3 = std::move(s1).a; // std::move(s1) 是将亡值，访问其成员 a 也是将亡值&#125;
-
-‍
-‍参考资料：
-C++官方草案
-C++参考手册-值类别
-David Mazières, 2021 - C++ 值类别和 decltype 解读
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>CMake基础教程2：导入第三方库</title>
+      <link href="/2026/08/18/cmake-primer-2/"/>
+      <url>/2026/08/18/cmake-primer-2/</url>
+      
+        <content type="html"><![CDATA[<p>第一篇CMake基础教程讲了如何用CMake构建生成单&#x2F;多文件项目，这篇就继续讲最重要的一种情况——导入第三库。</p><h1 id="一、使用-find-package"><a href="#一、使用-find-package" class="headerlink" title="一、使用 find_package"></a>一、使用 <code>find_package</code></h1><p>这种情况是第三库的作者已经提供了CMake的配置文件（&lt;库名&gt;Config.cmake<code>或</code>Find&lt;库名&gt;.cmake）</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">find_package</span>(SomeLibrary REQUIRED) <span class="comment"># REQUIRED 表示该库是必需的，找不到则报错[reference:1]</span></span><br><span class="line"><span class="comment"># ... 之后链接你的目标</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(MyApp SomeLibrary::SomeLibrary) <span class="comment"># 使用库提供的导入目标 (IMPORTED target)[reference:2]</span></span><br></pre></td></tr></table></figure><ul><li><strong>工作原理</strong>：<code>find_package</code> 会自动在系统标准路径或 <code>CMAKE_PREFIX_PATH</code> 指定的路径中搜索库。</li><li><strong>版本指定</strong>：可以指定所需版本，例如 <code>find_package(SomeLibrary 1.2.3 REQUIRED)</code>。</li><li><strong>组件（COMPONENTS）</strong>：对于包含多个组件的库（如 Qt），可以只请求需要的部分。</li></ul><p>如果库没有安装在系统标准路径，可以通过设置 <code>CMAKE_PREFIX_PATH</code> 变量来帮助 CMake 找到它：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">list</span>(APPEND CMAKE_PREFIX_PATH <span class="string">&quot;/path/to/your/library&quot;</span>)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
       <categories>
-        <category>Cpp</category>
+          
+          <category> 教程 </category>
+          
       </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++智能指针</title>
-    <url>/2026/06/17/cpp-smart-pointer/</url>
-    <content><![CDATA[指针是C&#x2F;C++里的重要概念，但是指针造成的问题也非常多：悬垂指针、内存泄漏、双重释放、越界访问、野指针……这么多内存问题很大程度上来自指针的不合理使用，于是C++为了让指针更好用且规避这些常见的问题，提供了指针的”升级版“——智能指针。
-智能指针在C++里用于自动管理动态分配对象的生命周期，是资源获取即初始化 (RAII) 的重要部分。
-智能指针定义在头文件里，属于模板类。
-智能指针本身是一个栈上对象，在自身构造函数中绑定分配的资源，在自身析构函数中自动释放资源。
-在现代C++中，推荐使用智能指针来管理动态分配的内存，而避免手动使用new&#x2F;delete。减少内存泄漏，重复释放，悬垂指针等问题。
-下面主要介绍C++11正式引入的三种智能指针。
-
-三种智能指针1. std::unique_ptr(独占所有权)独占所有权的意思是：一个对象，同一个时刻，只能有唯一一个unique_ptr指针指向它，所以unique_ptr不能复制，不能拷贝，只能通过std::move()转让所有权。
-在超出作用域时会自动释放对象，同时将自身置空。性能开销和原始指针一样。
-常用于：工厂函数返回值，管理容器元素。
-auto unp = std::make_unque&lt;int&gt;(42);
-
-
-
-2. std::shared_ptr(共享所有权)std::shared_ptr通过引用计数，多个shared_ptr指针可以指向同一个对象，当所有shared_ptr都被销毁后，自动释放指向的对象。
-但是引入引用计数，开销会比原始指针要多一些
-auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2// p1、p2 都离开作用域时才释放 int
-
-
-
-3. std::weak_ptr(弱引用)weak_ptr一般和shared_ptr搭配使用，用于避免shared_ptr的引用循环，weak_ptr指向shared_ptr指向的对象时不会增加。必须通过lock()临时获取shared_ptr才能访问对象
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> CMake </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++面向对象基础</title>
+      <link href="/2026/08/16/cpp-oop-primer/"/>
+      <url>/2026/08/16/cpp-oop-primer/</url>
+      
+        <content type="html"><![CDATA[<p>**OOP（面向对象编程）**我是先用Python学的，我学的第一门编程语言是C，众所周知C是过程式编程语言没有原生的面向对象特性。而最初的C++就是C with class，现在看来C++已经不是C with class那么简单了。现在的C++发展成了一门多范式编程语言，不光有过程式，面向对象式，还有函数式等等，总是就是大杂烩 <del>究极缝合怪</del> ……</p><p>咳咳，说回正题。OOP三大基本特性：封装、继承、多态，C++该有的都有，而且也是比Python要更完善更严格。</p>]]></content>
+      
+      
       <categories>
-        <category>Cpp</category>
+          
+          <category> C++ </category>
+          
       </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C语言程序的编译过程</title>
-    <url>/2026/06/06/c-compilation-process/</url>
-    <content><![CDATA[C语言程序的编译过程从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：预处理、编译、汇编、链接。每个阶段都可以用 GCC 的特定选项单独观察。
-假设源文件为 hello.c：
-
-1. 预处理 (Preprocessing)
-任务：处理以 #​ 开头的指令（如 #include​、#define​、#ifdef），展开宏，删除注释，添加行号信息等。
-命令：gcc -E hello.c -o hello.i
-输出：.i （文本形式，仍是 C 代码，但已经包含所有被包含的头文件和宏展开）。
-
-
-2. 编译 (Compilation)
-任务：将预处理后的 C 代码翻译成汇编语言（与具体 CPU 架构相关）。
-命令：gcc -S hello.i -o hello.s​ （也可以从 .c​ 直接：gcc -S hello.c）
-输出：.s 汇编文件。
-
-
-3. 汇编 (Assembly)
-任务：将汇编代码转换成机器指令（目标文件，即 .o​ 或 .obj 文件），此时已是二进制格式，但尚未链接库或解析外部符号。
-命令：gcc -c hello.s -o hello.o​ （或 gcc -c hello.c）
-输出：.o 目标文件（可重定位对象）。
-
-查看内容：objdump -d hello.o 可见二进制指令。
-
-4. 链接 (Linking)
-任务：将一个或多个目标文件与所需的静态&#x2F;动态库合并，解析符号地址（如 printf 的地址），生成最终可在操作系统上运行的可执行文件。
-命令：gcc hello.o -o hello​ （可同时指定多个 .o 文件和库）
-输出：可执行文件（Linux&#x2F;Unix 下默认 a.out​ 或通过 -o 指定名称）。
-
-链接细节：
-
-对于 printf​，GCC 默认会链接 C 标准库（-lc​），实际链接器（ld​）会找到 libc.so​（动态链接）或 libc.a（静态链接）。
-运行时动态链接还需要加载器（如 ld-linux.so）。
-
-
-全流程单条命令
-直接执行 gcc hello.c -o hello 等价于依次完成上述四步，并自动删除中间文件。
-
-
-查看各阶段中间文件可以使用 -save-temps 选项保留所有中间产物：
-gcc -save-temps hello.c -o hello
-
-目录下会出现 hello.i​、hello.s​、hello.o​ 和 hello。
-
-总结流程图hello.c (C源文件)   │   ├─ 预处理 (gcc -E) → hello.i (展开后的C代码)   │   ├─ 编译   (gcc -S) → hello.s (汇编代码)   │   ├─ 汇编   (gcc -c) → hello.o (目标文件，机器码)   │   └─ 链接   (gcc   ) → hello   (可执行文件)
-
-‍
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>博客内容分类管理规则</title>
+      <link href="/2026/08/14/blog-content-classify-rule/"/>
+      <url>/2026/08/14/blog-content-classify-rule/</url>
+      
+        <content type="html"><![CDATA[<p>我想我应该给博客设置一下分类规则，现在看着太乱了，以免以后文章多起来就难找了。</p>]]></content>
+      
+      
       <categories>
-        <category>C</category>
+          
+          <category> 思考 </category>
+          
       </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基础乐理</title>
-    <url>/2026/06/22/music-theory-intro/</url>
-    <content><![CDATA[1. 音名和唱名
-
-
-
-
-
-
-
-
-
-
-
-
-
-音名
-C
-D
-E
-F
-G
-A
-B
-
-
-唱名
-Do
-Re
-Mi
-Fa
-So
-La
-Si
-
-
-简谱
-1
-2
-3
-4
-5
-6
-7
-
-
-在钢琴上找到音名对应的键：
-
-按黑键2-3-2-3分组
-2个黑键为一组的那组里左边第一个黑键的左边对应的白键就是C
-然后依次是D-E-F-G-A-B-&gt;C循环
-
-
-2. 音程两个音之间的距离是音程，用度数 为单位。
-如何计算度数：
-
-
-都是白键的情况下，两个键之间（包括两端的键）包含了几个白键就是多少度
-
-例如上面那张图是A-&gt;E，就是5度
-
-尽管一些键的音程是一样的，但是它们之间包含的音数量并不相同，所以下面引入半音来精确区分
-
-
-‍
-3. 半音指的是键盘上两个距离最近的音，两个半音组成一个全音。
-就像下图：
-
-常见的音程分类如下：大三度和小三度非常常用
-
-
-
-音程
-纯一度
-小二度
-大二度
-小三度
-大三度
-纯四度
-增四度&#x2F;减五度
-纯五度
-小六度
-大六度
-小七度
-大七度
-纯八度
-
-
-
-半音数
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-
-
-4. 和弦三个或以上的音按照三度音程关系（或者非三度音程），组合在一起，就是和弦。
-比如下图：
-…….
-
-还可继续往上叠加，最多十三和弦。
-
-‍
-三和弦的三个音从下到上依次为根音、三音、五音
-三和弦按照构成的音程组合不同，可以分成一下四类，每一类的听感都有各自的特点：
-
-大三和弦：大三度+小三度
-小三和弦：
-
-
-
-
-类型
-组合（下-上）
-听感
-
-
-
-大三和弦
-大三度+小三度
-阳光温暖
-
-
-小三和弦
-小三度+大三度
-忧郁悲伤
-
-
-减三和弦
-小三度+小三度
-内敛压抑
-
-
-增三和弦
-大三度+大三度
-
-
-
-‍
-5. 调式调性全全半全全全半
-‍
-‍
-‍
-6. 一首歌的组成元素
-节奏
-和声
-旋律
-低音
-
-7. 五线谱‍
-8. 平均律]]></content>
+      
+      
+        <tags>
+            
+            <tag> 分类 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>CMake基础指南</title>
+      <link href="/2026/08/06/cmake-primer/"/>
+      <url>/2026/08/06/cmake-primer/</url>
+      
+        <content type="html"><![CDATA[<blockquote><p>CMake我是在CLion上第一次用的，CLion里编译程序前都要在一个叫CMamkeLists.txt的文件夹里写下面这样的代码：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">4.2</span>)</span><br><span class="line"><span class="keyword">project</span>(MyCpp)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">23</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(MyCpp main.cpp)</span><br></pre></td></tr></table></figure><p>然后就可以运行编译了，VSCode里也是，安装上CMakeTools的插件，也是一样的流程。</p></blockquote><p>在开发C&#x2F;C++项目时，完成代码后需要对源文件进行编译，这个环节由编译器负责。那我手动输入编译命令不就行了吗？但是在有多个源文件或者引入了多个第三方库时，需要每次手动输入很长的编译命令，每个文件之间还有复杂的依赖关系，很容易写错，还需要把编译指令记录下来。这样很不方便项目的管理，所以需要一套工具根据我们的需求去指挥编译器完成编译任务。</p><p><strong>那CMake是个什么东西？用来做什么的？</strong></p><p><strong>CMake</strong>是一个跨平台的开源构建工具，和编译器不同，它并不是一个直接的“编译器”，而是一个<strong>构建系统的生成器</strong>，一般用于C&#x2F;C++项目的构建。使用CMake可以更自动化更标准更方便地完成C&#x2F;C++的项目编译和构建。这篇文章介绍一下CMake主要的基本用法，不会涉及太多进阶的内容。</p><p>先理一下在C&#x2F;C++项目的构建环节里各个工具的作用：</p><ul><li><strong>编译器（如GCC&#x2F;MSVC）</strong>：负责把C&#x2F;C++代码翻译成机器能懂的二进制程序。</li><li><strong>Make&#x2F;Ninja</strong> ：负责指挥编译器先翻译哪个文件、后翻译哪个，并协调依赖关系。</li><li><strong>CMake</strong> ：而是根据CMakeLists.txt文件和不同平台（Windows、Linux、macOS），生成相应的“构建方案”（Makefile或VS工程文件）。</li></ul><p>编译器除外，CMake这套工具是包含两部分的：CMake和Make&#x2F;ninja，CMake的作用仅仅是生成一套构建方案，而不直接调用编译器，需要Make&#x2F;Ninja去调用。我们只跟CMake进行直接的交互，这个关键文件就是CMakeLists.txt。</p><blockquote><p><em>注：平常我们说用 ”CMake构建 ”，其实准确说指的是这套工具链。就像用 “GCC编译 ”，这也是指一套工具链，除了编译器还有链接器等，只不过我们在*<em>非必要情况下不需要关心过多的底层细节</em></em>。*</p></blockquote><h1 id="一-命令行工作流"><a href="#一-命令行工作流" class="headerlink" title="一. 命令行工作流"></a>一. 命令行工作流</h1><p>IDE里一般会使用图形化界面代替，这部分可以选择跳过。<br>在创建好项目根文件夹后，在根目录下打开终端，输入如下命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#注意Cmake版本，CMake3.13+推荐的命令行一体化构建：</span></span><br><span class="line"><span class="comment"># 1. 配置：让CMake生成构建方案，-B 指定构建目录名，自动创建目录 </span></span><br><span class="line">cmake -B build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 构建：这一步需要先写完CMakeLists.txt，再让Ninja/Make开始编译，--build 指定目录名</span></span><br><span class="line">cmake --build build</span><br><span class="line"></span><br><span class="line"><span class="comment">#需要指定模式时：Debug调试（默认） / Release发布</span></span><br><span class="line">cmake -B build -DCMAKE_BUILD_TYPE=Release</span><br><span class="line">cmake --build build</span><br></pre></td></tr></table></figure><h1 id="二-CMakeLists-txt基本命令"><a href="#二-CMakeLists-txt基本命令" class="headerlink" title="二. CMakeLists.txt基本命令"></a>二. CMakeLists.txt基本命令</h1><p>首先提一点，CMake 是一门<strong>解释型脚本语言</strong>，它的解析器是<strong>顺序执行</strong>的（从上往下读），所以代码顺序是有严格要求的。</p><p>假设项目只有一个main文件（<strong>单文件且没有外部库</strong>的情况），用CMake构建项目，<code>CMakeLists.txt</code>是唯一要写的文件，它有专门的语法，<code>CMakeLists.txt</code>里需要写下面这样的命令：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>) <span class="comment"># 项目使用的CMake的最低版本要求</span></span><br><span class="line"><span class="keyword">project</span>(MyApp)                       <span class="comment"># 项目名称</span></span><br><span class="line"><span class="keyword">add_executable</span>(app main.cpp)         <span class="comment"># 声明可执行文件名与需要编译的源文件</span></span><br></pre></td></tr></table></figure><p>这是最简单的可使用的<code>CMakeLists.txt</code>，不能再省了。</p><p>假设项目目录结构是这样的（<strong>多文件且没有第三方库</strong>的情况）：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MyProject/</span><br><span class="line">├── CMakeLists.txt</span><br><span class="line">├── main.cpp</span><br><span class="line">├── include/</span><br><span class="line">│   └── module.h</span><br><span class="line">└── src/</span><br><span class="line">    └── module.cpp</span><br></pre></td></tr></table></figure><p><code>CMakeLists.txt</code>：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>) <span class="comment"># 项目使用的CMake的最低版本要求</span></span><br><span class="line"><span class="keyword">project</span>(MyApp)                       <span class="comment"># 项目名称</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">17</span>)           <span class="comment"># 项目使用的C++标准</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 1.生成一个静态库（把src里的cpp编成库）</span></span><br><span class="line"><span class="keyword">add_library</span>(module_lib src/module.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.告诉module_lib，它的头文件在哪里（PUBLIC会让链接器自动找到）</span></span><br><span class="line"><span class="keyword">target_include_directories</span>(module_lib PUBLIC <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.生成主程序可执行文件，第一个参数是最后生成的exe文件的文件名</span></span><br><span class="line"><span class="keyword">add_executable</span>(my_app main.cpp)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4.将库链接给主程序（有了这行，my_app自动获得include路径）</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(my_app PRIVATE module_lib)</span><br></pre></td></tr></table></figure><p>大概的顺序就是：<strong>版本第一，项目第二，设完标准再建目标（add_executable），最后才能链接（target_link_libraries）</strong></p><p>解释一下基本的命令：</p><h2 id="1-固定头三句"><a href="#1-固定头三句" class="headerlink" title="1. 固定头三句"></a>1. 固定头三句</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>)  <span class="comment"># 锁定最低版本</span></span><br><span class="line"><span class="keyword">project</span>(MyProject)                    <span class="comment"># 给工程命名</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">17</span>)            <span class="comment"># 声明C++标准</span></span><br></pre></td></tr></table></figure><h4 id="project-：设置项目的基本信息"><a href="#project-：设置项目的基本信息" class="headerlink" title="project()：设置项目的基本信息"></a><code>project()</code>：设置项目的基本信息</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(&lt;项目名称&gt; [语言...])</span><br><span class="line"><span class="keyword">project</span>(&lt;项目名称&gt;</span><br><span class="line">        [VERSION &lt;主版本号&gt;[.&lt;次版本号&gt;[.&lt;修订号&gt;[.&lt;构建号&gt;]]]]</span><br><span class="line">        [DESCRIPTION &lt;项目描述&gt;]</span><br><span class="line">        [HOMEPAGE_URL &lt;项目主页URL&gt;]</span><br><span class="line">        [LANGUAGES &lt;语言&gt;...])</span><br></pre></td></tr></table></figure><ul><li><strong><code>项目名称</code>（必填）</strong>：工程名称，会赋值给变量 <code>PROJECT_NAME</code>。</li><li><strong><code>语言</code>（选填）</strong>：指定启用的编程语言（如 <code>C</code>, <code>CXX</code>, <code>Fortran</code> 等）。如果不指定，默认启用 <code>C</code> 和 <code>CXX</code>。</li><li><strong><code>VERSION</code></strong>：设置项目版本号，会生成 <code>PROJECT_VERSION</code> 等变量，关于版本号详细规则，参考</li><li><strong><code>DESCRIPTION</code></strong>：项目描述文本。</li><li><strong><code>HOMEPAGE_URL</code></strong>：项目主页 URL。</li></ul><p><strong>示例</strong>：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">project</span>(MyProject)                              <span class="comment"># 仅名称，默认语言 C/C++</span></span><br><span class="line"><span class="keyword">project</span>(MyProject VERSION <span class="number">1.2</span>.<span class="number">3</span> LANGUAGES CXX)  <span class="comment"># 指定版本和语言</span></span><br><span class="line"><span class="keyword">project</span>(MyProject DESCRIPTION <span class="string">&quot;My awesome project&quot;</span> HOMEPAGE_URL <span class="string">&quot;https://example.com&quot;</span>)</span><br></pre></td></tr></table></figure><blockquote><p><strong>注意</strong>：<code>project</code> 会设置一系列变量（如 <code>PROJECT_SOURCE_DIR</code>、<code>CMAKE_PROJECT_NAME</code> 等），并且会影响编译器的检查，这些是项目的元信息，要让项目看上去正规一些，那就严格设置。</p></blockquote><h4 id="set-：设置语言标准"><a href="#set-：设置语言标准" class="headerlink" title="set()：设置语言标准"></a><code>set()</code>：设置语言标准</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(&lt;变量&gt; &lt;值&gt;... [PARENT_SCOPE])</span><br></pre></td></tr></table></figure><ul><li><strong><code>&lt;变量&gt;</code></strong>：要设置的变量名。</li><li><strong><code>&lt;值&gt;</code></strong>：要赋给变量的值（可以是多个，会被拼接成字符串，默认用分号分隔）。</li><li><strong><code>[PARENT_SCOPE]</code></strong>：可选，将变量设置到父作用域（常用于函数或宏中）。</li></ul><p>下面举设置C&#x2F;C++标准的例子：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">17</span>)              <span class="comment"># 要求使用 C++17</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD_REQUIRED <span class="keyword">ON</span>)     <span class="comment"># 强制要求，不降级</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_EXTENSIONS <span class="keyword">OFF</span>)           <span class="comment"># 禁用编译器扩展</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(CMAKE_C_STANDARD <span class="number">99</span>)                <span class="comment"># 设置 C 标准为 C99</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_C_STANDARD_REQUIRED <span class="keyword">ON</span>)       <span class="comment"># 强制要求，不降级</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_C_EXTENSIONS <span class="keyword">OFF</span>)             <span class="comment"># 禁用编译器扩展 </span></span><br></pre></td></tr></table></figure><h2 id="2-生成库"><a href="#2-生成库" class="headerlink" title="2. 生成库"></a>2. 生成库</h2><p>不建议把所有的.c&#x2F;.cpp文件都塞进一个<code>add_executable</code>里。推荐的做法是：把功能模块单独编成库，再让主程序去链接它。</p><p>比如生成一个名为 module 的静态库，这个库只包含一个源文件：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(module STATIC src/module.cpp)</span><br><span class="line"><span class="comment"># 语法：add_library(&lt;库名&gt; &lt;库类型&gt; [EXCLUDE_FROM_ALL] [库文件路径列表...])</span></span><br></pre></td></tr></table></figure><p><strong>库类型参数</strong>：</p><ul><li><code>STATIC</code>：静态库 <code>.a</code>&#x2F;<code>.lib</code></li><li><code>SHARED</code>：动态库 <code>.so</code>&#x2F;<code>.dll</code></li><li><code>INTERFACE</code>：仅头文件库，如 header-only 的模板库</li><li><code>OBJECT</code>：对象文件集合，较少直接用</li></ul><p><strong>EXCLUDE_FROM_ALL（选填）：</strong></p><ul><li>不带 <code>EXCLUDE_FROM_ALL</code>：该库会随着 <code>make</code> 命令被构建。</li><li>带了 <code>EXCLUDE_FROM_ALL</code>：<code>make</code> 命令不会构建它。但是仍然可以通过**<code>make</code>明确指定目标名**来单独构建它</li></ul><blockquote><p>注：库文件路径默认是从<code>CMakeLists.txt</code>的所在目录开始的</p></blockquote><h2 id="3-指定头文件路径"><a href="#3-指定头文件路径" class="headerlink" title="3. 指定头文件路径"></a>3. 指定头文件路径</h2><p>让编译器找得到<strong>头文件</strong>，同时控制路径依赖的传播。</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 告诉 module 这个目标：你的头文件在 $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include 目录下</span></span><br><span class="line"><span class="keyword">target_include_directories</span>(module PUBLIC <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"><span class="comment"># 语法：target_include_directories(&lt;目标对象&gt; [SYSTEM] [AFTER | BEFORE] [&lt;作用域关键字&gt; [目录路径列表...]...] )</span></span><br></pre></td></tr></table></figure><p><strong>目标对象</strong>：由 <code>add_executable()</code> 或 <code>add_library()</code> 创建的目标名称。</p><p><strong>SYSTEM（可选）</strong>：加在作用域关键字<strong>之前</strong>。告诉编译器这些目录是系统级目录，编译器会<strong>抑制该目录下头文件的警告</strong>（比如第三方库的警告不再干扰你的编译输出）。</p><p><strong>AFTER | BEFORE（可选）</strong>：控制目录添加到编译器搜索路径的<strong>顺序</strong>（默认是 <code>AFTER</code>，即追加到列表末尾）。除非有特殊的覆盖需求，否则极少使用。</p><p><strong>作用域关键字（必填，至少一个）</strong>：</p><ul><li><p><code>PUBLIC</code>：<strong>既用于</strong>该目标，<strong>也传递</strong>给依赖它的目标。</p></li><li><p><code>PRIVATE</code>：<strong>只用于</strong>该目标自身，<strong>不传递</strong>给依赖它的其他目标</p></li><li><p><code>INTERFACE</code>：<strong>不用于</strong>该目标，<strong>只传递</strong>给依赖它的目标。</p></li></ul><p><strong>目录路径列表（必填）</strong>：要添加的目录路径。可以是绝对路径或相对路径。</p><blockquote><p><strong>CMake 官方建议：不要直接写裸的相对路径！</strong></p><ul><li><strong>不推荐的写法</strong>：<code>target_include_directories(mylib PUBLIC include)</code><br> 这种写法依赖于当前工作目录，极其不稳定（尤其是在 IDE 中或外部构建时）。</li><li><strong>推荐写法</strong>：<strong>使用变量将相对路径转换为绝对路径</strong>。</li></ul> <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># $&#123;CMAKE_CURRENT_SOURCE_DIR&#125; 代表当前正在处理的 CMakeLists.txt 所在的目录</span></span><br><span class="line"><span class="keyword">target_include_directories</span>(mylib PUBLIC </span><br><span class="line">    <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></blockquote><p>关于为什么 <code>add_library</code> 不需要加 <code>${CMAKE_CURRENT_SOURCE_DIR}</code>，而 <code>target_include_directories</code> 推荐加，核心区别在于：</p><ul><li><code>add_library</code> 的路径<strong>只在 CMake 配置时被解析</strong>，CMake 自己知道当前目录是哪里，拼接很稳。</li><li><code>target_include_directories</code> 的路径是<strong>写给编译器看的字符串</strong>，编译器运行时不知道 CMake 的当前目录，所以必须指明它绝对路径才能找到文件。</li></ul><p>再举一个有多个依赖项的例子：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_include_directories</span>(mylib</span><br><span class="line">    PUBLIC</span><br><span class="line">        <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>          <span class="comment"># 外部使用者也需要</span></span><br><span class="line">    PRIVATE</span><br><span class="line">        <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/src              <span class="comment"># 仅内部编译需要</span></span><br><span class="line">        <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/src/third_party  <span class="comment"># 仅内部需要的第三方库</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure><p>这有点像C++类的访问控制符区分字段</p><h2 id="4-生成可执行文件"><a href="#4-生成可执行文件" class="headerlink" title="4. 生成可执行文件"></a>4. 生成可执行文件</h2><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(app main.cpp)</span><br><span class="line"><span class="comment">#语法：add_executable(&lt;可执行文件名称&gt; [源文件列表...])</span></span><br></pre></td></tr></table></figure><p>如果有多个源文件，直接全部列出来。</p><p> <strong>源码文件很多怎么办？</strong> 用变量临时存一下：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(SOURCES src/<span class="keyword">math</span>.cpp src/other.cpp src/main.cpp)</span><br><span class="line"><span class="keyword">add_executable</span>(app <span class="variable">$&#123;SOURCES&#125;</span>)</span><br></pre></td></tr></table></figure><blockquote><p><strong>注意一定要区分大小写</strong>：CMake命令不区分大小写（<code>ADD_EXECUTABLE</code>也行），但<strong>变量和路径</strong>严格区分。</p></blockquote><h2 id="5-链接库"><a href="#5-链接库" class="headerlink" title="5. 链接库"></a>5. 链接库</h2><p><strong>可执行文件与库</strong>或者<strong>库与库</strong>之间可能会有调用依赖的关系，需要将它们<strong>链接</strong>到一起</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 告诉 app：你依赖 module 这个库</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(app PRIVATE module)</span><br><span class="line"><span class="comment"># 语法：target_link_libraries(&lt;目标对象&gt; [&lt;作用域关键字&gt; [依赖库列表...]...])</span></span><br></pre></td></tr></table></figure><p><strong>目标对象：</strong></p><ul><li><strong>可执行文件</strong>：由 <code>add_executable()</code> 创建。</li><li><strong>库</strong>：由 <code>add_library()</code> 创建</li></ul><p><strong>作用域关键字（控制依赖传播范围）</strong>：</p><ul><li><code>PRIVATE</code>：依赖只用于该目标自身，<strong>不传递</strong>给依赖它的其他目标。</li><li><code>PUBLIC</code>：依赖既用于该目标，<strong>也传递</strong>给依赖它的目标。</li><li><code>INTERFACE</code>：依赖<strong>不用于</strong>该目标，<strong>只传递</strong>给依赖它的目标（常用于仅有头文件的接口库）</li></ul><p>再举一个有多个依赖项的例子：</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(my_lib</span><br><span class="line">    PUBLIC</span><br><span class="line">        core_api      <span class="comment"># 外部用户也需要 core_api</span></span><br><span class="line">        interface_cv  <span class="comment"># 外部用户也需要 OpenCV接口</span></span><br><span class="line">    PRIVATE</span><br><span class="line">        internal_utils <span class="comment"># 仅 my_lib 内部编译链接用</span></span><br><span class="line">        logger         <span class="comment"># 仅内部日志库</span></span><br><span class="line">    INTERFACE</span><br><span class="line">        header_only_lib <span class="comment"># 仅头文件库，只影响外部接口</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure><blockquote><p>注：依赖关系我建议画个图来梳理会比较直观</p></blockquote><h1 id="三-总结"><a href="#三-总结" class="headerlink" title="三. 总结"></a>三. 总结</h1><p>掌握了上面这些CMake基础内容，用来构建单文件或者多文件项目够用了，多敲几遍就记得了。引入第三方库以及中大型项目分层，看进阶的内容。  </p><p>更多详细的内容可以去看CMake的相关文档：</p><ul><li><p>官方主页地址：<a href="https://cmake.org/">https://cmake.org/</a></p></li><li><p>官方文档地址：<a href="https://cmake.org/documentation">https://cmake.org/documentation</a></p></li><li><p>中文文档地址：<a href="https://cmake.com.cn/">https://cmake.com.cn/</a></p></li></ul>]]></content>
+      
+      
       <categories>
-        <category>Music</category>
+          
+          <category> 教程 </category>
+          
       </categories>
-      <tags>
-        <tag>Music</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>状态机模型的介绍</title>
-    <url>/2026/07/09/finite-state-machine-intro/</url>
-    <content><![CDATA[引子
-一扇自动门，它有两种状态：打开和关闭。
-
-平常是关闭的
-当有人靠近时，自动打开
-门打开后，感应人离开了，切换回关闭状态。
-
-
-一个与门逻辑元器件，它输出有两种状态：高电平和低电平
-
-当输入中有低电平，则输出低电平
-当输入中没有低电平，则输出高电平
-
-
-一个电路，它感应CPU的温度，控制风扇的转速：
-
-当CPU温度在55~65°C时，风扇转速为一档
-
-当CPU温度在66~80°C时，风扇转速为二档
-
-当CPU温度超过80°C时，风扇转速为三档
-
-
-
-
-这三个例子里，都是一个系统（对象）有不同状态，当满足某些特定的条件时，系统的状态转移到另一个状态。现实里这样的例子比比皆是，特别是对于自动控制系统来说，设计者要在设计时想清楚它们的状态和切换条件。为了系统地研究这种系统，人们把它们抽象成一个理想化模型——状态机。
-状态机是一种计算机领域经常用到的模型，状态机模型有很多种，平常我们说的状态机是有限状态机（Finite State Machine, FSM），这篇文章主要讲的是有限状态机。
-状态机是什么？结合上面的例子，简单来说状态机就是描述一个系统如何在不同的状态之间切换的模型，将存在状态转换的系统抽象成一个方便理论演绎的数学模型。
-状态机的四个核心要素任何一个状态机都包含这四个部分：
-
-状态（state）：系统在某一时刻的稳定情况，一个状态机至少有两个状态。比如自动门的“关闭”、“打开”；网络连接的“空闲”、“连接中”、“已连接”。
-事件&#x2F;条件(event)：导致状态发生改变的原因。比如“有人靠近”、“超时”、“收到确认信号”。
-转换（transition）：从一个状态到另一个状态的过程。它由事件触发，并可以附带条件（如“温度高于30度”）。
-动作（action）：在转换发生时或停留在某个状态时，系统执行的操作。比如“启动电机”、“显示错误信息”、“发送数据包”。
-
-两种主要类型状态机常分为两类：
-
-摩尔型（Moore 型）：输出只和当前状态有关。比如，只要处在“红灯状态”，就一直输出“停止”信号，和如何进入红灯状态无关。
-米利型（Mealy型）：输出和当前状态以及输入事件都有关。比如，当“关门状态”下收到“有人靠近”事件，输出“开门”动作。同一个“关门状态”收到“超时”事件，可能输出“报警”动作。
-
-状态转换图状态转换图英文全称State transition diagram，缩写STD，简称状态图。状态转换图是状态机的图形化表示，直观展示了状态机的状态转换的过程，可以帮助我们在设计时发现漏洞缺陷。
-下面以引子的第三个例子为例：
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>容器化技术Docke的安装与使用</title>
+      <link href="/2026/07/26/docker-reinstall-course/"/>
+      <url>/2026/07/26/docker-reinstall-course/</url>
+      
+        <content type="html"><![CDATA[<p>我之前写了一个Python小项目，本来在我电脑上运行得好好的，但是发给我朋友，虽然他那边也有装好的Python环境，但是还是不能直接运行，不是依赖库缺失，就是某个环节变量没设置，倒腾环境配置半天才能跑起来。所以那时我就在想，要是能把我电脑的环境一起发过去的话，是不是就能直接运行。</p><p>本文章讲的是如何在Windows系统(家庭版)上安装&#x2F;卸载Docker Desktop。</p><p>Docker的官网：<a href="https://docker.com/">https://docker.com/</a></p>]]></content>
+      
+      
       <categories>
-        <category>计算机科学</category>
+          
+          <category> 教程 </category>
+          
       </categories>
-      <tags>
-        <tag>FSM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Verilog快速上手</title>
-    <url>/2026/06/21/fpga-verilog-intro/</url>
-    <content><![CDATA[介绍Verilog是一种HDL(Hardware Description Language)，即硬件描述语言，用于设计和验证逻辑电路。
-与C&#x2F;C++,Java,Python等编程语言不同，HDL所描述的是电路结构和行为，相当于用结构化的语言来描述一个电路，这比电路图描述电路要更加自动化大规模化，最终综合得到的产物是可以直接映射到实际的电路结构上的。
-这篇文章主要介绍verilog代码的基本写法：
-1.1模块模块(module)​是Verilog的基本结构。模块就像集成电路芯片，一个电路就是一个模块，而一个模块内部可以由若干个小模块组成，这些小模块内部也可以由更小的模块组成。实现功能的电路结构一定要包裹在module &lt;模块名&gt;(&lt;输入输出端口列表&gt;)...endmodule里。
-下面我们用这个来描述一个电路，比如一个与门元件。与门有两个输入一个输出。所以我们将与门模块命名成model and_gate(input a, input b, output c)
-比如一个1位半加器：
-module half_adder( 	input a, 	input b,	output sum, 	output cy	)assign sum = a ^ b; //和assign cy = a &amp; b;// 进位endmodule
-
-上面的Verilog代码模块对应的就是下面这个方框里的电路，这个方框就是我们定义的半加器模块。
-
-在half_adder的括号里定义的a,b,sum,cy就是端口，可以看到相当于芯片的引脚。
-1.2 数据类型Verilog主要有两种数据类型：
-
-线网型（wire）：相当于导线，用于传导信号，连接各个端口和模块。
-寄存器型（reg）:  表示一个存储单元，与wire最大的区别就是有记忆存储功能，能保存当前状态。
-
-1.2 assign语句assign语句用于标记连续赋值的两端信号，等号相当于“连接”，用一根导线将左右两边的端点相连。例如下面这个模块：
-module example(a,b,c,d,o)	input a,b,c,d;	output o;	wire ab, cd;	assign ab = a &amp; b;	assign cd = c ^ d;	assign o = ~(ab | cd);endmodule
-
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C/C++中文乱码问题</title>
+      <link href="/2026/07/25/C-Cpp-fix-ChineseMessyCode/"/>
+      <url>/2026/07/25/C-Cpp-fix-ChineseMessyCode/</url>
+      
+        <content type="html"><![CDATA[<p>用VS Code写C语言程序时输出中文乱码的问题，接触过几次这种问题，问题的根本也多多少少摸清了。VS code将默认C语言程序保存为UTF-8，而window的终端输出默认是GBK编码。这里编码不统一就造成了乱码问题。</p><p>解决这个问题的思路是<strong>统一编码</strong>，要么统一成UTF-8，要么统一成GBK。一般来说UTF-8更广泛，那就统一使用UTF-8，那么解决方法就是<strong>让终端也使用UTF-8</strong>。</p><p>这里有几种方案：</p><h3 id="方案一：在代码中强制设置终端编码"><a href="#方案一：在代码中强制设置终端编码" class="headerlink" title="方案一：在代码中强制设置终端编码"></a>方案一：在代码中强制设置终端编码</h3><p>这个方法最彻底，无论程序是在VS Code里运行，还是被双击运行，都能保证中文正常显示。</p><ol><li>在C程序的开头，包含 <code>&lt;windows.h&gt;</code> 头文件。</li><li>在 <code>main</code> 函数的最开始处，调用 <code>SetConsoleOutputCP();</code>，参数设置成<code>CP_UTF8</code>或<code>65001</code>，将终端的输出代码页设置为UTF-8。</li></ol><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;windows.h&gt;</span> <span class="comment">// 添加这个头文件</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    SetConsoleOutputCP(CP_UTF8); <span class="comment">// 设置控制台输出编码为UTF-8</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;你好，世界！\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p><strong>原理</strong>：<code>SetConsoleOutputCP(CP_UTF8)</code> 这行代码让程序自己告诉Windows终端：“我要输出UTF-8编码的内容，请用UTF-8来解码”。这样就从根源上解决了编码不一致的问题。只要是在Windows平台上运行，都能正确输出中文内容。</p></blockquote><h3 id="方案二：使用编译器参数"><a href="#方案二：使用编译器参数" class="headerlink" title="方案二：使用编译器参数"></a>方案二：使用编译器参数</h3><p>如果你使用的是GCC编译器，可以在编译时通过参数指定源文件编码和运行时字符编码。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o output.exe main.c -finput-charset=UTF-8 -fexec-charset=GBK</span><br></pre></td></tr></table></figure><p>这个命令告诉编译器，源文件是UTF-8编码，但生成的程序在运行时，其中的字符串常量使用GBK编码。这相当于把转换工作交给了编译器，但需要在每次编译时都加上这些参数，稍显繁琐。</p><h3 id="方案三：配置VS-Code终端自动切换"><a href="#方案三：配置VS-Code终端自动切换" class="headerlink" title="方案三：配置VS Code终端自动切换"></a>方案三：配置VS Code终端自动切换</h3><p>如果你不想修改代码，可以配置VS Code，让它在每次打开终端时自动执行 <code>chcp 65001</code> 命令，将终端编码临时切换为UTF-8。</p><ol><li>在VS Code中，按下 <code>Ctrl + Shift + P</code>，输入并选择 <code>Preferences: Open Settings (JSON)</code>，打开设置文件。</li><li>在 <code>settings.json</code> 文件中，添加或修改以下配置：</li></ol><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;terminal.integrated.defaultProfile.windows&quot;</span><span class="punctuation">:</span> <span class="string">&quot;PowerShell with UTF-8&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;terminal.integrated.profiles.windows&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;PowerShell with UTF-8&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="string">&quot;-NoExit&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;-Command&quot;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="string">&quot;chcp 65001 | Out-Null&quot;</span></span><br><span class="line">            <span class="punctuation">]</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure><blockquote><p><strong>注意</strong>：这个方案只对在VS Code内部打开的终端有效。如果你直接双击运行编译好的 <code>.exe</code> 文件，依然会出现乱码</p></blockquote><h3 id="方案四：结合-CMake"><a href="#方案四：结合-CMake" class="headerlink" title="方案四：结合 CMake"></a>方案四：结合 CMake</h3><p>在CLion里习惯改 <code>CMakeLists.txt</code>，那么在VS Code里完全可以保留这套工作流。</p><ol><li><strong>在 <code>CMakeLists.txt</code> 中固定编译参数</strong>：</li></ol><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.10</span>)</span><br><span class="line"><span class="keyword">project</span>(MyProject)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_compile_options</span>(-fexec-charset=GBK -finput-charset=UTF-<span class="number">8</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">add_executable</span>(<span class="variable">$&#123;PROJECT_NAME&#125;</span> main.c)</span><br></pre></td></tr></table></figure><h3 id="方案五：修改VS-Code文件编码为GBK-不推荐"><a href="#方案五：修改VS-Code文件编码为GBK-不推荐" class="headerlink" title="方案五：修改VS Code文件编码为GBK (不推荐)"></a>方案五：修改VS Code文件编码为GBK (不推荐)</h3><p>这是一个“向下兼容”的方案，将源文件保存为终端认识的GBK格式。但这样做会丢失UTF-8的通用性，不推荐。</p><ol><li>点击VS Code右下角状态栏的编码标识（例如“UTF-8”）。</li><li>在弹出的菜单中选择“<strong>通过编码保存</strong>” (Save with Encoding)。</li><li>选择“<strong>GBK</strong>”或“<strong>简体中文(GB2312)</strong>”</li></ol>]]></content>
+      
+      
       <categories>
-        <category>FPGA</category>
+          
+          <category> C </category>
+          
       </categories>
-      <tags>
-        <tag>FPGA</tag>
-        <tag>Verilog</tag>
-        <tag>HDL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C/C++中文乱码问题</title>
-    <url>/2026/07/25/C-Cpp-fix-ChineseMessyCode/</url>
-    <content><![CDATA[用VS Code写C语言程序时输出中文乱码的问题，接触过几次这种问题，问题的根本也多多少少摸清了。VS code将默认C语言程序保存为UTF-8，而window的终端输出默认是GBK编码。这里编码不统一就造成了乱码问题。
-解决这个问题的思路是统一编码，要么统一成UTF-8，要么统一成GBK。一般来说UTF-8更广泛，那就统一使用UTF-8，那么解决方法就是让终端也使用UTF-8。
-这里有几种方案：
-方案一：在代码中强制设置终端编码这个方法最彻底，无论程序是在VS Code里运行，还是被双击运行，都能保证中文正常显示。
-
-在C程序的开头，包含 &lt;windows.h&gt; 头文件。
-在 main 函数的最开始处，调用 SetConsoleOutputCP();，参数设置成CP_UTF8或65001，将终端的输出代码页设置为UTF-8。
-
-#include &lt;stdio.h&gt;#include &lt;windows.h&gt; // 添加这个头文件int main() &#123;    SetConsoleOutputCP(CP_UTF8); // 设置控制台输出编码为UTF-8        printf(&quot;你好，世界！\n&quot;);    return 0;&#125;
-
-
-原理：SetConsoleOutputCP(CP_UTF8) 这行代码让程序自己告诉Windows终端：“我要输出UTF-8编码的内容，请用UTF-8来解码”。这样就从根源上解决了编码不一致的问题。只要是在Windows平台上运行，都能正确输出中文内容。
-
-方案二：使用编译器参数如果你使用的是GCC编译器，可以在编译时通过参数指定源文件编码和运行时字符编码。
-gcc -o output.exe main.c -finput-charset=UTF-8 -fexec-charset=GBK
-
-这个命令告诉编译器，源文件是UTF-8编码，但生成的程序在运行时，其中的字符串常量使用GBK编码。这相当于把转换工作交给了编译器，但需要在每次编译时都加上这些参数，稍显繁琐。
-方案三：配置VS Code终端自动切换如果你不想修改代码，可以配置VS Code，让它在每次打开终端时自动执行 chcp 65001 命令，将终端编码临时切换为UTF-8。
-
-在VS Code中，按下 Ctrl + Shift + P，输入并选择 Preferences: Open Settings (JSON)，打开设置文件。
-在 settings.json 文件中，添加或修改以下配置：
-
-&#123;    &quot;terminal.integrated.defaultProfile.windows&quot;: &quot;PowerShell with UTF-8&quot;,    &quot;terminal.integrated.profiles.windows&quot;: &#123;        &quot;PowerShell with UTF-8&quot;: &#123;            &quot;path&quot;: &quot;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe&quot;,            &quot;args&quot;: [                &quot;-NoExit&quot;,                &quot;-Command&quot;,                &quot;chcp 65001 | Out-Null&quot;            ]        &#125;    &#125;&#125;
-
-
-注意：这个方案只对在VS Code内部打开的终端有效。如果你直接双击运行编译好的 .exe 文件，依然会出现乱码
-
-方案四：结合 CMake在CLion里习惯改 CMakeLists.txt，那么在VS Code里完全可以保留这套工作流。
-
-在 CMakeLists.txt 中固定编译参数：
-
-cmake_minimum_required(VERSION 3.10)project(MyProject)add_compile_options(-fexec-charset=GBK -finput-charset=UTF-8)add_executable($&#123;PROJECT_NAME&#125; main.c)
-
-
-
-方案五：修改VS Code文件编码为GBK (不推荐)这是一个“向下兼容”的方案，将源文件保存为终端认识的GBK格式。但这样做会丢失UTF-8的通用性，不推荐。
-
-点击VS Code右下角状态栏的编码标识（例如“UTF-8”）。
-在弹出的菜单中选择“通过编码保存” (Save with Encoding)。
-选择“GBK”或“简体中文(GB2312)”
-
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> C </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++基础输入输出操作</title>
+      <link href="/2026/07/16/cpp-basic-io/"/>
+      <url>/2026/07/16/cpp-basic-io/</url>
+      
+        <content type="html"><![CDATA[<p>**输入输出（Input Output）**操作（简称为IO操作），入门编程一门编程语言第一个程序就是经典的输出HelloWorld，IO操作是程序里经常用到的：打印输出、读取用户输入、读写文件……。除了很常用的那几个函数写多几遍了也就记住了，但是比较细致的操作总是忘记怎么写，比如格式化输出，每次都要回去查，比较麻烦。我C++也是最近才学的，所以我在这里梳理一下C++中的最基本的IO操作。</p><blockquote><p>一些碎碎念：我之前学的C，一些小项目是直接用C的，写洛谷力扣也是用C，C比较<del>简陋</del>简单。学C++的契机是一次数学建模比赛吧（也不是正式的比赛，类似于那种上机考试而已）</p></blockquote><p>首先涉及IO操作就需要用到的3个标准库：</p><ul><li><code>&lt;iostream&gt;</code>：控制台终端的输入输出等</li><li><code>&lt;iomanip&gt;</code>：控制输出格式（宽度，精度等）</li><li><code>&lt;fstream&gt;</code>：文件读写操作</li></ul><h1 id="1-标准输入输出"><a href="#1-标准输入输出" class="headerlink" title="1. 标准输入输出&lt;iostream&gt;"></a>1. 标准输入输出<code>&lt;iostream&gt;</code></h1><h2 id="1-1-控制台输出：std-cout"><a href="#1-1-控制台输出：std-cout" class="headerlink" title="1.1 控制台输出：std::cout"></a>1.1 控制台输出：<code>std::cout</code></h2><p><code>cout</code>（console output）搭配**插入运算符 <code>&lt;&lt;</code> **使用，可以连续输出不同数据类型。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> age = <span class="number">18</span>;</span><br><span class="line">    <span class="type">double</span> height = <span class="number">1.75</span>;</span><br><span class="line">    std::string name = <span class="string">&quot;小明&quot;</span>;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;姓名：&quot;</span> &lt;&lt; name &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;年龄：&quot;</span> &lt;&lt; age &lt;&lt; <span class="string">&quot; 岁\n&quot;</span>;  </span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;身高：&quot;</span> &lt;&lt; height &lt;&lt; <span class="string">&quot; 米&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><code>\n</code> 是换行符，<code>std::endl</code> 也换行并立即刷新缓冲区。</li><li>初学建议简单使用 <code>\n</code> 即可；需要立即显示且不影响性能时再用 <code>std::endl</code>。</li></ul><h2 id="1-2-控制台输入：std-cin"><a href="#1-2-控制台输入：std-cin" class="headerlink" title="1.2 控制台输入：std::cin"></a>1.2 控制台输入：<code>std::cin</code></h2><p><code>cin</code>（console input）搭配<strong>提取运算符 <code>&gt;&gt;</code></strong>，默认以<strong>空格、Tab、换行</strong>作为分隔符。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> age;</span><br><span class="line">    std::string name;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;请输入姓名和年龄（用空格分开）：&quot;</span>;</span><br><span class="line">    std::cin &gt;&gt; name &gt;&gt; age;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>注意</strong>：<code>cin &gt;&gt;</code> 读到空格就会停止，因此输入 “张三 20” 时，<code>name</code> 只得到 “张三”。如果姓名中间有空格（如 “张 三”），需要用 <code>std::getline</code>。</p><h2 id="1-3-读取整行：std-getline"><a href="#1-3-读取整行：std-getline" class="headerlink" title="1.3 读取整行：std::getline()"></a>1.3 读取整行：<code>std::getline()</code></h2><p><code>getline()</code> 可以读取<strong>包含空格</strong>的一整行，直到遇到换行符**\n**。getline是个函数，调用格式是<code>std::getline(&lt;输入流源&gt;, &lt;输出目标&gt;)</code>。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::string fullName;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;请输入全名（可含空格）：&quot;</span>;</span><br><span class="line">    std::<span class="built_in">getline</span>(std::cin, fullName);</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;你的全名是：&quot;</span> &lt;&lt; fullName &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>注意</strong>： 当混合使用 <code>cin &gt;&gt;</code> 和 <code>getline</code> 时，由于 <code>cin &gt;&gt;</code> 读取数字后，输入缓冲区会残留一个换行符。紧接的 <code>getline</code> 可能直接读到一个空行。</p><p><strong>解决方法</strong>：在两者之间添加 <code>cin.ignore()</code> 丢弃残留换行符。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> age;</span><br><span class="line">std::string name;</span><br><span class="line"></span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;年龄：&quot;</span>;</span><br><span class="line">std::cin &gt;&gt; age;</span><br><span class="line">std::cin.<span class="built_in">ignore</span>();  <span class="comment">// 忽略换行符</span></span><br><span class="line"></span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;全名：&quot;</span>;</span><br><span class="line">std::<span class="built_in">getline</span>(std::cin, name);</span><br></pre></td></tr></table></figure><h2 id="1-4-错误与日志的输出：std-cerr与std-clog"><a href="#1-4-错误与日志的输出：std-cerr与std-clog" class="headerlink" title="1.4 错误与日志的输出：std::cerr与std::clog"></a>1.4 错误与日志的输出：<code>std::cerr</code>与<code>std::clog</code></h2><p>除了标准输出流还有其他用固定用途的输出流，比如标准错误流：</p><ul><li><code>std::cerr</code>：无缓冲的错误流，用立即显示错误信息。</li><li><code>std::clog</code>：带缓冲的错误流，一般用于日志信息输出。</li></ul><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::cerr &lt;&lt; <span class="string">&quot;[Error]: 这是一条错误信息&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">std::clog &lt;&lt; <span class="string">&quot;[Info]: 这是一条日志信息&quot;</span> &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure><h1 id="2-格式化输出"><a href="#2-格式化输出" class="headerlink" title="2. 格式化输出&lt;iomanip&gt;"></a>2. 格式化输出<code>&lt;iomanip&gt;</code></h1><p>需要引入 <code>&lt;iomanip&gt;</code>，常用的控制符：</p><table><thead><tr><th align="left">控制符</th><th align="left">作用</th><th align="left">示例</th></tr></thead><tbody><tr><td align="left"><code>std::setw(n)</code></td><td align="left">设置输出宽度（仅对下一个输出有效）</td><td align="left"><code>std::cout &lt;&lt; std::setw(10) &lt;&lt; 123;</code></td></tr><tr><td align="left"><code>std::setprecision(n)</code></td><td align="left">设置浮点数有效数字位数</td><td align="left">配合 <code>std::fixed</code> 使用</td></tr><tr><td align="left"><code>std::fixed</code></td><td align="left">固定小数点表示</td><td align="left"><code>std::cout &lt;&lt; std::fixed &lt;&lt; 3.14159;</code></td></tr><tr><td align="left"><code>std::left</code>&#x2F;<code>std::right</code></td><td align="left">左&#x2F;右对齐</td><td align="left"><code>std::cout &lt;&lt; std::left &lt;&lt; std::setw(10) &lt;&lt; &quot;hi&quot;;</code></td></tr></tbody></table><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iomanip&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">double</span> pi = <span class="number">3.14159265</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;默认：&quot;</span> &lt;&lt; pi &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;保留3位小数：&quot;</span> &lt;&lt; std::fixed &lt;&lt; std::<span class="built_in">setprecision</span>(<span class="number">3</span>) &lt;&lt; pi &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; std::left  &lt;&lt; std::<span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="string">&quot;姓名&quot;</span></span><br><span class="line">              &lt;&lt; std::right &lt;&lt; std::<span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="string">&quot;分数&quot;</span> &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    std::cout &lt;&lt; std::left  &lt;&lt; std::<span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="string">&quot;小明&quot;</span></span><br><span class="line">              &lt;&lt; std::right &lt;&lt; std::<span class="built_in">setw</span>(<span class="number">10</span>) &lt;&lt; <span class="number">95</span> &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="3-文件IO操作"><a href="#3-文件IO操作" class="headerlink" title="3. 文件IO操作&lt;fstream&gt;"></a>3. 文件IO操作<code>&lt;fstream&gt;</code></h1><p>文件读写的基本流程就是：<strong>打开 → 读写 → 关闭</strong>。记得及时关闭那些已经不要使用了的文件资源，资源泄漏也是一种常见的程序错误。</p><p>三个基本对象类型：</p><ul><li><code>fstream</code>：可读可写</li><li><code>ifstream</code>：只读取</li><li><code>ofstream</code>：只写入</li></ul><p><strong>写入</strong>：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::ofstream <span class="title">outFile</span><span class="params">(<span class="string">&quot;example.txt&quot;</span>)</span></span>; <span class="comment">//创建文件输出流对象，参数填入文件对象的路径，如果文件存在会直接清空覆盖</span></span><br><span class="line">    <span class="keyword">if</span> (outFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        outFile &lt;&lt; <span class="string">&quot;Hello, File\n&quot;</span>;</span><br><span class="line">        outFile &lt;&lt; <span class="string">&quot;第二行内容\n&quot;</span>;</span><br><span class="line">        outFile.<span class="built_in">close</span>(); <span class="comment">//关闭文件</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>追加写入模式</strong>：在创建文件对象时加入参数<code>std::ios:app</code></p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::ofstream <span class="title">outFile</span><span class="params">(<span class="string">&quot;log.txt&quot;</span>, std::ios::app)</span></span>;</span><br><span class="line">outFile &lt;&lt; <span class="string">&quot;这一行会追加在末尾&quot;</span> &lt;&lt; std::endl;</span><br></pre></td></tr></table></figure><p><strong>读取</strong>：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">std::ifstream <span class="title">inFile</span><span class="params">(<span class="string">&quot;example.txt&quot;</span>)</span></span>; <span class="comment">//创建一个文件输入流对象，参数填入文件对象的路径</span></span><br><span class="line">    std::string line;</span><br><span class="line">    <span class="keyword">if</span> (inFile.<span class="built_in">is_open</span>())</span><br><span class="line">    &#123;</span><br><span class="line">    std::string line;</span><br><span class="line">    <span class="keyword">while</span> (std::<span class="built_in">getline</span>(inFile, line))  <span class="comment">// 循环条件直接判断读取是否成功</span></span><br><span class="line">        &#123; </span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;读取到: &quot;</span> &lt;&lt; line &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">        inFile.<span class="built_in">close</span>(); <span class="comment">//关闭文件</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p><strong>按空格&#x2F;单词读取</strong>：使用 <code>&gt;&gt;</code> 运算符。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">std::string word;</span><br><span class="line"><span class="keyword">while</span> (inFile &gt;&gt; word)  <span class="comment">// 自动跳过空白符，直到读取到末尾</span></span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; word &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h1 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h1><p>以上就是C++里最基本的IO操作，这里暂时不提及太复杂的操作，那些就留到专门的篇章里仔细讲解吧。</p>]]></content>
+      
+      
       <categories>
-        <category>C</category>
+          
+          <category> Cpp </category>
+          
       </categories>
-      <tags>
-        <tag>C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HTML快速入门基础</title>
-    <url>/2026/07/02/HTML-primer/</url>
-    <content><![CDATA[我们在浏览器里打开的网页，一个网页上有内容部分（文段、图片……）有可交互部分（按钮，链接……），那么它们是怎么被排版到特定的位置？这篇文章的主要内容就是介绍书写网页使用的基本工具，排版网页内容用到的是一种标记语言——HTML ，全名“超文本标记语言”(Hypertext Markup Language)。
-下面来简单介绍HTML文件应该怎么书写，怎么入门写网页。
-1.HTML的本质一个HTML文件的内容都是由一个个**标签（Tag）**组成。你大可把这些标签看成“积木块”，写网页的过程类似于用这些积木搭建你想要的呈现的效果。标签的格式类型主要分为以下两类：
-
-成对出现的：&lt;标签名&gt;内容&lt;/标签名&gt; ，比如：&lt;p&gt;这是一段文字&lt;/p&gt;
-单个出现的：&lt;标签名 /&gt;，比如：&lt;br /&gt;（换行）
-
-用尖括号来标记标签类型，中间写展示的内容，结尾需要加斜杠/。
-2. HTML基本标签类型要展示的内容不同，所以需要用到不同类型的标签，还有一点是标签名称不区分大小写，但是习惯上使用全小写，这里只介绍一些常用的标签：
-内容排版类：
-
-
-
-内容类型
-标签
-描述
-例子
-
-
-
-标题
-&lt;h1&gt; … &lt;h6&gt;
-定义标题大小、级别
-&lt;h1&gt;一级标题&lt;/h1&gt; &lt;h2&gt;二级标题&lt;/h2&gt;
-
-
-文段
-&lt;p&gt;
-定义一个文字段落
-&lt;p&gt;这是一句文段&lt;/p&gt;
-
-
-换行
-&lt;br&gt;
-插入一个换行符
-第一行&lt;br&gt;第二行或是&lt;br/&gt;
-
-
-分割线
-&lt;hr&gt;
-插入一条水平分割线
-&lt;hr&gt;
-
-
-注释
-&lt;!-- ... --&gt;
-定义HTML代码的注释内容
-&lt;!-- 这是注释 --&gt;
-
-
-多媒体类：
-
-
-
-内容类型
-标签
-描述
-例子
-
-
-
-超链接
-&lt;a&gt;
-定义超链接，点击可跳转
-&lt;a href=&quot;https://example.com&quot;&gt;这是一个链接&lt;/a&gt;
-
-
-图片
-&lt;img&gt;
-插入图片
-&lt;img src=&quot;图片文件路径或链接&quot;, alt=&quot;图片描述&quot;/&gt;
-
-
-音频
-audio
-插入音频
-&lt;audio src=&quot;音频文件路径或链接&quot; controls&gt;&lt;/audio&gt;
-
-
-视频
-video
-插入视频
-&lt;video src=&quot;视频文件路径或链接&quot; controls&gt;&lt;/video&gt;
-
-
-文本格式类：
-
-
-
-内容类型
-标签
-描述
-例子
-
-
-
-黑体加粗
-&lt;strong&gt; &#x2F; &lt;b&gt;
-给文本加粗
-&lt;b&gt;这一行加粗&lt;/b&gt;
-
-
-斜体
-&lt;em&gt; &#x2F; &lt;i&gt;
-将文本显示为斜体
-&lt;i&gt;这行是斜体字&lt;/i&gt;
-
-
-下划线
-&lt;ins&gt; &#x2F; &lt;u&gt;
-给文本加下划线
-&lt;u&gt;这行有下划线&lt;/u&gt;
-
-
-上下标
-&lt;sup&gt; &#x2F; &lt;sub&gt;
-给文本加上下标
-H&lt;sub&gt;2&lt;/sub&gt;O &#x2F; x&lt;sup&gt;2&lt;/sup&gt;
-
-
-删除线
-&lt;del&gt; &#x2F; &lt;s&gt;
-给文本划上删除线
-&lt;del&gt;已删除内容&lt;/del&gt;
-
-
-框架类标签：
-
-
-
-内容类型
-标签
-描述
-例子
-
-
-
-声明类型
-&lt;!DOCTYPE html&gt;
-声明文档类型为HTML5，必须放在第一行。
-&lt;!DOCTYPE html&gt;
-
-
-根部分
-&lt;html&gt;
-HTML文档的根元素。
-&lt;html&gt; ... &lt;/html&gt;
-
-
-头部分
-&lt;head&gt;
-包含文档的元数据（如标题、编码等），不显示在页面中。
-&lt;head&gt; ... &lt;/head&gt;
-
-
-标题部分
-&lt;title&gt;
-定义网页的标题，显示在浏览器标签栏上。
-&lt;title&gt;我的网页&lt;/title&gt;
-
-
-元数据
-&lt;meta&gt;
-提供页面的元信息，如字符编码、视口设置等。
-&lt;meta charset=&quot;UTF-8&quot;&gt;
-
-
-身体部分
-&lt;body&gt;
-定义文档的主体，所有可见内容都写在这里。
-&lt;body&gt; ... &lt;/body&gt;
-
-
-布局类：
-
-
-
-内容类型
-标签
-描述
-例子
-
-
-
-块
-&lt;div&gt;
-块级容器，用于对页面进行分区或布局，独占一行。
-&lt;div&gt; ... &lt;/div&gt;
-
-
-行
-&lt;span&gt;
-行内容器，用于包裹一小段文本或内联元素，无默认样式。
-&lt;span&gt;姓名：张三&lt;/span&gt;
-
-
-列表标签：
-
-
-
-标签
-描述
-示例
-
-
-
-&lt;ul&gt;
-定义无序列表，通常以项目符号呈现。
-&lt;ul&gt;&lt;li&gt;项目一&lt;/li&gt;&lt;/ul&gt;
-
-
-&lt;ol&gt;
-定义有序列表，通常以数字序号呈现。
-&lt;ol&gt;&lt;li&gt;第一步&lt;/li&gt;&lt;/ol&gt;
-
-
-&lt;dl&gt;
-定义描述列表，用于展示术语及其描述。
-&lt;dl&gt;&lt;dt&gt;术语&lt;/dt&gt;&lt;dd&gt;描述&lt;/dd&gt;&lt;/dl&gt;
-
-
-&lt;li&gt;
-定义列表项，用在 &lt;ul&gt; 或 &lt;ol&gt; 中。
-见上例
-
-
-表格标签：
-
-
-
-标签
-描述
-示例
-
-
-
-&lt;table&gt;
-定义一个表格。
-&lt;table&gt; ... &lt;/table&gt;
-
-
-&lt;tr&gt;
-定义表格中的一行。
-&lt;tr&gt; ... &lt;/tr&gt;
-
-
-&lt;td&gt;
-定义表格中的一个标准单元格。
-&lt;td&gt;数据&lt;/td&gt;
-
-
-&lt;th&gt;
-定义表格中的表头单元格，通常加粗居中。
-&lt;th&gt;表头&lt;/th&gt;
-
-
-3. 标签的属性 标签的属性是写在标签里的配置参数，调整属性可以精确控制标签的行为，也叫做样式(style)，样式代码描述了标签的外观
-4. 网页基本架构一个网页的HTML文件基本上都是下面这样的格式：
-&lt;!DOCTYPE html&gt;    &lt;!-- 声明文档类型，告诉浏览器这是HTML5 --&gt;&lt;html&gt;              &lt;!-- 网页的根，所有内容都写在里面 --&gt;    &lt;head&gt;          &lt;!-- 头部：给浏览器看的配置信息（标题、编码） --&gt;        &lt;meta charset=&quot;UTF-8&quot;&gt;   &lt;!-- 设置编码为UTF-8，防止乱码 --&gt;        &lt;title&gt;我的第一个网页&lt;/title&gt;  &lt;!-- 浏览器标签栏显示的标题 --&gt;    &lt;/head&gt;    &lt;body&gt;          &lt;!-- 身体：给用户看的所有内容（文字、图片、按钮） --&gt;        这里写用户能看到的一切内容！    &lt;/body&gt;&lt;/html&gt;
-
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>状态机模型的介绍</title>
+      <link href="/2026/07/09/finite-state-machine-intro/"/>
+      <url>/2026/07/09/finite-state-machine-intro/</url>
+      
+        <content type="html"><![CDATA[<h1 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h1><ol><li><p>一扇自动门，它有两种状态：打开和关闭。</p><ul><li>平常是关闭的</li><li>当有人靠近时，自动打开</li><li>门打开后，感应人离开了，切换回关闭状态。</li></ul></li><li><p>一个与门逻辑元器件，它输出有两种状态：高电平和低电平</p><ul><li>当输入中有低电平，则输出低电平</li><li>当输入中没有低电平，则输出高电平</li></ul></li><li><p>一个电路，它感应CPU的温度，控制风扇的转速：</p><ul><li><p>当CPU温度在55~65°C时，风扇转速为一档</p></li><li><p>当CPU温度在66~80°C时，风扇转速为二档</p></li><li><p>当CPU温度超过80°C时，风扇转速为三档</p></li></ul></li></ol><p>这三个例子里，都是一个系统（对象）有不同状态，当满足某些特定的条件时，系统的状态转移到另一个状态。现实里这样的例子比比皆是，特别是对于自动控制系统来说，设计者要在设计时想清楚它们的状态和切换条件。为了系统地研究这种系统，人们把它们抽象成一个理想化模型——状态机。</p><p>状态机是一种计算机领域经常用到的模型，状态机模型有很多种，平常我们说的状态机是<strong>有限状态机（Finite State Machine, FSM）</strong>，这篇文章主要讲的是有限状态机。</p><h1 id="状态机是什么？"><a href="#状态机是什么？" class="headerlink" title="状态机是什么？"></a>状态机是什么？</h1><p>结合上面的例子，简单来说状态机就是<strong>描述一个系统如何在不同的状态之间切换</strong>的模型，将存在状态转换的系统抽象成一个方便理论演绎的数学模型。</p><h1 id="状态机的四个核心要素"><a href="#状态机的四个核心要素" class="headerlink" title="状态机的四个核心要素"></a>状态机的四个核心要素</h1><p>任何一个状态机都包含这四个部分：</p><ol><li><strong>状态（state）</strong>：系统在某一时刻的<strong>稳定</strong>情况，一个状态机至少有两个状态。比如自动门的“关闭”、“打开”；网络连接的“空闲”、“连接中”、“已连接”。</li><li><strong>事件&#x2F;条件(event)</strong>：导致状态发生改变的原因。比如“有人靠近”、“超时”、“收到确认信号”。</li><li><strong>转换（transition）</strong>：从一个状态到另一个状态的过程。它由事件触发，并可以附带条件（如“温度高于30度”）。</li><li><strong>动作（action）</strong>：在转换发生时或停留在某个状态时，系统执行的操作。比如“启动电机”、“显示错误信息”、“发送数据包”。</li></ol><h1 id="两种主要类型"><a href="#两种主要类型" class="headerlink" title="两种主要类型"></a>两种主要类型</h1><p>状态机常分为两类：</p><ul><li><strong>摩尔型（Moore 型）</strong>：输出只和当前状态有关。比如，只要处在“红灯状态”，就一直输出“停止”信号，和如何进入红灯状态无关。</li><li><strong>米利型（Mealy型）</strong>：输出和当前状态以及输入事件都有关。比如，当“关门状态”下收到“有人靠近”事件，输出“开门”动作。同一个“关门状态”收到“超时”事件，可能输出“报警”动作。</li></ul><h1 id="状态转换图"><a href="#状态转换图" class="headerlink" title="状态转换图"></a>状态转换图</h1><p><strong>状态转换图</strong>英文全称<strong>State transition diagram</strong>，缩写<strong>STD</strong>，简称<strong>状态图</strong>。状态转换图是状态机的图形化表示，直观展示了状态机的状态转换的过程，可以帮助我们在设计时发现漏洞缺陷。</p><p>下面以引子的第三个例子为例：</p>]]></content>
+      
+      
       <categories>
-        <category>教程</category>
+          
+          <category> 计算机科学 </category>
+          
       </categories>
-      <tags>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>容器化技术Docke的安装与使用</title>
-    <url>/2026/07/26/docker-reinstall-course/</url>
-    <content><![CDATA[我之前写了一个Python小项目，本来在我电脑上运行得好好的，但是发给我朋友，虽然他那边也有装好的Python环境，但是还是不能直接运行，不是依赖库缺失，就是某个环节变量没设置，倒腾环境配置半天才能跑起来。所以那时我就在想，要是能把我电脑的环境一起发过去的话，是不是就能直接运行。
-本文章讲的是如何在Windows系统(家庭版)上安装&#x2F;卸载Docker Desktop。
-Docker的官网：https://docker.com/
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> FSM </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>HTML快速入门基础</title>
+      <link href="/2026/07/02/HTML-primer/"/>
+      <url>/2026/07/02/HTML-primer/</url>
+      
+        <content type="html"><![CDATA[<p>我们在浏览器里打开的网页，一个网页上有内容部分（文段、图片……）有可交互部分（按钮，链接……），那么它们是怎么被排版到特定的位置？这篇文章的主要内容就是介绍书写网页使用的基本工具，排版网页内容用到的是一种标记语言——<strong>HTML</strong> ，全名“超文本标记语言”(Hypertext Markup Language)。</p><p>下面来简单介绍HTML文件应该怎么书写，怎么入门写网页。</p><h1 id="1-HTML的本质"><a href="#1-HTML的本质" class="headerlink" title="1.HTML的本质"></a>1.HTML的本质</h1><p>一个HTML文件的内容都是由一个个**标签（Tag）**组成。你大可把这些标签看成“积木块”，写网页的过程类似于用这些积木搭建你想要的呈现的效果。标签的格式类型主要分为以下两类：</p><ul><li>成对出现的：<code>&lt;标签名&gt;内容&lt;/标签名&gt; </code>，比如：<code>&lt;p&gt;这是一段文字&lt;/p&gt;</code></li><li>单个出现的：<code>&lt;标签名 /&gt;</code>，比如：<code>&lt;br /&gt;</code>（换行）</li></ul><p>用尖括号来标记标签类型，中间写展示的内容，结尾需要加斜杠<code>/</code>。</p><h1 id="2-HTML基本标签类型"><a href="#2-HTML基本标签类型" class="headerlink" title="2. HTML基本标签类型"></a>2. HTML基本标签类型</h1><p>要展示的内容不同，所以需要用到不同类型的标签，还有一点是标签名称<strong>不区分大小写</strong>，但是习惯上使用全小写，这里只介绍一些常用的标签：</p><p><strong>内容排版类：</strong></p><table><thead><tr><th>内容类型</th><th>标签</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td>标题</td><td><code>&lt;h1&gt;</code> … <code>&lt;h6&gt;</code></td><td>定义标题大小、级别</td><td><code>&lt;h1&gt;一级标题&lt;/h1&gt;</code> <code>&lt;h2&gt;二级标题&lt;/h2&gt;</code></td></tr><tr><td>文段</td><td><code>&lt;p&gt;</code></td><td>定义一个文字段落</td><td><code>&lt;p&gt;这是一句文段&lt;/p&gt;</code></td></tr><tr><td>换行</td><td><code>&lt;br&gt;</code></td><td>插入一个换行符</td><td><code>第一行&lt;br&gt;第二行</code>或是<code>&lt;br/&gt;</code></td></tr><tr><td>分割线</td><td><code>&lt;hr&gt;</code></td><td>插入一条水平分割线</td><td><code>&lt;hr&gt;</code></td></tr><tr><td>注释</td><td><code>&lt;!-- ... --&gt;</code></td><td>定义HTML代码的注释内容</td><td><code>&lt;!-- 这是注释 --&gt;</code></td></tr></tbody></table><p><strong>多媒体类：</strong></p><table><thead><tr><th>内容类型</th><th>标签</th><th align="left">描述</th><th>例子</th></tr></thead><tbody><tr><td>超链接</td><td><code>&lt;a&gt;</code></td><td align="left">定义超链接，点击可跳转</td><td><code>&lt;a href=&quot;https://example.com&quot;&gt;这是一个链接&lt;/a&gt;</code></td></tr><tr><td>图片</td><td><code>&lt;img&gt;</code></td><td align="left">插入图片</td><td><code>&lt;img src=&quot;图片文件路径或链接&quot;, alt=&quot;图片描述&quot;/&gt;</code></td></tr><tr><td>音频</td><td><code>audio</code></td><td align="left">插入音频</td><td><code>&lt;audio src=&quot;音频文件路径或链接&quot; controls&gt;&lt;/audio&gt;</code></td></tr><tr><td>视频</td><td><code>video</code></td><td align="left">插入视频</td><td><code>&lt;video src=&quot;视频文件路径或链接&quot; controls&gt;&lt;/video&gt;</code></td></tr></tbody></table><p><strong>文本格式类：</strong></p><table><thead><tr><th>内容类型</th><th>标签</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td>黑体加粗</td><td><code>&lt;strong&gt;</code> &#x2F; <code>&lt;b&gt;</code></td><td>给文本加粗</td><td><code>&lt;b&gt;这一行加粗&lt;/b&gt;</code></td></tr><tr><td>斜体</td><td><code>&lt;em&gt;</code> &#x2F; <code>&lt;i&gt;</code></td><td>将文本显示为斜体</td><td><code>&lt;i&gt;这行是斜体字&lt;/i&gt;</code></td></tr><tr><td>下划线</td><td><code>&lt;ins&gt;</code> &#x2F; <code>&lt;u&gt;</code></td><td>给文本加下划线</td><td><code>&lt;u&gt;这行有下划线&lt;/u&gt;</code></td></tr><tr><td>上下标</td><td><code>&lt;sup&gt;</code> &#x2F; <code>&lt;sub&gt;</code></td><td>给文本加上下标</td><td><code>H&lt;sub&gt;2&lt;/sub&gt;O</code> &#x2F; <code>x&lt;sup&gt;2&lt;/sup&gt;</code></td></tr><tr><td>删除线</td><td><code>&lt;del&gt;</code> &#x2F; <code>&lt;s&gt;</code></td><td>给文本划上删除线</td><td><code>&lt;del&gt;已删除内容&lt;/del&gt;</code></td></tr></tbody></table><p><strong>框架类标签：</strong></p><table><thead><tr><th>内容类型</th><th align="left">标签</th><th align="left">描述</th><th align="left">例子</th></tr></thead><tbody><tr><td>声明类型</td><td align="left"><code>&lt;!DOCTYPE html&gt;</code></td><td align="left">声明文档类型为HTML5，必须放在第一行。</td><td align="left"><code>&lt;!DOCTYPE html&gt;</code></td></tr><tr><td>根部分</td><td align="left"><code>&lt;html&gt;</code></td><td align="left">HTML文档的根元素。</td><td align="left"><code>&lt;html&gt; ... &lt;/html&gt;</code></td></tr><tr><td>头部分</td><td align="left"><code>&lt;head&gt;</code></td><td align="left">包含文档的元数据（如标题、编码等），不显示在页面中。</td><td align="left"><code>&lt;head&gt; ... &lt;/head&gt;</code></td></tr><tr><td>标题部分</td><td align="left"><code>&lt;title&gt;</code></td><td align="left">定义网页的标题，显示在浏览器标签栏上。</td><td align="left"><code>&lt;title&gt;我的网页&lt;/title&gt;</code></td></tr><tr><td>元数据</td><td align="left"><code>&lt;meta&gt;</code></td><td align="left">提供页面的元信息，如字符编码、视口设置等。</td><td align="left"><code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code></td></tr><tr><td>身体部分</td><td align="left"><code>&lt;body&gt;</code></td><td align="left">定义文档的主体，所有可见内容都写在这里。</td><td align="left"><code>&lt;body&gt; ... &lt;/body&gt;</code></td></tr></tbody></table><p><strong>布局类：</strong></p><table><thead><tr><th>内容类型</th><th align="left">标签</th><th align="left">描述</th><th align="left">例子</th></tr></thead><tbody><tr><td>块</td><td align="left"><code>&lt;div&gt;</code></td><td align="left">块级容器，用于对页面进行分区或布局，独占一行。</td><td align="left"><code>&lt;div&gt; ... &lt;/div&gt;</code></td></tr><tr><td>行</td><td align="left"><code>&lt;span&gt;</code></td><td align="left">行内容器，用于包裹一小段文本或内联元素，无默认样式。</td><td align="left"><code>&lt;span&gt;姓名：张三&lt;/span&gt;</code></td></tr></tbody></table><p><strong>列表标签：</strong></p><table><thead><tr><th align="left">标签</th><th align="left">描述</th><th align="left">示例</th></tr></thead><tbody><tr><td align="left"><code>&lt;ul&gt;</code></td><td align="left">定义<strong>无序列表</strong>，通常以项目符号呈现。</td><td align="left"><code>&lt;ul&gt;&lt;li&gt;项目一&lt;/li&gt;&lt;/ul&gt;</code></td></tr><tr><td align="left"><code>&lt;ol&gt;</code></td><td align="left">定义<strong>有序列表</strong>，通常以数字序号呈现。</td><td align="left"><code>&lt;ol&gt;&lt;li&gt;第一步&lt;/li&gt;&lt;/ol&gt;</code></td></tr><tr><td align="left"><code>&lt;dl&gt;</code></td><td align="left">定义<strong>描述列表</strong>，用于展示术语及其描述。</td><td align="left"><code>&lt;dl&gt;&lt;dt&gt;术语&lt;/dt&gt;&lt;dd&gt;描述&lt;/dd&gt;&lt;/dl&gt;</code></td></tr><tr><td align="left"><code>&lt;li&gt;</code></td><td align="left">定义列表项，用在 <code>&lt;ul&gt;</code> 或 <code>&lt;ol&gt;</code> 中。</td><td align="left">见上例</td></tr></tbody></table><p><strong>表格标签：</strong></p><table><thead><tr><th align="left">标签</th><th align="left">描述</th><th align="left">示例</th></tr></thead><tbody><tr><td align="left"><code>&lt;table&gt;</code></td><td align="left">定义一个表格。</td><td align="left"><code>&lt;table&gt; ... &lt;/table&gt;</code></td></tr><tr><td align="left"><code>&lt;tr&gt;</code></td><td align="left">定义表格中的一行。</td><td align="left"><code>&lt;tr&gt; ... &lt;/tr&gt;</code></td></tr><tr><td align="left"><code>&lt;td&gt;</code></td><td align="left">定义表格中的一个标准单元格。</td><td align="left"><code>&lt;td&gt;数据&lt;/td&gt;</code></td></tr><tr><td align="left"><code>&lt;th&gt;</code></td><td align="left">定义表格中的表头单元格，通常加粗居中。</td><td align="left"><code>&lt;th&gt;表头&lt;/th&gt;</code></td></tr></tbody></table><h1 id="3-标签的属性"><a href="#3-标签的属性" class="headerlink" title="3. 标签的属性"></a>3. 标签的属性</h1><p> 标签的属性是写在标签里的配置参数，调整属性可以精确控制标签的行为，也叫做<strong>样式(style)</strong>，样式代码描述了标签的外观</p><h1 id="4-网页基本架构"><a href="#4-网页基本架构" class="headerlink" title="4. 网页基本架构"></a>4. 网页基本架构</h1><p>一个网页的HTML文件基本上都是下面这样的格式：</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span>    <span class="comment">&lt;!-- 声明文档类型，告诉浏览器这是HTML5 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span>              <span class="comment">&lt;!-- 网页的根，所有内容都写在里面 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span>          <span class="comment">&lt;!-- 头部：给浏览器看的配置信息（标题、编码） --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span>   <span class="comment">&lt;!-- 设置编码为UTF-8，防止乱码 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>我的第一个网页<span class="tag">&lt;/<span class="name">title</span>&gt;</span>  <span class="comment">&lt;!-- 浏览器标签栏显示的标题 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span>          <span class="comment">&lt;!-- 身体：给用户看的所有内容（文字、图片、按钮） --&gt;</span></span><br><span class="line">        这里写用户能看到的一切内容！</span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
       <categories>
-        <category>教程</category>
+          
+          <category> 教程 </category>
+          
       </categories>
-      <tags>
-        <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CMake基础指南</title>
-    <url>/2026/08/06/cmake-primer/</url>
-    <content><![CDATA[
-CMake我是在CLion上第一次用的，CLion里编译程序前都要在一个叫CMamkeLists.txt的文件夹里写下面这样的代码：
-cmake_minimum_required(VERSION 4.2)project(MyCpp)set(CMAKE_CXX_STANDARD 23)add_executable(MyCpp main.cpp)
-
-然后就可以运行编译了，VSCode里也是，安装上CMakeTools的插件，也是一样的流程。
-
-在开发C&#x2F;C++项目时，完成代码后需要对源文件进行编译，这个环节由编译器负责。那我手动输入编译命令不就行了吗？但是在有多个源文件或者引入了多个第三方库时，需要每次手动输入很长的编译命令，每个文件之间还有复杂的依赖关系，很容易写错，还需要把编译指令记录下来。这样很不方便项目的管理，所以需要一套工具根据我们的需求去指挥编译器完成编译任务。
-那CMake是个什么东西？用来做什么的？
-CMake是一个跨平台的开源构建工具，和编译器不同，它并不是一个直接的“编译器”，而是一个构建系统的生成器，一般用于C&#x2F;C++项目的构建。使用CMake可以更自动化更标准更方便地完成C&#x2F;C++的项目编译和构建。这篇文章介绍一下CMake主要的基本用法，不会涉及太多进阶的内容。
-先理一下在C&#x2F;C++项目的构建环节里各个工具的作用：
-
-编译器（如GCC&#x2F;MSVC）：负责把C&#x2F;C++代码翻译成机器能懂的二进制程序。
-Make&#x2F;Ninja ：负责指挥编译器先翻译哪个文件、后翻译哪个，并协调依赖关系。
-CMake ：而是根据CMakeLists.txt文件和不同平台（Windows、Linux、macOS），生成相应的“构建方案”（Makefile或VS工程文件）。
-
-编译器除外，CMake这套工具是包含两部分的：CMake和Make&#x2F;ninja，CMake的作用仅仅是生成一套构建方案，而不直接调用编译器，需要Make&#x2F;Ninja去调用。我们只跟CMake进行直接的交互，这个关键文件就是CMakeLists.txt。
-
-注：平常我们说用 ”CMake构建 ”，其实准确说指的是这套工具链。就像用 “GCC编译 ”，这也是指一套工具链，除了编译器还有链接器等，只不过我们在*非必要情况下不需要关心过多的底层细节。*
-
-一. 命令行工作流IDE里一般会使用图形化界面代替，这部分可以选择跳过。在创建好项目根文件夹后，在根目录下打开终端，输入如下命令：
-#注意Cmake版本，CMake3.13+推荐的命令行一体化构建：# 1. 配置：让CMake生成构建方案，-B 指定构建目录名，自动创建目录 cmake -B build# 2. 构建：这一步需要先写完CMakeLists.txt，再让Ninja/Make开始编译，--build 指定目录名cmake --build build#需要指定模式时：Debug调试（默认） / Release发布cmake -B build -DCMAKE_BUILD_TYPE=Releasecmake --build build
-
-
-
-二. CMakeLists.txt基本命令首先提一点，CMake 是一门解释型脚本语言，它的解析器是顺序执行的（从上往下读），所以代码顺序是有严格要求的。
-假设项目只有一个main文件（单文件且没有外部库的情况），用CMake构建项目，CMakeLists.txt是唯一要写的文件，它有专门的语法，CMakeLists.txt里需要写下面这样的命令：
-cmake_minimum_required(VERSION 3.10) # 项目使用的CMake的最低版本要求project(MyApp)                       # 项目名称add_executable(app main.cpp)         # 声明可执行文件名与需要编译的源文件
-
-这是最简单的可使用的CMakeLists.txt，不能再省了。
-假设项目目录结构是这样的（多文件且没有第三方库的情况）：
-MyProject/├── CMakeLists.txt├── main.cpp├── include/│   └── module.h└── src/    └── module.cpp
-CMakeLists.txt：
-cmake_minimum_required(VERSION 3.10) # 项目使用的CMake的最低版本要求project(MyApp)                       # 项目名称set(CMAKE_CXX_STANDARD 17)           # 项目使用的C++标准# 1.生成一个静态库（把src里的cpp编成库）add_library(module_lib src/module.cpp)# 2.告诉module_lib，它的头文件在哪里（PUBLIC会让链接器自动找到）target_include_directories(module_lib PUBLIC $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)# 3.生成主程序可执行文件，第一个参数是最后生成的exe文件的文件名add_executable(my_app main.cpp)# 4.将库链接给主程序（有了这行，my_app自动获得include路径）target_link_libraries(my_app PRIVATE module_lib)
-
-大概的顺序就是：版本第一，项目第二，设完标准再建目标（add_executable），最后才能链接（target_link_libraries）
-解释一下基本的命令：
-1. 固定头三句cmake_minimum_required(VERSION 3.10)  # 锁定最低版本project(MyProject)                    # 给工程命名set(CMAKE_CXX_STANDARD 17)            # 声明C++标准
-
-project()：设置项目的基本信息project(&lt;项目名称&gt; [语言...])project(&lt;项目名称&gt;        [VERSION &lt;主版本号&gt;[.&lt;次版本号&gt;[.&lt;修订号&gt;[.&lt;构建号&gt;]]]]        [DESCRIPTION &lt;项目描述&gt;]        [HOMEPAGE_URL &lt;项目主页URL&gt;]        [LANGUAGES &lt;语言&gt;...])
-
-
-项目名称（必填）：工程名称，会赋值给变量 PROJECT_NAME。
-语言（选填）：指定启用的编程语言（如 C, CXX, Fortran 等）。如果不指定，默认启用 C 和 CXX。
-VERSION：设置项目版本号，会生成 PROJECT_VERSION 等变量，关于版本号详细规则，参考
-DESCRIPTION：项目描述文本。
-HOMEPAGE_URL：项目主页 URL。
-
-示例：
-project(MyProject)                              # 仅名称，默认语言 C/C++project(MyProject VERSION 1.2.3 LANGUAGES CXX)  # 指定版本和语言project(MyProject DESCRIPTION &quot;My awesome project&quot; HOMEPAGE_URL &quot;https://example.com&quot;)
-
-
-注意：project 会设置一系列变量（如 PROJECT_SOURCE_DIR、CMAKE_PROJECT_NAME 等），并且会影响编译器的检查，这些是项目的元信息，要让项目看上去正规一些，那就严格设置。
-
-set()：设置语言标准set(&lt;变量&gt; &lt;值&gt;... [PARENT_SCOPE])
-
-
-&lt;变量&gt;：要设置的变量名。
-&lt;值&gt;：要赋给变量的值（可以是多个，会被拼接成字符串，默认用分号分隔）。
-[PARENT_SCOPE]：可选，将变量设置到父作用域（常用于函数或宏中）。
-
-下面举设置C&#x2F;C++标准的例子：
-set(CMAKE_CXX_STANDARD 17)              # 要求使用 C++17set(CMAKE_CXX_STANDARD_REQUIRED ON)     # 强制要求，不降级set(CMAKE_CXX_EXTENSIONS OFF)           # 禁用编译器扩展set(CMAKE_C_STANDARD 99)                # 设置 C 标准为 C99set(CMAKE_C_STANDARD_REQUIRED ON)       # 强制要求，不降级set(CMAKE_C_EXTENSIONS OFF)             # 禁用编译器扩展 
-
-
-
-2. 生成库不建议把所有的.c&#x2F;.cpp文件都塞进一个add_executable里。推荐的做法是：把功能模块单独编成库，再让主程序去链接它。
-比如生成一个名为 module 的静态库，这个库只包含一个源文件：
-add_library(module STATIC src/module.cpp)# 语法：add_library(&lt;库名&gt; &lt;库类型&gt; [EXCLUDE_FROM_ALL] [库文件路径列表...])
-
-库类型参数：
-
-STATIC：静态库 .a&#x2F;.lib
-SHARED：动态库 .so&#x2F;.dll
-INTERFACE：仅头文件库，如 header-only 的模板库
-OBJECT：对象文件集合，较少直接用
-
-EXCLUDE_FROM_ALL（选填）：
-
-不带 EXCLUDE_FROM_ALL：该库会随着 make 命令被构建。
-带了 EXCLUDE_FROM_ALL：make 命令不会构建它。但是仍然可以通过**make明确指定目标名**来单独构建它
-
-
-注：库文件路径默认是从CMakeLists.txt的所在目录开始的
-
-3. 指定头文件路径让编译器找得到头文件，同时控制路径依赖的传播。
-# 告诉 module 这个目标：你的头文件在 $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include 目录下target_include_directories(module PUBLIC $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)# 语法：target_include_directories(&lt;目标对象&gt; [SYSTEM] [AFTER | BEFORE] [&lt;作用域关键字&gt; [目录路径列表...]...] )
-
-目标对象：由 add_executable() 或 add_library() 创建的目标名称。
-SYSTEM（可选）：加在作用域关键字之前。告诉编译器这些目录是系统级目录，编译器会抑制该目录下头文件的警告（比如第三方库的警告不再干扰你的编译输出）。
-AFTER | BEFORE（可选）：控制目录添加到编译器搜索路径的顺序（默认是 AFTER，即追加到列表末尾）。除非有特殊的覆盖需求，否则极少使用。
-作用域关键字（必填，至少一个）：
-
-PUBLIC：既用于该目标，也传递给依赖它的目标。
-
-PRIVATE：只用于该目标自身，不传递给依赖它的其他目标
-
-INTERFACE：不用于该目标，只传递给依赖它的目标。
-
-
-目录路径列表（必填）：要添加的目录路径。可以是绝对路径或相对路径。
-
-CMake 官方建议：不要直接写裸的相对路径！
-
-不推荐的写法：target_include_directories(mylib PUBLIC include) 这种写法依赖于当前工作目录，极其不稳定（尤其是在 IDE 中或外部构建时）。
-推荐写法：使用变量将相对路径转换为绝对路径。
-
- # $&#123;CMAKE_CURRENT_SOURCE_DIR&#125; 代表当前正在处理的 CMakeLists.txt 所在的目录target_include_directories(mylib PUBLIC     $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)
-关于为什么 add_library 不需要加 ${CMAKE_CURRENT_SOURCE_DIR}，而 target_include_directories 推荐加，核心区别在于：
-
-add_library 的路径只在 CMake 配置时被解析，CMake 自己知道当前目录是哪里，拼接很稳。
-target_include_directories 的路径是写给编译器看的字符串，编译器运行时不知道 CMake 的当前目录，所以必须指明它绝对路径才能找到文件。
-
-再举一个有多个依赖项的例子：
-target_include_directories(mylib    PUBLIC        $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include          # 外部使用者也需要    PRIVATE        $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/src              # 仅内部编译需要        $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/src/third_party  # 仅内部需要的第三方库)
-
-这有点像C++类的访问控制符区分字段
-4. 生成可执行文件add_executable(app main.cpp)#语法：add_executable(&lt;可执行文件名称&gt; [源文件列表...])
-
-如果有多个源文件，直接全部列出来。
- 源码文件很多怎么办？ 用变量临时存一下：
-set(SOURCES src/math.cpp src/other.cpp src/main.cpp)add_executable(app $&#123;SOURCES&#125;)
-
-
-注意一定要区分大小写：CMake命令不区分大小写（ADD_EXECUTABLE也行），但变量和路径严格区分。
-
-5. 链接库可执行文件与库或者库与库之间可能会有调用依赖的关系，需要将它们链接到一起
-# 告诉 app：你依赖 module 这个库target_link_libraries(app PRIVATE module)# 语法：target_link_libraries(&lt;目标对象&gt; [&lt;作用域关键字&gt; [依赖库列表...]...])
-
-目标对象：
-
-可执行文件：由 add_executable() 创建。
-库：由 add_library() 创建
-
-作用域关键字（控制依赖传播范围）：
-
-PRIVATE：依赖只用于该目标自身，不传递给依赖它的其他目标。
-PUBLIC：依赖既用于该目标，也传递给依赖它的目标。
-INTERFACE：依赖不用于该目标，只传递给依赖它的目标（常用于仅有头文件的接口库）
-
-再举一个有多个依赖项的例子：
-target_link_libraries(my_lib    PUBLIC        core_api      # 外部用户也需要 core_api        interface_cv  # 外部用户也需要 OpenCV接口    PRIVATE        internal_utils # 仅 my_lib 内部编译链接用        logger         # 仅内部日志库    INTERFACE        header_only_lib # 仅头文件库，只影响外部接口)
-
-
-注：依赖关系我建议画个图来梳理会比较直观
-
-三. 总结掌握了上面这些CMake基础内容，用来构建单文件或者多文件项目够用了，多敲几遍就记得了。引入第三方库以及中大型项目分层，看进阶的内容。  
-更多详细的内容可以去看CMake的相关文档：
-
-官方主页地址：https://cmake.org/
-
-官方文档地址：https://cmake.org/documentation
-
-中文文档地址：https://cmake.com.cn/
-
-
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> HTML </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>基础乐理</title>
+      <link href="/2026/06/22/music-theory-intro/"/>
+      <url>/2026/06/22/music-theory-intro/</url>
+      
+        <content type="html"><![CDATA[<h1 id="1-音名和唱名"><a href="#1-音名和唱名" class="headerlink" title="1. 音名和唱名"></a>1. 音名和唱名</h1><table><thead><tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr></thead><tbody><tr><td>音名</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>A</td><td>B</td></tr><tr><td>唱名</td><td>Do</td><td>Re</td><td>Mi</td><td>Fa</td><td>So</td><td>La</td><td>Si</td></tr><tr><td>简谱</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr></tbody></table><p>在钢琴上找到音名对应的键：</p><ul><li>按黑键2-3-2-3分组</li><li>2个黑键为一组的那组里左边第一个黑键的左边对应的白键就是C</li><li>然后依次是D-E-F-G-A-B-&gt;C循环</li></ul><p><img src="https://img.aquazin.top/_posts/2026-06-22-music-theory-intro/imgs/keys.png"></p><h1 id="2-音程"><a href="#2-音程" class="headerlink" title="2. 音程"></a>2. 音程</h1><p>两个音之间的距离是音程，用<strong>度数</strong> 为单位。</p><p>如何计算度数：</p><p><img src="https://img.aquazin.top/_posts/2026-06-22-music-theory-intro/imgs/interval.png"></p><ul><li><p>都是白键的情况下，两个键之间（包括两端的键）包含了几个白键就是多少度</p></li><li><p>例如上面那张图是A-&gt;E，就是5度</p></li><li><p>尽管一些键的音程是一样的，但是它们之间包含的音数量并不相同，所以下面引入<strong>半音</strong>来精确区分</p></li></ul><p>‍</p><h1 id="3-半音"><a href="#3-半音" class="headerlink" title="3. 半音"></a>3. 半音</h1><p>指的是键盘上两个距离最近的音，两个半音组成一个全音。</p><p>就像下图：</p><p><img src="https://img.aquazin.top/_posts/2026-06-22-music-theory-intro/imgs/semitone.png"></p><p>常见的音程分类如下：大三度和小三度非常常用</p><table><thead><tr><th align="center">音程</th><th align="center">纯一度</th><th align="center">小二度</th><th align="center">大二度</th><th align="center"><strong>小三度</strong></th><th align="center"><strong>大三度</strong></th><th align="center">纯四度</th><th align="center">增四度&#x2F;减五度</th><th align="center">纯五度</th><th align="center">小六度</th><th align="center">大六度</th><th align="center">小七度</th><th align="center">大七度</th><th align="center">纯八度</th></tr></thead><tbody><tr><td align="center">半音数</td><td align="center">0</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td align="center">6</td><td align="center">7</td><td align="center">8</td><td align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td></tr></tbody></table><h1 id="4-和弦"><a href="#4-和弦" class="headerlink" title="4. 和弦"></a>4. 和弦</h1><p><strong>三个或以上</strong>的音按照<strong>三度音程</strong>关系（或者非三度音程），组合在一起，就是<strong>和弦</strong>。</p><p>比如下图：</p><p><img src="https://img.aquazin.top/2026-06-22-music-theory-intro/imgs/chord3.png"><img src="https://img.aquazin.top/2026-06-22-music-theory-intro/imgs/chord7.png"><img src="https://img.aquazin.top/2026-06-22-music-theory-intro/imgs/chord9.png">…….</p><ul><li>还可继续往上叠加，最多<strong>十三和弦。</strong></li></ul><p>‍</p><p>三和弦的三个音从下到上依次为根音、三音、五音</p><p>三和弦按照构成的音程组合不同，可以分成一下四类，每一类的听感都有各自的特点：</p><ul><li>大三和弦：大三度+小三度</li><li>小三和弦：</li></ul><table><thead><tr><th>类型</th><th>组合（下-上）</th><th>听感</th></tr></thead><tbody><tr><td>大三和弦</td><td>大三度+小三度</td><td>阳光温暖</td></tr><tr><td>小三和弦</td><td>小三度+大三度</td><td>忧郁悲伤</td></tr><tr><td>减三和弦</td><td>小三度+小三度</td><td>内敛压抑</td></tr><tr><td>增三和弦</td><td>大三度+大三度</td><td></td></tr></tbody></table><p>‍</p><h1 id="5-调式调性"><a href="#5-调式调性" class="headerlink" title="5. 调式调性"></a>5. 调式调性</h1><p>全全半全全全半</p><p>‍</p><p>‍</p><p>‍</p><h1 id="6-一首歌的组成元素"><a href="#6-一首歌的组成元素" class="headerlink" title="6. 一首歌的组成元素"></a>6. 一首歌的组成元素</h1><ol><li>节奏</li><li>和声</li><li>旋律</li><li>低音</li></ol><h1 id="7-五线谱"><a href="#7-五线谱" class="headerlink" title="7. 五线谱"></a>7. 五线谱</h1><p>‍</p><h1 id="8-平均律"><a href="#8-平均律" class="headerlink" title="8. 平均律"></a>8. 平均律</h1>]]></content>
+      
+      
       <categories>
-        <category>教程</category>
+          
+          <category> Music </category>
+          
       </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>博客内容分类管理规则</title>
-    <url>/2026/08/14/blog-content-classify-rule/</url>
-    <content><![CDATA[我想我应该给博客设置一下分类规则，现在看着太乱了，以免以后文章多起来就难找了。
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> Music </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Verilog快速上手</title>
+      <link href="/2026/06/21/fpga-verilog-intro/"/>
+      <url>/2026/06/21/fpga-verilog-intro/</url>
+      
+        <content type="html"><![CDATA[<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><strong>Verilog</strong>是一种HDL(Hardware Description Language)，即<strong>硬件描述语言</strong>，用于设计和验证逻辑电路。</p><p>与C&#x2F;C++,Java,Python等编程语言不同，HDL所描述的是电路结构和行为，相当于用结构化的语言来描述一个电路，这比电路图描述电路要更加自动化大规模化，最终综合得到的产物是可以直接映射到实际的电路结构上的。</p><p>这篇文章主要介绍verilog代码的基本写法：</p><h2 id="1-1模块"><a href="#1-1模块" class="headerlink" title="1.1模块"></a>1.1模块</h2><p><code>模块(module)</code>​是Verilog的基本结构。模块就像集成电路芯片，一个电路就是一个模块，而一个模块内部可以由若干个小模块组成，这些小模块内部也可以由更小的模块组成。实现功能的电路结构一定要包裹在<code>module &lt;模块名&gt;(&lt;输入输出端口列表&gt;)...endmodule</code>里。</p><p>下面我们用这个来描述一个电路，比如一个与门元件。与门有两个输入一个输出。所以我们将与门模块命名成<code>model and_gate(input a, input b, output c)</code></p><p>比如一个1位半加器：</p><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> half_adder( </span><br><span class="line"><span class="keyword">input</span> a, </span><br><span class="line"><span class="keyword">input</span> b,</span><br><span class="line"><span class="keyword">output</span> sum, </span><br><span class="line"><span class="keyword">output</span> cy</span><br><span class="line">)</span><br><span class="line"><span class="keyword">assign</span> sum = a ^ b; <span class="comment">//和</span></span><br><span class="line"><span class="keyword">assign</span> cy = a &amp; b;<span class="comment">// 进位</span></span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure><p>上面的Verilog代码模块对应的就是下面这个方框里的电路，这个方框就是我们定义的半加器模块。</p><p><img src="https://img.aquazin.top/_posts/2026-06-21-fpga-verilog-intro/imgs/half_adder.webp"></p><p>在half_adder的括号里定义的a,b,sum,cy就是端口，可以看到相当于芯片的引脚。</p><h2 id="1-2-数据类型"><a href="#1-2-数据类型" class="headerlink" title="1.2 数据类型"></a>1.2 数据类型</h2><p>Verilog主要有两种数据类型：</p><ol><li><strong>线网型（wire）</strong>：相当于导线，用于传导信号，连接各个端口和模块。</li><li><strong>寄存器型（reg）</strong>:  表示一个存储单元，与wire最大的区别就是有<strong>记忆存储</strong>功能，能保存当前状态。</li></ol><h2 id="1-2-assign语句"><a href="#1-2-assign语句" class="headerlink" title="1.2 assign语句"></a>1.2 assign语句</h2><p><code>assign</code>语句用于标记<strong>连续赋值</strong>的两端信号，等号相当于“连接”，用一根导线将左右两边的端点相连。例如下面这个模块：</p><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> example(a,b,c,d,o)</span><br><span class="line"><span class="keyword">input</span> a,b,c,d;</span><br><span class="line"><span class="keyword">output</span> o;</span><br><span class="line"><span class="keyword">wire</span> ab, cd;</span><br><span class="line"><span class="keyword">assign</span> ab = a &amp; b;</span><br><span class="line"><span class="keyword">assign</span> cd = c ^ d;</span><br><span class="line"><span class="keyword">assign</span> o = ~(ab | cd);</span><br><span class="line"><span class="keyword">endmodule</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
       <categories>
-        <category>思考</category>
+          
+          <category> FPGA </category>
+          
       </categories>
-      <tags>
-        <tag>分类</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++基础输入输出操作</title>
-    <url>/2026/07/16/cpp-basic-io/</url>
-    <content><![CDATA[**输入输出（Input Output）**操作（简称为IO操作），入门编程一门编程语言第一个程序就是经典的输出HelloWorld，IO操作是程序里经常用到的：打印输出、读取用户输入、读写文件……。除了很常用的那几个函数写多几遍了也就记住了，但是比较细致的操作总是忘记怎么写，比如格式化输出，每次都要回去查，比较麻烦。我C++也是最近才学的，所以我在这里梳理一下C++中的最基本的IO操作。
-
-一些碎碎念：我之前学的C，一些小项目是直接用C的，写洛谷力扣也是用C，C比较简陋简单。学C++的契机是一次数学建模比赛吧（也不是正式的比赛，类似于那种上机考试而已）
-
-首先涉及IO操作就需要用到的3个标准库：
-
-&lt;iostream&gt;：控制台终端的输入输出等
-&lt;iomanip&gt;：控制输出格式（宽度，精度等）
-&lt;fstream&gt;：文件读写操作
-
-1. 标准输入输出&lt;iostream&gt;1.1 控制台输出：std::coutcout（console output）搭配**插入运算符 &lt;&lt; **使用，可以连续输出不同数据类型。
-#include &lt;iostream&gt;int main() &#123;    int age = 18;    double height = 1.75;    std::string name = &quot;小明&quot;;    std::cout &lt;&lt; &quot;姓名：&quot; &lt;&lt; name &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; &quot;年龄：&quot; &lt;&lt; age &lt;&lt; &quot; 岁\n&quot;;      std::cout &lt;&lt; &quot;身高：&quot; &lt;&lt; height &lt;&lt; &quot; 米&quot; &lt;&lt; std::endl;    return 0;&#125;
-
-
-\n 是换行符，std::endl 也换行并立即刷新缓冲区。
-初学建议简单使用 \n 即可；需要立即显示且不影响性能时再用 std::endl。
-
-1.2 控制台输入：std::cincin（console input）搭配提取运算符 &gt;&gt;，默认以空格、Tab、换行作为分隔符。
-#include &lt;iostream&gt;#include &lt;string&gt;int main() &#123;    int age;    std::string name;    std::cout &lt;&lt; &quot;请输入姓名和年龄（用空格分开）：&quot;;    std::cin &gt;&gt; name &gt;&gt; age;        return 0;&#125;
-
-注意：cin &gt;&gt; 读到空格就会停止，因此输入 “张三 20” 时，name 只得到 “张三”。如果姓名中间有空格（如 “张 三”），需要用 std::getline。
-1.3 读取整行：std::getline()getline() 可以读取包含空格的一整行，直到遇到换行符**\n**。getline是个函数，调用格式是std::getline(&lt;输入流源&gt;, &lt;输出目标&gt;)。
-#include &lt;iostream&gt;#include &lt;string&gt;int main() &#123;    std::string fullName;    std::cout &lt;&lt; &quot;请输入全名（可含空格）：&quot;;    std::getline(std::cin, fullName);    std::cout &lt;&lt; &quot;你的全名是：&quot; &lt;&lt; fullName &lt;&lt; std::endl;    return 0;&#125;
-
-注意： 当混合使用 cin &gt;&gt; 和 getline 时，由于 cin &gt;&gt; 读取数字后，输入缓冲区会残留一个换行符。紧接的 getline 可能直接读到一个空行。
-解决方法：在两者之间添加 cin.ignore() 丢弃残留换行符。
-int age;std::string name;std::cout &lt;&lt; &quot;年龄：&quot;;std::cin &gt;&gt; age;std::cin.ignore();  // 忽略换行符std::cout &lt;&lt; &quot;全名：&quot;;std::getline(std::cin, name);
-
-
-
-1.4 错误与日志的输出：std::cerr与std::clog除了标准输出流还有其他用固定用途的输出流，比如标准错误流：
-
-std::cerr：无缓冲的错误流，用立即显示错误信息。
-std::clog：带缓冲的错误流，一般用于日志信息输出。
-
-std::cerr &lt;&lt; &quot;[Error]: 这是一条错误信息&quot; &lt;&lt; std::endl;std::clog &lt;&lt; &quot;[Info]: 这是一条日志信息&quot; &lt;&lt; std::endl;
-
-
-
-2. 格式化输出&lt;iomanip&gt;需要引入 &lt;iomanip&gt;，常用的控制符：
-
-
-
-控制符
-作用
-示例
-
-
-
-std::setw(n)
-设置输出宽度（仅对下一个输出有效）
-std::cout &lt;&lt; std::setw(10) &lt;&lt; 123;
-
-
-std::setprecision(n)
-设置浮点数有效数字位数
-配合 std::fixed 使用
-
-
-std::fixed
-固定小数点表示
-std::cout &lt;&lt; std::fixed &lt;&lt; 3.14159;
-
-
-std::left&#x2F;std::right
-左&#x2F;右对齐
-std::cout &lt;&lt; std::left &lt;&lt; std::setw(10) &lt;&lt; &quot;hi&quot;;
-
-
-#include &lt;iostream&gt;#include &lt;iomanip&gt;int main() &#123;    double pi = 3.14159265;    std::cout &lt;&lt; &quot;默认：&quot; &lt;&lt; pi &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; &quot;保留3位小数：&quot; &lt;&lt; std::fixed &lt;&lt; std::setprecision(3) &lt;&lt; pi &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; std::left  &lt;&lt; std::setw(10) &lt;&lt; &quot;姓名&quot;              &lt;&lt; std::right &lt;&lt; std::setw(10) &lt;&lt; &quot;分数&quot; &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; std::left  &lt;&lt; std::setw(10) &lt;&lt; &quot;小明&quot;              &lt;&lt; std::right &lt;&lt; std::setw(10) &lt;&lt; 95 &lt;&lt; &quot;\n&quot;;    return 0;&#125;
-
-
-
-3. 文件IO操作&lt;fstream&gt;文件读写的基本流程就是：打开 → 读写 → 关闭。记得及时关闭那些已经不要使用了的文件资源，资源泄漏也是一种常见的程序错误。
-三个基本对象类型：
-
-fstream：可读可写
-ifstream：只读取
-ofstream：只写入
-
-写入：
-#include &lt;fstream&gt;#include &lt;iostream&gt;int main()&#123;    std::ofstream outFile(&quot;example.txt&quot;); //创建文件输出流对象，参数填入文件对象的路径，如果文件存在会直接清空覆盖    if (outFile.is_open())    &#123;        outFile &lt;&lt; &quot;Hello, File\n&quot;;        outFile &lt;&lt; &quot;第二行内容\n&quot;;        outFile.close(); //关闭文件    &#125;        return 0;&#125;
-
-追加写入模式：在创建文件对象时加入参数std::ios:app
-std::ofstream outFile(&quot;log.txt&quot;, std::ios::app);outFile &lt;&lt; &quot;这一行会追加在末尾&quot; &lt;&lt; std::endl;
-
-
-
-读取：
-#include &lt;fstream&gt;#include &lt;iostream&gt;#include &lt;string&gt;int main()&#123;    std::ifstream inFile(&quot;example.txt&quot;); //创建一个文件输入流对象，参数填入文件对象的路径    std::string line;    if (inFile.is_open())    &#123;    	std::string line;    	while (std::getline(inFile, line))  // 循环条件直接判断读取是否成功        &#123;         	std::cout &lt;&lt; &quot;读取到: &quot; &lt;&lt; line &lt;&lt; std::endl;    	&#125;        inFile.close(); //关闭文件    &#125;        return 0;&#125;
-
-按空格&#x2F;单词读取：使用 &gt;&gt; 运算符。
-std::string word;while (inFile &gt;&gt; word)  // 自动跳过空白符，直到读取到末尾&#123;    std::cout &lt;&lt; word &lt;&lt; std::endl;&#125;
-
-
-
-结尾以上就是C++里最基本的IO操作，这里暂时不提及太复杂的操作，那些就留到专门的篇章里仔细讲解吧。
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> FPGA </tag>
+            
+            <tag> Verilog </tag>
+            
+            <tag> HDL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++智能指针</title>
+      <link href="/2026/06/17/cpp-smart-pointer/"/>
+      <url>/2026/06/17/cpp-smart-pointer/</url>
+      
+        <content type="html"><![CDATA[<p>指针是C&#x2F;C++里的重要概念，但是指针造成的问题也非常多：悬垂指针、内存泄漏、双重释放、越界访问、野指针……这么多内存问题很大程度上来自指针的不合理使用，于是C++为了让指针更好用且规避这些常见的问题，提供了指针的”升级版“——智能指针。</p><p><strong>智能指针</strong>在C++里用于<strong>自动管理动态分配对象的生命周期</strong>，是<strong>资源获取即初始化 (RAII)</strong> 的重要部分。</p><p>智能指针定义在头文件<memory>里，属于模板类。</p><p>智能指针本身是一个栈上对象，在自身构造函数中绑定分配的资源，在自身析构函数中自动释放资源。</p><p>在现代C++中，推荐使用智能指针来管理动态分配的内存，而避免手动使用new&#x2F;delete。减少内存泄漏，重复释放，悬垂指针等问题。</p><p>下面主要介绍C++11正式引入的三种智能指针。</p><hr><h2 id="三种智能指针"><a href="#三种智能指针" class="headerlink" title="三种智能指针"></a>三种智能指针</h2><h3 id="1-std-unique-ptr-独占所有权"><a href="#1-std-unique-ptr-独占所有权" class="headerlink" title="1. std::unique_ptr(独占所有权)"></a>1. std::unique_ptr(独占所有权)</h3><p>独占所有权的意思是：一个对象，同一个时刻，只能有唯一一个unique_ptr指针指向它，所以unique_ptr不能复制，不能拷贝，只能通过<code>std::move()</code>转让所有权。</p><p>在超出作用域时会自动释放对象，同时将自身置空。性能开销和原始指针一样。</p><p>常用于：工厂函数返回值，管理容器元素。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> unp = std::<span class="built_in">make_unque</span>&lt;<span class="type">int</span>&gt;(<span class="number">42</span>);</span><br></pre></td></tr></table></figure><h3 id="2-std-shared-ptr-共享所有权"><a href="#2-std-shared-ptr-共享所有权" class="headerlink" title="2. std::shared_ptr(共享所有权)"></a>2. std::shared_ptr(共享所有权)</h3><p>std::shared_ptr通过引用计数，多个shared_ptr指针可以指向同一个对象，当所有shared_ptr都被销毁后，自动释放指向的对象。</p><p>但是引入引用计数，开销会比原始指针要多一些</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> p1 = std::<span class="built_in">make_shared</span>&lt;<span class="type">int</span>&gt;(<span class="number">42</span>);</span><br><span class="line"><span class="keyword">auto</span> p2 = p1;  <span class="comment">// 引用计数变为 2</span></span><br><span class="line"><span class="comment">// p1、p2 都离开作用域时才释放 int</span></span><br></pre></td></tr></table></figure><h3 id="3-std-weak-ptr-弱引用"><a href="#3-std-weak-ptr-弱引用" class="headerlink" title="3. std::weak_ptr(弱引用)"></a>3. std::weak_ptr(弱引用)</h3><p>weak_ptr一般和shared_ptr搭配使用，用于避免shared_ptr的引用循环，weak_ptr指向shared_ptr指向的对象时不会增加。必须通过<code>lock()</code>临时获取shared_ptr才能访问对象</p>]]></content>
+      
+      
       <categories>
-        <category>Cpp</category>
+          
+          <category> Cpp </category>
+          
       </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++面向对象基础</title>
-    <url>/2026/08/16/cpp-oop-primer/</url>
-    <content><![CDATA[**OOP（面向对象编程）**我是先用Python学的，我学的第一门编程语言是C，众所周知C是过程式编程语言没有原生的面向对象特性。而最初的C++就是C with class，现在看来C++已经不是C with class那么简单了。现在的C++发展成了一门多范式编程语言，不光有过程式，面向对象式，还有函数式等等，总是就是大杂烩 究极缝合怪 ……
-咳咳，说回正题。OOP三大基本特性：封装、继承、多态，C++该有的都有，而且也是比Python要更完善更严格。
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C语言程序的编译过程</title>
+      <link href="/2026/06/06/c-compilation-process/"/>
+      <url>/2026/06/06/c-compilation-process/</url>
+      
+        <content type="html"><![CDATA[<h1 id="C语言程序的编译过程"><a href="#C语言程序的编译过程" class="headerlink" title="C语言程序的编译过程"></a>C语言程序的编译过程</h1><p>从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：<strong>预处理</strong>、<strong>编译</strong>、<strong>汇编</strong>、<strong>链接</strong>。每个阶段都可以用 GCC 的特定选项单独观察。</p><p>假设源文件为 <code>hello.c</code>：</p><hr><h3 id="1-预处理-Preprocessing"><a href="#1-预处理-Preprocessing" class="headerlink" title="1. 预处理 (Preprocessing)"></a>1. 预处理 (Preprocessing)</h3><ul><li><strong>任务</strong>：处理以 <code>#</code>​ 开头的指令（如 <code>#include</code>​、<code>#define</code>​、<code>#ifdef</code>），展开宏，删除注释，添加行号信息等。</li><li><strong>命令</strong>：<code>gcc -E hello.c -o hello.i</code></li><li><strong>输出</strong>：<code>.i</code> （文本形式，仍是 C 代码，但已经包含所有被包含的头文件和宏展开）。</li></ul><hr><h3 id="2-编译-Compilation"><a href="#2-编译-Compilation" class="headerlink" title="2. 编译 (Compilation)"></a>2. 编译 (Compilation)</h3><ul><li><strong>任务</strong>：将预处理后的 C 代码翻译成<strong>汇编语言</strong>（与具体 CPU 架构相关）。</li><li><strong>命令</strong>：<code>gcc -S hello.i -o hello.s</code>​ （也可以从 <code>.c</code>​ 直接：<code>gcc -S hello.c</code>）</li><li><strong>输出</strong>：<code>.s</code> 汇编文件。</li></ul><hr><h3 id="3-汇编-Assembly"><a href="#3-汇编-Assembly" class="headerlink" title="3. 汇编 (Assembly)"></a>3. 汇编 (Assembly)</h3><ul><li><strong>任务</strong>：将汇编代码转换成<strong>机器指令</strong>（目标文件，即 <code>.o</code>​ 或 <code>.obj</code> 文件），此时已是二进制格式，但尚未链接库或解析外部符号。</li><li><strong>命令</strong>：<code>gcc -c hello.s -o hello.o</code>​ （或 <code>gcc -c hello.c</code>）</li><li><strong>输出</strong>：<code>.o</code> 目标文件（可重定位对象）。</li></ul><p><strong>查看内容</strong>：<code>objdump -d hello.o</code> 可见二进制指令。</p><hr><h3 id="4-链接-Linking"><a href="#4-链接-Linking" class="headerlink" title="4. 链接 (Linking)"></a>4. 链接 (Linking)</h3><ul><li><strong>任务</strong>：将一个或多个目标文件与所需的静态&#x2F;动态库合并，解析符号地址（如 <code>printf</code> 的地址），生成最终可在操作系统上运行的可执行文件。</li><li><strong>命令</strong>：<code>gcc hello.o -o hello</code>​ （可同时指定多个 <code>.o</code> 文件和库）</li><li><strong>输出</strong>：可执行文件（Linux&#x2F;Unix 下默认 <code>a.out</code>​ 或通过 <code>-o</code> 指定名称）。</li></ul><p><strong>链接细节</strong>：</p><ul><li>对于 <code>printf</code>​，GCC 默认会链接 C 标准库（<code>-lc</code>​），实际链接器（<code>ld</code>​）会找到 <code>libc.so</code>​（动态链接）或 <code>libc.a</code>（静态链接）。</li><li>运行时动态链接还需要加载器（如 <code>ld-linux.so</code>）。</li></ul><hr><h3 id="全流程单条命令"><a href="#全流程单条命令" class="headerlink" title="全流程单条命令"></a>全流程单条命令</h3><ul><li>直接执行 <code>gcc hello.c -o hello</code> 等价于依次完成上述四步，并自动删除中间文件。</li></ul><hr><h3 id="查看各阶段中间文件"><a href="#查看各阶段中间文件" class="headerlink" title="查看各阶段中间文件"></a>查看各阶段中间文件</h3><p>可以使用 <code>-save-temps</code> 选项保留所有中间产物：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -save-temps hello.c -o hello</span><br></pre></td></tr></table></figure><p>目录下会出现 <code>hello.i</code>​、<code>hello.s</code>​、<code>hello.o</code>​ 和 <code>hello</code>。</p><hr><h3 id="总结流程图"><a href="#总结流程图" class="headerlink" title="总结流程图"></a>总结流程图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hello.c (C源文件)</span><br><span class="line">   │</span><br><span class="line">   ├─ 预处理 (gcc -E) → hello.i (展开后的C代码)</span><br><span class="line">   │</span><br><span class="line">   ├─ 编译   (gcc -S) → hello.s (汇编代码)</span><br><span class="line">   │</span><br><span class="line">   ├─ 汇编   (gcc -c) → hello.o (目标文件，机器码)</span><br><span class="line">   │</span><br><span class="line">   └─ 链接   (gcc   ) → hello   (可执行文件)</span><br></pre></td></tr></table></figure><p>‍</p>]]></content>
+      
+      
       <categories>
-        <category>C++</category>
+          
+          <category> C </category>
+          
       </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CMake基础教程2：导入第三方库</title>
-    <url>/2026/08/18/cmake-primer-2/</url>
-    <content><![CDATA[第一篇CMake基础教程讲了如何用CMake构建生成单&#x2F;多文件项目，这篇就继续讲讲最重要的一种情况——导入第三库。
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> C </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++中的左值右值与引用</title>
+      <link href="/2026/06/05/cpp-lvalue-rvalue-reference/"/>
+      <url>/2026/06/05/cpp-lvalue-rvalue-reference/</url>
+      
+        <content type="html"><![CDATA[<p><strong>左值(lvalue)</strong> 和<strong>右值(rvalue)</strong>，这两个术语我之前在学C语言时有所耳闻。第一层意思就是字面意思，赋值表达式里等号<code>=</code>左边的叫左值，<strong>只能</strong>出现在等号右边的叫右值；第二层意思是，可取地址的变量叫左值，不可取地址的变量叫右值。C语言里就这样划分，很简单，平时写代码也不需要彻底弄明白这个。但是但是，在C++里就不一样了，特别是在C++11后（称为现代C++起点），新增了<strong>移动语义</strong>，<strong>引用</strong>，<strong>生命周期管理</strong>这些特性后，C++的<strong>值类别</strong>就被分得更细了。要写出高性能的C++代码，就得使用引用和移动语义，弄清楚值类别概念是绕不开的，理解值类别概念是掌握移动语义和生命周期管理的前提。这篇文章我就讲解一下C++的值类别，还有如何在使用引用时应用这些概念。</p><p>下面专门讨论C++中的值类别概念：</p><h2 id="一、传统定义（C-98-03）："><a href="#一、传统定义（C-98-03）：" class="headerlink" title="一、传统定义（C++98&#x2F;03）："></a>一、传统定义（C++98&#x2F;03）：</h2><ul><li>左值：可以出现在赋值运算符<code>=</code>​左边的表达式。左值对象具有持久的存储位置，<strong>可以取到地址</strong></li><li>右值：只能出现在赋值运算符<code>=</code>​右边的表达式。右值代表一个<strong>临时值</strong>，没有持久内存地址，<strong>不可以取地址</strong>（这是重点）</li></ul><h3 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">5</span>; <span class="comment">//这里的a就是左值对象，5是右值对象</span></span><br><span class="line"><span class="type">int</span>* pa = &amp;a; <span class="comment">//对a取地址，合法</span></span><br><span class="line"><span class="type">int</span>* ptr = &amp;<span class="number">5</span>; <span class="comment">//绝对会报错error: lvalue required as unary &#x27;&amp;&#x27; operand，取地址操作符&amp;只能对左值对象使用，5是个右值</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> b = <span class="number">0</span>;</span><br><span class="line">a + b = <span class="number">10</span>; <span class="comment">//报错error: lvalue required as left operand of assignment，a+b是个右值表达式，不能出现在=的左边</span></span><br><span class="line"><span class="type">int</span>* p1 = &amp;(b++)<span class="comment">//报错，b++是个右值表达式</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="built_in">f</span>()&#123; <span class="type">int</span> ret = <span class="number">1</span>; <span class="keyword">return</span> ret;&#125;</span><br><span class="line"><span class="type">int</span>* pf = &amp;<span class="built_in">f</span>(); <span class="comment">//报错，非引用类型的函数返回值也是右值</span></span><br></pre></td></tr></table></figure><p>通过上面这里例子（有些例子代码比较离谱，IDE检查不会放过这么低级的错误，直接就报错了），总结一下判断方法就是：<strong>能不能取地址，能就是左值，不能另外说（右值下面还有分类）</strong> 。</p><p>‍</p><h2 id="二、C-11（现代C-）及之后的定义："><a href="#二、C-11（现代C-）及之后的定义：" class="headerlink" title="二、C++11（现代C++）及之后的定义："></a>二、C++11（现代C++）及之后的定义：</h2><p>在C++11之后，右值又被细分为<code>纯右值(prvalue)</code>、<code>将亡值(xvalue)</code>，划分依据是：**是否有身份(identity)，也就是能否取地址、视为独立对象。**可以这么理解，在C++里“身份”的定义是：<strong>表达式是否代表一个可访问且持久的内存地址（左值）。</strong> 汇编里内存地址就是身份</p><blockquote><p>在<a href="https://eel.is/c++draft/basic.lval">C++官方草案</a>是这样分的：</p><p><img src="https://img.aquazin.top/_posts/2026-06-05-cpp-lvalue-rvalue-reference/imgs/value_category.png" alt="值类别"></p><p>  A <strong>glvalue</strong> is an expression whose evaluation determines the identity of an object, function, non-static data member, or a direct base class relationship</p><p>  A <strong>prvalue</strong>  is an expression whose evaluation initializes an object or computes the value of an operand of an operator, as specified by the context in which it appears, or an expression that has type <em>cv</em> void</p><p>  An <strong>xvalue</strong>  is a glvalue that denotes an object whose resources can be reused (usually because it is near the end of its lifetime)</p><p>  An <strong>lvalue</strong> is a glvalue that is not an xvalue</p><p>  An <strong>rvalue</strong> is a prvalue or an xvalue</p></blockquote><p>这个图看上去还挺直观的</p><h3 id="1-纯右值："><a href="#1-纯右值：" class="headerlink" title="1.纯右值："></a>1.纯右值：</h3><ul><li><strong>无身份</strong>：不能取地址，没有持久的内存地址。</li><li><strong>通常是临时值</strong>：比如字面量(<code>42</code>​,<code>true</code>​)，运算结果(<code>a+b</code>​)，返回非引用类型的函数调用(<code>int f()</code>​)，后自增&#x2F;自减(<code>a++</code>)，Lambda表达式等等。</li><li><strong>特性</strong>：生命周期在表达式结束后就结束</li></ul><p>‍</p><h3 id="2-将亡值："><a href="#2-将亡值：" class="headerlink" title="2.将亡值："></a>2.将亡值：</h3><ul><li><p><strong>有身份</strong>：可以取地址</p></li><li><p><strong>可移动</strong>：它的资源可以被安全地移走，因为对象马上就要消亡。</p></li><li><p><strong>来源</strong>：</p><ul><li>转换：使用<code>std::move(x)</code>，将一个左值对象x，临时转换成将亡值</li><li>调用返回<strong>右值引用</strong>的函数，例如 <code>int&amp;&amp; f()</code>。</li><li>对将亡值对象的成员访问（如 <code>xvalue.member</code>​ 或 <code>xvalue.*ptr</code>）。</li></ul></li></ul><h3 id="划分对比表"><a href="#划分对比表" class="headerlink" title="划分对比表"></a>划分对比表</h3><table><thead><tr><th>类别</th><th>有身份？</th><th>可移动？</th><th>典型示例</th></tr></thead><tbody><tr><td>左值</td><td>✅</td><td>❌（通常）</td><td>​<code>int a;</code>​、<code>++a</code>​、<code>a = b</code>​ 中的 <code>a</code></td></tr><tr><td>将亡值</td><td>✅</td><td>✅</td><td>​<code>std::move(a)</code>​、<code>static_cast&lt;int&amp;&amp;&gt;(a)</code></td></tr><tr><td>纯右值</td><td>❌</td><td>✅（但无身份，不能直接移动）</td><td>​<code>42</code>​、<code>a+b</code>​、<code>int()</code>​、<code>a++</code></td></tr></tbody></table><blockquote><p>注：纯右值本身没有身份，因此无法直接对其使用移动操作，但纯右值在初始化对象时会生成临时对象（C++17前是隐式临时对象，C++17后纯右值直接构造到目标，避免了临时对象）。</p></blockquote><p>‍</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>将亡值专门用于告诉编译器“这个对象可以安全地移动”，而纯右值则代表纯粹的计算值。</p><ul><li><strong>纯右值</strong>：没有身份，只有可移动的值（或根本没有对象，如字面量）。</li><li><strong>将亡值</strong>：有身份，并且明确表示其资源即将被转移。</li></ul><p>‍</p><h3 id="以下是我个人的理解："><a href="#以下是我个人的理解：" class="headerlink" title="以下是我个人的理解："></a>以下是我个人的理解：</h3><p>左值对象在内存空间里有自己的地址，这个地址是能长期存在的（生命周期长且可控），也就是持久且可访问的，这样取到的地址才有意义。</p><p>而右值，它们是临时分配的，生命周期极短，基本上只在表达式语句内，用完就失效了，而且不可控。C&#x2F;C++设计上就把它们定义为没有身份的量，它们没有长期的稳定的地址，它们可能会被随时覆盖擦除。</p><p>其次，C&#x2F;C++里传递对象的方式默认是 <strong>复制语义</strong>​。函数返回值是复制传递的临时对象（右值），这就解释了<strong>非引用类型</strong>的函数返回值不能取地址。同样，对于传入函数的<strong>非引用类型</strong>参数，在函数内部我们拿到的也是复制产生的对象而不是函数外部的原本对象，这就解释了要在函数内影响外部变量（不包括全局变量和静态变量），就要传递对象的指针（传地址）才能做到。另外这个传递的地址其实也是复制产生的，它们指向的对象是同一个。</p><p>‍</p><h2 id="三、引用"><a href="#三、引用" class="headerlink" title="三、引用"></a>三、引用</h2><p><strong>引用</strong>是C++新加入的一种特性，可以更方便地操作和传递对象。</p><p>举个最基本的用法：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> &amp;ra = a; </span><br><span class="line">ra = <span class="number">2</span>; <span class="comment">//等价于a = 2;</span></span><br></pre></td></tr></table></figure><p>上面的例子说明，引用其实像是给原本的对象a起了一个别名ra，我们对ra进行的操作都等价于对a进行操作。这点和使用指针有点相似，指针的写法是下面这样的：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pa = &amp;a;</span><br><span class="line">*pa = <span class="number">2</span>; <span class="comment">//等价于a = 2;</span></span><br></pre></td></tr></table></figure><p>都是通过另一个对象来对原本的对象进行操作，对比一下，引用的语法比指针更方便一些。有一点最大的不同是：<strong>引用声明时必须初始化</strong></p><p>指针可以这样写：</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> *pa;</span><br><span class="line">pa = &amp;a;</span><br><span class="line">*pa = <span class="number">2</span>;</span><br></pre></td></tr></table></figure><p>变量声明和初始化可以分开，如果忘记初始化就出现了<code>野指针</code>&#x2F;<code>空指针</code>，因为是随机分配的，我们也不知道野指针之前会指向什么对象，有的内存地址是不能随意访问的，空指针是不能解引用的，于是解引用就有可能会造成段错误，程序崩溃。</p><p>但是引用从声明时就要求一定要绑定一个对象，也就声明即初始化，这样从一开始就杜绝了像野指针空指针那样的解引用访问问题。</p><p>引用分为<strong>左值引用</strong><code>T&amp;</code>和<strong>右值引用</strong><code>T&amp;&amp;</code>，因为引用对象的值属性分左值右值，所以引用也分为这两种。</p><h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;utility&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">f</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">10</span>; &#125;          <span class="comment">// f() 是纯右值</span></span><br><span class="line"><span class="function"><span class="type">int</span>&amp;&amp; <span class="title">g</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">10</span>; &#125;        <span class="comment">// 错误示例，实际应返回静态局部变量等</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">5</span>;</span><br><span class="line">    <span class="type">int</span>&amp;&amp; r = std::<span class="built_in">move</span>(x);     <span class="comment">// std::move(x) 将左值x临时转换成将亡值，绑定到右值引用 r</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 纯右值</span></span><br><span class="line">    <span class="type">int</span> y = <span class="built_in">f</span>();                <span class="comment">// f() 纯右值</span></span><br><span class="line">    <span class="type">int</span> z = x + <span class="number">1</span>;              <span class="comment">// x+1 纯右值</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将亡值</span></span><br><span class="line">    <span class="keyword">auto</span>&amp;&amp; t1 = std::<span class="built_in">move</span>(x);   <span class="comment">// std::move(x) 将亡值</span></span><br><span class="line">    <span class="keyword">auto</span>&amp;&amp; t2 = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&amp;&amp;&gt;(x);  <span class="comment">// 也是将亡值</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对将亡值的成员访问</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">S</span> &#123; <span class="type">int</span> a; &#125;;</span><br><span class="line">    S s1;</span><br><span class="line">    <span class="keyword">auto</span>&amp;&amp; t3 = std::<span class="built_in">move</span>(s1).a; <span class="comment">// std::move(s1) 是将亡值，访问其成员 a 也是将亡值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>‍</p><p>‍参考资料：</p><p><a href="https://eel.is/c++draft">C++官方草案</a></p><p><a href="https://zh.cppreference.com/cpp/language/value_category">C++参考手册-值类别</a></p><p>David Mazières, 2021 - <a href="https://www.scs.stanford.edu/~dm/blog/decltype.html">C++ 值类别和 decltype 解读</a></p>]]></content>
+      
+      
       <categories>
-        <category>教程</category>
+          
+          <category> Cpp </category>
+          
       </categories>
-      <tags>
-        <tag>CMake</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hello World</title>
+      <link href="/2026/05/21/hello-world/"/>
+      <url>/2026/05/21/hello-world/</url>
+      
+        <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+  
+  
 </search>
