@@ -1130,4 +1130,18 @@ list(APPEND CMAKE_PREFIX_PATH &quot;/path/to/your/library&quot;)]]></content>
         <tag>CMake</tag>
       </tags>
   </entry>
+  <entry>
+    <title>树莓派pico：Vscode C++开发环境配置</title>
+    <url>/2026/08/26/raspberry-pi-pico-vscode-cpp-devEnvConfig/</url>
+    <content><![CDATA[上个月买了一块树莓派RP2040的开发板来捣鼓捣鼓，没想到开发环境配置还真是头疼，花了我整整一天
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>嵌入式</tag>
+        <tag>树莓派</tag>
+      </tags>
+  </entry>
 </search>
