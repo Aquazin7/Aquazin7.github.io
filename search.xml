@@ -1144,4 +1144,16 @@ list(APPEND CMAKE_PREFIX_PATH &quot;/path/to/your/library&quot;)]]></content>
         <tag>树莓派</tag>
       </tags>
   </entry>
+  <entry>
+    <title>C++模板指南</title>
+    <url>/2026/08/27/cpp-template-primer/</url>
+    <content><![CDATA[TODO
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
 </search>
