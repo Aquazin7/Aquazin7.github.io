@@ -1,226 +1,1228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-    
-    <entry>
-      <title>Color Themes</title>
-      <link href="/hexo-theme-freemind-blog/2016/01/30/color-themes/"/>
-      <url>/hexo-theme-freemind-blog/2016/01/30/color-themes/</url>
-      <content type="html"><![CDATA[<p>Freemind contains luxuriant color themes for your choice. To use one of them, simply modify the <code>theme</code> and <code>inverse</code> settings from your theme <code>_config.yml</code> file <em>e.g.</em></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">theme: bootstrap</div><div class="line">inverse: true</div></pre></td></tr></table></figure><p>, where <code>theme</code> here indicates which theme you are going to use, and <code>inverse</code> here says you want inverse color scheme on some important components such as navigation bar and header title.</p><p>User contributions are welcome! If you want to contribute a color theme, you can <a href="https://github.com/wzpan/hexo-theme-freemind-blog/tree/dev" target="_blank" rel="external">fork the dev branch</a> . Write a new theme in LESS and send me a pull request.</p><a id="more"></a><h2 id="bootstrap"><a href="#bootstrap" class="headerlink" title="bootstrap"></a>bootstrap</h2><h3 id="default"><a href="#default" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/bootstrap.png" alt="bootstrap"></p><h3 id="inverse"><a href="#inverse" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/bootstrap-inverse.png" alt="bootstrap-inverse"></p><h2 id="cerulean"><a href="#cerulean" class="headerlink" title="cerulean"></a>cerulean</h2><h3 id="default-1"><a href="#default-1" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/cerulean.png" alt="cerulean"></p><h3 id="inverse-1"><a href="#inverse-1" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/cerulean-inverse.png" alt="cerulean-inverse"></p><h2 id="cosmo"><a href="#cosmo" class="headerlink" title="cosmo"></a>cosmo</h2><h3 id="default-2"><a href="#default-2" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/cosmo.png" alt="cosmo"></p><h3 id="inverse-2"><a href="#inverse-2" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/cosmo-inverse.png" alt="cosmo-inverse"></p><h2 id="cyborg"><a href="#cyborg" class="headerlink" title="cyborg"></a>cyborg</h2><h3 id="default-3"><a href="#default-3" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/cyborg.png" alt="cyborg"></p><h3 id="inverse-3"><a href="#inverse-3" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/cyborg-inverse.png" alt="cyborg-inverse"></p><h2 id="darkly"><a href="#darkly" class="headerlink" title="darkly"></a>darkly</h2><h3 id="default-4"><a href="#default-4" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/darkly.png" alt="darkly"></p><h3 id="inverse-4"><a href="#inverse-4" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/darkly-inverse.png" alt="darkly-inverse"></p><h2 id="flatly"><a href="#flatly" class="headerlink" title="flatly"></a>flatly</h2><h3 id="default-5"><a href="#default-5" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/flatly.png" alt="flatly"></p><h3 id="inverse-5"><a href="#inverse-5" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/flatly-inverse.png" alt="flatly"></p><h2 id="journal"><a href="#journal" class="headerlink" title="journal"></a>journal</h2><h3 id="default-6"><a href="#default-6" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/journal.png" alt="journal"></p><h3 id="inverse-6"><a href="#inverse-6" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/journal-inverse.png" alt="journal-inverse"></p><h2 id="lumen"><a href="#lumen" class="headerlink" title="lumen"></a>lumen</h2><h3 id="default-7"><a href="#default-7" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/lumen.png" alt="lumen"></p><h3 id="inverse-7"><a href="#inverse-7" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/lumen-inverse.png" alt="lumen-inverse"></p><h2 id="paper"><a href="#paper" class="headerlink" title="paper"></a>paper</h2><h3 id="default-8"><a href="#default-8" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/paper.png" alt="paper"></p><h3 id="inverse-8"><a href="#inverse-8" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/paper-inverse.png" alt="paper-inverse"></p><h2 id="readable"><a href="#readable" class="headerlink" title="readable"></a>readable</h2><h3 id="default-9"><a href="#default-9" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/readable.png" alt="readable"></p><h3 id="inverse-9"><a href="#inverse-9" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/readable-inverse.png" alt="readable-inverse"></p><h2 id="sandstone"><a href="#sandstone" class="headerlink" title="sandstone"></a>sandstone</h2><h3 id="default-10"><a href="#default-10" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/sandstone.png" alt="sandstone"></p><h3 id="inverse-10"><a href="#inverse-10" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/sandstone-inverse.png" alt="sandstone-inverse"></p><h2 id="simplex"><a href="#simplex" class="headerlink" title="simplex"></a>simplex</h2><h3 id="default-11"><a href="#default-11" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/simplex.png" alt="simplex"></p><h3 id="inverse-11"><a href="#inverse-11" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/simplex-inverse.png" alt="simplex-inverse"></p><h2 id="slate"><a href="#slate" class="headerlink" title="slate"></a>slate</h2><h3 id="default-12"><a href="#default-12" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/slate.png" alt="slate"></p><h3 id="inverse-12"><a href="#inverse-12" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/slate-inverse.png" alt="slate-inverse"></p><h2 id="spacelab"><a href="#spacelab" class="headerlink" title="spacelab"></a>spacelab</h2><h3 id="default-13"><a href="#default-13" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/spacelab.png" alt="spacelab"></p><h3 id="inverse-13"><a href="#inverse-13" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/spacelab-inverse.png" alt="spacelab-inverse"></p><h2 id="superhero"><a href="#superhero" class="headerlink" title="superhero"></a>superhero</h2><h3 id="default-14"><a href="#default-14" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/superhero.png" alt="superhero"></p><h3 id="inverse-14"><a href="#inverse-14" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/superhero-inverse.png" alt="superhero-inverse"></p><h2 id="united"><a href="#united" class="headerlink" title="united"></a>united</h2><h3 id="default-15"><a href="#default-15" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/united.png" alt="united"></p><h3 id="inverse-15"><a href="#inverse-15" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/united-inverse.png" alt="united-inverse"></p><h2 id="yeti"><a href="#yeti" class="headerlink" title="yeti"></a>yeti</h2><h3 id="default-16"><a href="#default-16" class="headerlink" title="default"></a>default</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/yeti.png" alt="yeti"></p><h3 id="inverse-16"><a href="#inverse-16" class="headerlink" title="inverse"></a>inverse</h3><p><img src="/hexo-theme-freemind-blog/images/color-themes/yeti-inverse.png" alt="yeti-inverse"></p>]]></content>
-      
+<search>
+  <entry>
+    <title>Hello World</title>
+    <url>/2026/05/21/hello-world/</url>
+    <content><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
+
+More info: Writing
+Run server$ hexo server
+
+More info: Server
+Generate static files$ hexo generate
+
+More info: Generating
+Deploy to remote sites$ hexo deploy
+
+More info: Deployment
+]]></content>
+  </entry>
+  <entry>
+    <title>C++中的左值右值与引用</title>
+    <url>/2026/06/05/cpp-lvalue-rvalue-reference/</url>
+    <content><![CDATA[左值(lvalue) 和右值(rvalue)，这两个术语我之前在学C语言时有所耳闻。第一层意思就是字面意思，赋值表达式里等号=左边的叫左值，只能出现在等号右边的叫右值；第二层意思是，可取地址的变量叫左值，不可取地址的变量叫右值。C语言里就这样划分，很简单，平时写代码也不需要彻底弄明白这个。但是但是，在C++里就不一样了，特别是在C++11后（称为现代C++起点），新增了移动语义，引用，生命周期管理这些特性后，C++的值类别就被分得更细了。要写出高性能的C++代码，就得使用引用和移动语义，弄清楚值类别概念是绕不开的，理解值类别概念是掌握移动语义和生命周期管理的前提。这篇文章我就讲解一下C++的值类别，还有如何在使用引用时应用这些概念。
+下面专门讨论C++中的值类别概念：
+一、传统定义（C++98&#x2F;03）：
+左值：可以出现在赋值运算符=​左边的表达式。左值对象具有持久的存储位置，可以取到地址
+右值：只能出现在赋值运算符=​右边的表达式。右值代表一个临时值，没有持久内存地址，不可以取地址（这是重点）
+
+例子：int a = 5; //这里的a就是左值对象，5是右值对象int* pa = &amp;a; //对a取地址，合法int* ptr = &amp;5; //绝对会报错error: lvalue required as unary &#x27;&amp;&#x27; operand，取地址操作符&amp;只能对左值对象使用，5是个右值int b = 0;a + b = 10; //报错error: lvalue required as left operand of assignment，a+b是个右值表达式，不能出现在=的左边int* p1 = &amp;(b++)//报错，b++是个右值表达式int f()&#123; int ret = 1; return ret;&#125;int* pf = &amp;f(); //报错，非引用类型的函数返回值也是右值
+
+通过上面这里例子（有些例子代码比较离谱，IDE检查不会放过这么低级的错误，直接就报错了），总结一下判断方法就是：能不能取地址，能就是左值，不能另外说（右值下面还有分类） 。
+‍
+二、C++11（现代C++）及之后的定义：在C++11之后，右值又被细分为纯右值(prvalue)、将亡值(xvalue)，划分依据是：**是否有身份(identity)，也就是能否取地址、视为独立对象。**可以这么理解，在C++里“身份”的定义是：表达式是否代表一个可访问且持久的内存地址（左值）。 汇编里内存地址就是身份
+
+在C++官方草案是这样分的：
+
+  A glvalue is an expression whose evaluation determines the identity of an object, function, non-static data member, or a direct base class relationship
+  A prvalue  is an expression whose evaluation initializes an object or computes the value of an operand of an operator, as specified by the context in which it appears, or an expression that has type cv void
+  An xvalue  is a glvalue that denotes an object whose resources can be reused (usually because it is near the end of its lifetime)
+  An lvalue is a glvalue that is not an xvalue
+  An rvalue is a prvalue or an xvalue
+
+这个图看上去还挺直观的
+1.纯右值：
+无身份：不能取地址，没有持久的内存地址。
+通常是临时值：比如字面量(42​,true​)，运算结果(a+b​)，返回非引用类型的函数调用(int f()​)，后自增&#x2F;自减(a++)，Lambda表达式等等。
+特性：生命周期在表达式结束后就结束
+
+‍
+2.将亡值：
+有身份：可以取地址
+
+可移动：它的资源可以被安全地移走，因为对象马上就要消亡。
+
+来源：
+
+转换：使用std::move(x)，将一个左值对象x，临时转换成将亡值
+调用返回右值引用的函数，例如 int&amp;&amp; f()。
+对将亡值对象的成员访问（如 xvalue.member​ 或 xvalue.*ptr）。
+
+
+
+划分对比表
+
+
+类别
+有身份？
+可移动？
+典型示例
+
+
+
+左值
+✅
+❌（通常）
+​int a;​、++a​、a = b​ 中的 a
+
+
+将亡值
+✅
+✅
+​std::move(a)​、static_cast&lt;int&amp;&amp;&gt;(a)
+
+
+纯右值
+❌
+✅（但无身份，不能直接移动）
+​42​、a+b​、int()​、a++
+
+
+
+注：纯右值本身没有身份，因此无法直接对其使用移动操作，但纯右值在初始化对象时会生成临时对象（C++17前是隐式临时对象，C++17后纯右值直接构造到目标，避免了临时对象）。
+
+‍
+总结将亡值专门用于告诉编译器“这个对象可以安全地移动”，而纯右值则代表纯粹的计算值。
+
+纯右值：没有身份，只有可移动的值（或根本没有对象，如字面量）。
+将亡值：有身份，并且明确表示其资源即将被转移。
+
+‍
+以下是我个人的理解：左值对象在内存空间里有自己的地址，这个地址是能长期存在的（生命周期长且可控），也就是持久且可访问的，这样取到的地址才有意义。
+而右值，它们是临时分配的，生命周期极短，基本上只在表达式语句内，用完就失效了，而且不可控。C&#x2F;C++设计上就把它们定义为没有身份的量，它们没有长期的稳定的地址，它们可能会被随时覆盖擦除。
+其次，C&#x2F;C++里传递对象的方式默认是 复制语义​。函数返回值是复制传递的临时对象（右值），这就解释了非引用类型的函数返回值不能取地址。同样，对于传入函数的非引用类型参数，在函数内部我们拿到的也是复制产生的对象而不是函数外部的原本对象，这就解释了要在函数内影响外部变量（不包括全局变量和静态变量），就要传递对象的指针（传地址）才能做到。另外这个传递的地址其实也是复制产生的，它们指向的对象是同一个。
+‍
+三、引用引用是C++新加入的一种特性，可以更方便地操作和传递对象。
+举个最基本的用法：
+int a = 1;int &amp;ra = a; ra = 2; //等价于a = 2;
+
+上面的例子说明，引用其实像是给原本的对象a起了一个别名ra，我们对ra进行的操作都等价于对a进行操作。这点和使用指针有点相似，指针的写法是下面这样的：
+int *pa = &amp;a;*pa = 2; //等价于a = 2;
+
+都是通过另一个对象来对原本的对象进行操作，对比一下，引用的语法比指针更方便一些。有一点最大的不同是：引用声明时必须初始化
+指针可以这样写：
+int *pa;pa = &amp;a;*pa = 2;
+
+变量声明和初始化可以分开，如果忘记初始化就出现了野指针&#x2F;空指针，因为是随机分配的，我们也不知道野指针之前会指向什么对象，有的内存地址是不能随意访问的，空指针是不能解引用的，于是解引用就有可能会造成段错误，程序崩溃。
+但是引用从声明时就要求一定要绑定一个对象，也就声明即初始化，这样从一开始就杜绝了像野指针空指针那样的解引用访问问题。
+引用分为左值引用T&amp;和右值引用T&amp;&amp;，因为引用对象的值属性分左值右值，所以引用也分为这两种。
+例子#include &lt;utility&gt;int f() &#123; return 10; &#125;          // f() 是纯右值int&amp;&amp; g() &#123; return 10; &#125;        // 错误示例，实际应返回静态局部变量等int main() &#123;    int x = 5;    int&amp;&amp; r = std::move(x);     // std::move(x) 将左值x临时转换成将亡值，绑定到右值引用 r    // 纯右值    int y = f();                // f() 纯右值    int z = x + 1;              // x+1 纯右值    // 将亡值    auto&amp;&amp; t1 = std::move(x);   // std::move(x) 将亡值    auto&amp;&amp; t2 = static_cast&lt;int&amp;&amp;&gt;(x);  // 也是将亡值    // 对将亡值的成员访问    struct S &#123; int a; &#125;;    S s1;    auto&amp;&amp; t3 = std::move(s1).a; // std::move(s1) 是将亡值，访问其成员 a 也是将亡值&#125;
+
+‍
+‍参考资料：
+C++官方草案
+C++参考手册-值类别
+David Mazières, 2021 - C++ 值类别和 decltype 解读
+]]></content>
       <categories>
-          
-          <category> Docs </category>
-          
+        <category>Cpp</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> themes </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>Questions and Answers</title>
-      <link href="/hexo-theme-freemind-blog/2014/03/16/qna/"/>
-      <url>/hexo-theme-freemind-blog/2014/03/16/qna/</url>
-      <content type="html"><![CDATA[<span class="label label-danger">Q</span> What does <code>Freemind</code> stands for?<br><br><span class="label label-success">A</span> <code>Freemind</code> is named after <a href="http://freemind.pluskid.org/" target="_blank" rel="external">Pluskid’s blog</a>. This theme is greatly inspired by his blog layouts and stylesheets.<br><br><span class="label label-danger">Q</span> There’re already so many themes for Hexo. Why create this one?<br><br><span class="label label-success">A</span> In fact I created this theme before I turned to use Hexo. I switched to Hexo about half an year ago, including my theme, since I have already got used to it and don’t wanna change it for now.<br><br><a id="more"></a><p><span class="label label-danger">Q</span> Why use raw CSS stylesheets instead of more fashionable stylus?</p><p><span class="label label-success">A</span> Yes, stylus is cool. But I don’t want to wrote my stylesheets again in stylus. So let’s just keep them.</p><p><span class="label label-danger">Q</span> I love your theme. How to contribute?</p><p><span class="label label-success">A</span> Great that you love it. To devote your contribution, you can:</p><ul><li>Star its <a href="https://github.com/wzpan/hexo-theme-freemind" target="_blank" rel="external">Github project</a>;</li><li>Fork this project, make your change, and then send me your pull request;</li><li>Since it is public under MIT license, you can make your own theme based on mine. But it will be nicer if you claimed that your work is based on mine in your theme project page.</li></ul><p><span class="label label-danger">Q</span> <a href="http://hahack.com" target="_blank" rel="external">Your blog</a> looks a little different to this theme. Why such difference?</p><p><span class="label label-success">A</span> Yes. I modified the theme a little bit as I open sourced this theme. I actually did some simplification <em>e.g.</em> I removed the whole <a href="http://hahack.com/wiki" target="_blank" rel="external">Wiki</a> page because I don’t think that everybody need this.</p><p><span class="label label-danger">Q</span> How to generate ToC(Table of Contents) in a certain page?</p><p><span class="label label-success">A</span> Add <code>toc: true</code> in the <a href="https://github.com/wzpan/hexo-theme-freemind#front-matter" target="_blank" rel="external">front-matter</a>.</p><p><span class="label label-danger">Q</span> Where can I find your markdown source files of these docs?</p><p><span class="label label-success">A</span> From the <a href="https://github.com/wzpan/hexo-theme-freemind-blog" target="_blank" rel="external">source repo</a> of this site.</p>]]></content>
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++智能指针</title>
+    <url>/2026/06/17/cpp-smart-pointer/</url>
+    <content><![CDATA[指针是C&#x2F;C++里的重要概念，但是指针造成的问题也非常多：悬垂指针、内存泄漏、双重释放、越界访问、野指针……这么多内存问题很大程度上来自指针的不合理使用，于是C++为了让指针更好用且规避这些常见的问题，提供了指针的”升级版“——智能指针。
+智能指针在C++里用于自动管理动态分配对象的生命周期，是资源获取即初始化 (RAII) 的重要部分。
+智能指针定义在头文件里，属于模板类。
+智能指针本身是一个栈上对象，在自身构造函数中绑定分配的资源，在自身析构函数中自动释放资源。
+在现代C++中，推荐使用智能指针来管理动态分配的内存，而避免手动使用new&#x2F;delete。减少内存泄漏，重复释放，悬垂指针等问题。
+下面主要介绍C++11正式引入的三种智能指针。
+
+三种智能指针1. std::unique_ptr(独占所有权)独占所有权的意思是：一个对象，同一个时刻，只能有唯一一个unique_ptr指针指向它，所以unique_ptr不能复制，不能拷贝，只能通过std::move()转让所有权。
+在超出作用域时会自动释放对象，同时将自身置空。性能开销和原始指针一样。
+常用于：工厂函数返回值，管理容器元素。
+auto unp = std::make_unque&lt;int&gt;(42);
+
+
+
+2. std::shared_ptr(共享所有权)std::shared_ptr通过引用计数，多个shared_ptr指针可以指向同一个对象，当所有shared_ptr都被销毁后，自动释放指向的对象。
+但是引入引用计数，开销会比原始指针要多一些
+auto p1 = std::make_shared&lt;int&gt;(42);auto p2 = p1;  // 引用计数变为 2// p1、p2 都离开作用域时才释放 int
+
+
+
+3. std::weak_ptr(弱引用)weak_ptr一般和shared_ptr搭配使用，用于避免shared_ptr的引用循环，weak_ptr指向shared_ptr指向的对象时不会增加。必须通过lock()临时获取shared_ptr才能访问对象
+]]></content>
       <categories>
-          
-          <category> Docs </category>
-          
+        <category>Cpp</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Q&amp;A </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>Questions and Answers（中文）</title>
-      <link href="/hexo-theme-freemind-blog/2014/03/16/qna-cn/"/>
-      <url>/hexo-theme-freemind-blog/2014/03/16/qna-cn/</url>
-      <content type="html"><![CDATA[<span class="label label-danger">Q</span> <code>Freemind</code> 这名字有何含义？<br><br><span class="label label-success">A</span> <code>Freemind</code> 命名出自 <a href="http://freemind.pluskid.org/" target="_blank" rel="external">Pluskid</a> 的博客。这个主题很大程度借鉴了他的博客的布局和样式。<br><br><span class="label label-danger">Q</span> 现在都有这么多 Hexo 的主题了，为啥又要写一个？<br><br><span class="label label-success">A</span> 实际上我这个主题在我使用 Hexo 前已经创建了。我在半年前将博客迁移到 Hexo ，因为我已经习惯了原来的主题，所以顺便把主题也移植了过来。<br><br><a id="more"></a><p><span class="label label-danger">Q</span> 为啥还用 CSS 写样式，而不用更高端大气的 stylus ？</p><p><span class="label label-success">A</span> 嗯，stylus 的确很酷。不过我不想再把以前的样式重写成 stylus 了。所以暂时先保留原来的 CSS。</p><p><span class="label label-danger">Q</span> 你的博客不错用，如何贡献？</p><p><span class="label label-success">A</span> 有人喜欢我的东西我就很高兴咯。如果想做出贡献，你可以：</p><ul><li>为本主题的 <a href="https://github.com/wzpan/hexo-theme-freemind" target="_blank" rel="external">Github 项目</a> 加颗星；</li><li>Fork 这个项目，尽情DIY，然后给我发 pull request;</li><li>这个项目遵循 MIT 开源协议，你可以在本主题基础上创建你的主题。不过如果你能在你的主题页面中声明主题基于 Freemind 就再好不过了。</li></ul><p><span class="label label-danger">Q</span> <a href="http://hahack.com" target="_blank" rel="external">你自己的博客</a> 看起来跟这个主题有点不一样呀，为什么？</p><p><span class="label label-success">A</span> 是的。我在开源这个主题前做了些简化。不是所有人都需要我的博客里的一些特性，比如 <a href="http://hahack.com/wiki" target="_blank" rel="external">Wiki</a> 页面。</p><p><span class="label label-danger">Q</span> 如何指定某些页面生成 ToC(Table of Contents) ？</p><p><span class="label label-success">A</span> 在<a href="https://github.com/wzpan/hexo-theme-freemind#front-matter" target="_blank" rel="external">文章头部</a>添加 <code>toc: true</code> 。</p><p><span class="label label-danger">Q</span> 从哪里可以找到你的这几篇文档的 Markdown 源码？</p><p><span class="label label-success">A</span> 在本站点的 <a href="https://github.com/wzpan/hexo-theme-freemind-blog" target="_blank" rel="external">源码仓库</a> 。</p>]]></content>
-      
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C语言程序的编译过程</title>
+    <url>/2026/06/06/c-compilation-process/</url>
+    <content><![CDATA[C语言程序的编译过程从 C 源代码到可执行文件，GCC 工具链会依次经历四个主要阶段：预处理、编译、汇编、链接。每个阶段都可以用 GCC 的特定选项单独观察。
+假设源文件为 hello.c：
+
+1. 预处理 (Preprocessing)
+任务：处理以 #​ 开头的指令（如 #include​、#define​、#ifdef），展开宏，删除注释，添加行号信息等。
+命令：gcc -E hello.c -o hello.i
+输出：.i （文本形式，仍是 C 代码，但已经包含所有被包含的头文件和宏展开）。
+
+
+2. 编译 (Compilation)
+任务：将预处理后的 C 代码翻译成汇编语言（与具体 CPU 架构相关）。
+命令：gcc -S hello.i -o hello.s​ （也可以从 .c​ 直接：gcc -S hello.c）
+输出：.s 汇编文件。
+
+
+3. 汇编 (Assembly)
+任务：将汇编代码转换成机器指令（目标文件，即 .o​ 或 .obj 文件），此时已是二进制格式，但尚未链接库或解析外部符号。
+命令：gcc -c hello.s -o hello.o​ （或 gcc -c hello.c）
+输出：.o 目标文件（可重定位对象）。
+
+查看内容：objdump -d hello.o 可见二进制指令。
+
+4. 链接 (Linking)
+任务：将一个或多个目标文件与所需的静态&#x2F;动态库合并，解析符号地址（如 printf 的地址），生成最终可在操作系统上运行的可执行文件。
+命令：gcc hello.o -o hello​ （可同时指定多个 .o 文件和库）
+输出：可执行文件（Linux&#x2F;Unix 下默认 a.out​ 或通过 -o 指定名称）。
+
+链接细节：
+
+对于 printf​，GCC 默认会链接 C 标准库（-lc​），实际链接器（ld​）会找到 libc.so​（动态链接）或 libc.a（静态链接）。
+运行时动态链接还需要加载器（如 ld-linux.so）。
+
+
+全流程单条命令
+直接执行 gcc hello.c -o hello 等价于依次完成上述四步，并自动删除中间文件。
+
+
+查看各阶段中间文件可以使用 -save-temps 选项保留所有中间产物：
+gcc -save-temps hello.c -o hello
+
+目录下会出现 hello.i​、hello.s​、hello.o​ 和 hello。
+
+总结流程图hello.c (C源文件)   │   ├─ 预处理 (gcc -E) → hello.i (展开后的C代码)   │   ├─ 编译   (gcc -S) → hello.s (汇编代码)   │   ├─ 汇编   (gcc -c) → hello.o (目标文件，机器码)   │   └─ 链接   (gcc   ) → hello   (可执行文件)
+
+‍
+]]></content>
       <categories>
-          
-          <category> Docs </category>
-          
+        <category>C</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> Q&amp;A </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>Tag Plugins</title>
-      <link href="/hexo-theme-freemind-blog/2014/03/16/tag-plugins/"/>
-      <url>/hexo-theme-freemind-blog/2014/03/16/tag-plugins/</url>
-      <content type="html"><![CDATA[<p>The freemind theme offers several new tag plugins, so as to fully take advantages of Bootstrap.</p><p>To use these tag plugins, you need to install <a href="https://github.com/wzpan/hexo-tag-bootstrap" target="_blank" rel="external">hexo-tag-bootstrap</a> first. In your blog root folder, execute the following command:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-tag-bootstrap --save</div></pre></td></tr></table></figure><p>Then you can use these tag plugins in your blog, as easily as you normally do using hexo tag plugins. </p><a id="more"></a><h2 id="Text-Color"><a href="#Text-Color" class="headerlink" title="Text Color"></a>Text Color</h2><p>Convey meaning through color with a handful of emphasis utility classes. These may also be applied to links and will darken on hover just like our default link styles.</p><h3 id="Syntax"><a href="#Syntax" class="headerlink" title="Syntax"></a>Syntax</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% textcolor [style] %&#125;</div><div class="line">  text string</div><div class="line">&#123;% endtextcolor %&#125;</div></pre></td></tr></table></figure><h3 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;% textcolor muted %&#125;</div><div class="line">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor primary %&#125;</div><div class="line">Nullam id dolor id nibh ultricies vehicula ut id elit.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor success %&#125;</div><div class="line">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor info %&#125;</div><div class="line">Maecenas sed diam eget risus varius blandit sit amet non magna.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor warning %&#125;</div><div class="line">Etiam porta sem malesuada magna mollis euismod.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor danger %&#125;</div><div class="line">Donec ullamcorper nulla non metus auctor fringilla.</div><div class="line">&#123;% endtextcolor %&#125;</div></pre></td></tr></table></figure><h3 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h3><p class="text-muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p><p class="text-primary">Nullam id dolor id nibh ultricies vehicula ut id elit.</p><p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p><p class="text-info">Maecenas sed diam eget risus varius blandit sit amet non magna.</p><p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p><p class="text-danger">Donec ullamcorper nulla non metus auctor fringilla.</p><h2 id="Buttons"><a href="#Buttons" class="headerlink" title="Buttons"></a>Buttons</h2><p>Inserts a button with target links, text and specified color.</p><h3 id="Syntax-1"><a href="#Syntax-1" class="headerlink" title="Syntax"></a>Syntax</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% btn url text [style] %&#125;</div></pre></td></tr></table></figure><h3 id="Examples-1"><a href="#Examples-1" class="headerlink" title="Examples"></a>Examples</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;% btn http://hahack.com hahack %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack primary %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack success %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack warning %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack danger %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack info %&#125;</div></pre></td></tr></table></figure><h3 id="Results-1"><a href="#Results-1" class="headerlink" title="Results"></a>Results</h3><a class="btn btn-default" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-primary" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-success" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-warning" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-danger" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-info" href="http://hahack.com" target="_blank" rel="external">hahack</a><h2 id="Labels"><a href="#Labels" class="headerlink" title="Labels"></a>Labels</h2><p>Inserts a label with text and specified color.</p><h3 id="Syntax-2"><a href="#Syntax-2" class="headerlink" title="Syntax"></a>Syntax</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% label text [style] %&#125;</div></pre></td></tr></table></figure><h3 id="Examples-2"><a href="#Examples-2" class="headerlink" title="Examples"></a>Examples</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;% label default %&#125;</div><div class="line"></div><div class="line">&#123;% label warinng warning %&#125;</div><div class="line"></div><div class="line">&#123;% label success success %&#125;</div><div class="line"></div><div class="line">&#123;% label danger danger %&#125;</div><div class="line"></div><div class="line">&#123;% label primary primary %&#125;</div><div class="line"></div><div class="line">&#123;% label info info %&#125;</div></pre></td></tr></table></figure><h3 id="Results-2"><a href="#Results-2" class="headerlink" title="Results"></a>Results</h3><span class="label label-default">default</span><span class="label label-warning">warinng</span><span class="label label-success">success</span><span class="label label-danger">danger</span><span class="label label-primary">primary</span><span class="label label-info">info</span><h2 id="Badges"><a href="#Badges" class="headerlink" title="Badges"></a>Badges</h2><p>Inserts a badge with text.</p><h3 id="Syntax-3"><a href="#Syntax-3" class="headerlink" title="Syntax"></a>Syntax</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% badge text %&#125;</div></pre></td></tr></table></figure><h3 id="Examples-3"><a href="#Examples-3" class="headerlink" title="Examples"></a>Examples</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% badge 42 %&#125;</div></pre></td></tr></table></figure><h3 id="Results-3"><a href="#Results-3" class="headerlink" title="Results"></a>Results</h3><span class="badge">42</span><h2 id="Alerts"><a href="#Alerts" class="headerlink" title="Alerts"></a>Alerts</h2><p>Inserts alert messages with text and specified color.</p><h3 id="Syntax-4"><a href="#Syntax-4" class="headerlink" title="Syntax"></a>Syntax</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% alert [style] %&#125;</div><div class="line">   Alert string</div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure><h3 id="Examples-4"><a href="#Examples-4" class="headerlink" title="Examples"></a>Examples</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;% alert warning %&#125;</div><div class="line">Best check yo self, you&apos;re not looking too good.</div><div class="line">&#123;% endalert %&#125;</div><div class="line"></div><div class="line">&#123;% alert danger %&#125;</div><div class="line">Change a few things up and try submitting again.</div><div class="line">&#123;% endalert %&#125;</div><div class="line"></div><div class="line">&#123;% alert success %&#125;</div><div class="line">You successfully read this important alert message.</div><div class="line">&#123;% endalert %&#125;</div><div class="line"></div><div class="line">&#123;% alert info %&#125;</div><div class="line">This alert needs your attention, but it&apos;s not super important.</div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure><h3 id="Results-4"><a href="#Results-4" class="headerlink" title="Results"></a>Results</h3><div class="alert alert-warning"><i class="fa fa-bell"></i>  Best check yo self, you're not looking too good.</div><div class="alert alert-danger"><i class="fa fa-bug"></i>  Change a few things up and try submitting again.</div><div class="alert alert-success"><i class="fa fa-lightbulb-o"></i>  You successfully read this important alert message.</div><div class="alert alert-info"><i class="fa fa-info"></i>  This alert needs your attention, but it's not super important.</div>]]></content>
-      
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>基础乐理</title>
+    <url>/2026/06/22/music-theory-intro/</url>
+    <content><![CDATA[1. 音名和唱名
+
+
+
+
+
+
+
+
+
+
+
+
+
+音名
+C
+D
+E
+F
+G
+A
+B
+
+
+唱名
+Do
+Re
+Mi
+Fa
+So
+La
+Si
+
+
+简谱
+1
+2
+3
+4
+5
+6
+7
+
+
+在钢琴上找到音名对应的键：
+
+按黑键2-3-2-3分组
+2个黑键为一组的那组里左边第一个黑键的左边对应的白键就是C
+然后依次是D-E-F-G-A-B-&gt;C循环
+
+
+2. 音程两个音之间的距离是音程，用度数 为单位。
+如何计算度数：
+
+
+都是白键的情况下，两个键之间（包括两端的键）包含了几个白键就是多少度
+
+例如上面那张图是A-&gt;E，就是5度
+
+尽管一些键的音程是一样的，但是它们之间包含的音数量并不相同，所以下面引入半音来精确区分
+
+
+‍
+3. 半音指的是键盘上两个距离最近的音，两个半音组成一个全音。
+就像下图：
+
+常见的音程分类如下：大三度和小三度非常常用
+
+
+
+音程
+纯一度
+小二度
+大二度
+小三度
+大三度
+纯四度
+增四度&#x2F;减五度
+纯五度
+小六度
+大六度
+小七度
+大七度
+纯八度
+
+
+
+半音数
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+
+
+4. 和弦三个或以上的音按照三度音程关系（或者非三度音程），组合在一起，就是和弦。
+比如下图：
+…….
+
+还可继续往上叠加，最多十三和弦。
+
+‍
+三和弦的三个音从下到上依次为根音、三音、五音
+三和弦按照构成的音程组合不同，可以分成一下四类，每一类的听感都有各自的特点：
+
+大三和弦：大三度+小三度
+小三和弦：
+
+
+
+
+类型
+组合（下-上）
+听感
+
+
+
+大三和弦
+大三度+小三度
+阳光温暖
+
+
+小三和弦
+小三度+大三度
+忧郁悲伤
+
+
+减三和弦
+小三度+小三度
+内敛压抑
+
+
+增三和弦
+大三度+大三度
+
+
+
+‍
+5. 调式调性全全半全全全半
+‍
+‍
+‍
+6. 一首歌的组成元素
+节奏
+和声
+旋律
+低音
+
+7. 五线谱‍
+8. 平均律]]></content>
       <categories>
-          
-          <category> Docs </category>
-          
+        <category>Music</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> plugins </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>Tag Plugins（中文）</title>
-      <link href="/hexo-theme-freemind-blog/2014/03/16/tag-plugins-cn/"/>
-      <url>/hexo-theme-freemind-blog/2014/03/16/tag-plugins-cn/</url>
-      <content type="html"><![CDATA[<p>Freemind 主题提供了丰富的 tag plugins，以充分利用 Bootstrap 的威力。</p><p>在使用这些 tag plugins 之前，你需要先安装 <a href="https://github.com/wzpan/hexo-tag-bootstrap" target="_blank" rel="external">hexo-tag-bootstrap</a> 。在你的 Hexo 博客目录，执行下列命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-tag-bootstrap --save</div></pre></td></tr></table></figure><p>然后就可以像使用其他 hexo tag plugins 一样使用这些 Bootstrap tag plugins 了。</p><a id="more"></a><h2 id="文本颜色"><a href="#文本颜色" class="headerlink" title="文本颜色"></a>文本颜色</h2><p>插入一段文本，并用特殊的颜色高亮它。</p><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% textcolor [style] %&#125;</div><div class="line">  text string</div><div class="line">&#123;% endtextcolor %&#125;</div></pre></td></tr></table></figure><h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&#123;% textcolor muted %&#125;</div><div class="line">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor primary %&#125;</div><div class="line">Nullam id dolor id nibh ultricies vehicula ut id elit.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor success %&#125;</div><div class="line">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor info %&#125;</div><div class="line">Maecenas sed diam eget risus varius blandit sit amet non magna.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor warning %&#125;</div><div class="line">Etiam porta sem malesuada magna mollis euismod.</div><div class="line">&#123;% endtextcolor %&#125;</div><div class="line"></div><div class="line">&#123;% textcolor danger %&#125;</div><div class="line">Donec ullamcorper nulla non metus auctor fringilla.</div><div class="line">&#123;% endtextcolor %&#125;</div></pre></td></tr></table></figure><h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p class="text-muted">Fusce dapibus, tellus ac cursus commodo, tortor mauris nibh.</p><p class="text-primary">Nullam id dolor id nibh ultricies vehicula ut id elit.</p><p class="text-success">Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p><p class="text-info">Maecenas sed diam eget risus varius blandit sit amet non magna.</p><p class="text-warning">Etiam porta sem malesuada magna mollis euismod.</p><p class="text-danger">Donec ullamcorper nulla non metus auctor fringilla.</p><h2 id="按钮（Buttons）"><a href="#按钮（Buttons）" class="headerlink" title="按钮（Buttons）"></a>按钮（Buttons）</h2><p>插入一个按钮，按钮可以带有链接、文本，并可以指定样式。</p><h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% btn url text [style] %&#125;</div></pre></td></tr></table></figure><h3 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;% btn http://hahack.com hahack %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack primary %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack success %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack warning %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack danger %&#125;</div><div class="line"></div><div class="line">&#123;% btn http://hahack.com hahack info %&#125;</div></pre></td></tr></table></figure><h3 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h3><a class="btn btn-default" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-primary" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-success" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-warning" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-danger" href="http://hahack.com" target="_blank" rel="external">hahack</a><a class="btn btn-info" href="http://hahack.com" target="_blank" rel="external">hahack</a><h2 id="标签（Labels）"><a href="#标签（Labels）" class="headerlink" title="标签（Labels）"></a>标签（Labels）</h2><p>插入一个标签，并为其指定文本和样式。</p><h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% label text [style] %&#125;</div></pre></td></tr></table></figure><h3 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;% label default %&#125;</div><div class="line"></div><div class="line">&#123;% label warinng warning %&#125;</div><div class="line"></div><div class="line">&#123;% label success success %&#125;</div><div class="line"></div><div class="line">&#123;% label danger danger %&#125;</div><div class="line"></div><div class="line">&#123;% label primary primary %&#125;</div><div class="line"></div><div class="line">&#123;% label info info %&#125;</div></pre></td></tr></table></figure><h3 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h3><span class="label label-default">default</span><span class="label label-warning">warinng</span><span class="label label-success">success</span><span class="label label-danger">danger</span><span class="label label-primary">primary</span><span class="label label-info">info</span><h2 id="徽章（Badges）"><a href="#徽章（Badges）" class="headerlink" title="徽章（Badges）"></a>徽章（Badges）</h2><p>插入一个徽章，并为其指定文本。</p><h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% badge text %&#125;</div></pre></td></tr></table></figure><h3 id="示例-3"><a href="#示例-3" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% badge 42 %&#125;</div></pre></td></tr></table></figure><h3 id="结果-3"><a href="#结果-3" class="headerlink" title="结果"></a>结果</h3><span class="badge">42</span><h2 id="警报（Alerts）"><a href="#警报（Alerts）" class="headerlink" title="警报（Alerts）"></a>警报（Alerts）</h2><p>插入一段警报文本信息，并为其指定样式。</p><h3 id="语法-4"><a href="#语法-4" class="headerlink" title="语法"></a>语法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;% alert [style] %&#125;</div><div class="line">   Alert string</div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure><h3 id="示例-4"><a href="#示例-4" class="headerlink" title="示例"></a>示例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&#123;% alert warning %&#125;</div><div class="line">Best check yo self, you&apos;re not looking too good.</div><div class="line">&#123;% endalert %&#125;</div><div class="line"></div><div class="line">&#123;% alert danger %&#125;</div><div class="line">Change a few things up and try submitting again.</div><div class="line">&#123;% endalert %&#125;</div><div class="line"></div><div class="line">&#123;% alert success %&#125;</div><div class="line">You successfully read this important alert message.</div><div class="line">&#123;% endalert %&#125;</div><div class="line"></div><div class="line">&#123;% alert info %&#125;</div><div class="line">This alert needs your attention, but it&apos;s not super important.</div><div class="line">&#123;% endalert %&#125;</div></pre></td></tr></table></figure><h3 id="结果-4"><a href="#结果-4" class="headerlink" title="结果"></a>结果</h3><div class="alert alert-warning"><i class="fa fa-bell"></i>  Best check yo self, you're not looking too good.</div><div class="alert alert-danger"><i class="fa fa-bug"></i>  Change a few things up and try submitting again.</div><div class="alert alert-success"><i class="fa fa-lightbulb-o"></i>  You successfully read this important alert message.</div><div class="alert alert-info"><i class="fa fa-info"></i>  This alert needs your attention, but it's not super important.</div>]]></content>
-      
+      <tags>
+        <tag>Music</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>状态机模型的介绍</title>
+    <url>/2026/07/09/finite-state-machine-intro/</url>
+    <content><![CDATA[引子
+一扇自动门，它有两种状态：打开和关闭。
+
+平常是关闭的
+当有人靠近时，自动打开
+门打开后，感应人离开了，切换回关闭状态。
+
+
+一个与门逻辑元器件，它输出有两种状态：高电平和低电平
+
+当输入中有低电平，则输出低电平
+当输入中没有低电平，则输出高电平
+
+
+一个电路，它感应CPU的温度，控制风扇的转速：
+
+当CPU温度在55~65°C时，风扇转速为一档
+
+当CPU温度在66~80°C时，风扇转速为二档
+
+当CPU温度超过80°C时，风扇转速为三档
+
+
+
+
+这三个例子里，都是一个系统（对象）有不同状态，当满足某些特定的条件时，系统的状态转移到另一个状态。现实里这样的例子比比皆是，特别是对于自动控制系统来说，设计者要在设计时想清楚它们的状态和切换条件。为了系统地研究这种系统，人们把它们抽象成一个理想化模型——状态机。
+状态机是一种计算机领域经常用到的模型，状态机模型有很多种，平常我们说的状态机是有限状态机（Finite State Machine, FSM），这篇文章主要讲的是有限状态机。
+状态机是什么？结合上面的例子，简单来说状态机就是描述一个系统如何在不同的状态之间切换的模型，将存在状态转换的系统抽象成一个方便理论演绎的数学模型。
+状态机的四个核心要素任何一个状态机都包含这四个部分：
+
+状态（state）：系统在某一时刻的稳定情况，一个状态机至少有两个状态。比如自动门的“关闭”、“打开”；网络连接的“空闲”、“连接中”、“已连接”。
+事件&#x2F;条件(event)：导致状态发生改变的原因。比如“有人靠近”、“超时”、“收到确认信号”。
+转换（transition）：从一个状态到另一个状态的过程。它由事件触发，并可以附带条件（如“温度高于30度”）。
+动作（action）：在转换发生时或停留在某个状态时，系统执行的操作。比如“启动电机”、“显示错误信息”、“发送数据包”。
+
+两种主要类型状态机常分为两类：
+
+摩尔型（Moore 型）：输出只和当前状态有关。比如，只要处在“红灯状态”，就一直输出“停止”信号，和如何进入红灯状态无关。
+米利型（Mealy型）：输出和当前状态以及输入事件都有关。比如，当“关门状态”下收到“有人靠近”事件，输出“开门”动作。同一个“关门状态”收到“超时”事件，可能输出“报警”动作。
+
+状态转换图状态转换图英文全称State transition diagram，缩写STD，简称状态图。状态转换图是状态机的图形化表示，直观展示了状态机的状态转换的过程，可以帮助我们在设计时发现漏洞缺陷。
+下面以引子的第三个例子为例：
+]]></content>
       <categories>
-          
-          <category> Docs </category>
-          
+        <category>计算机科学</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> plugins </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>Code Highlight</title>
-      <link href="/hexo-theme-freemind-blog/2014/03/15/code-highlight/"/>
-      <url>/hexo-theme-freemind-blog/2014/03/15/code-highlight/</url>
-      <content type="html"><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C"></a>C</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// C</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Hello World\n"</span>);</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// C++</span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream.h&gt;</span></span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></div><div class="line">&#123;</div><div class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Hello World"</span> &lt;&lt; <span class="built_in">endl</span>;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure><a id="more"></a><h2 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">helloWorld</span></span></div><div class="line">&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span></span></div><div class="line">    &#123;</div><div class="line">        System.out.println(<span class="string">"Hello World"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="Assembler"><a href="#Assembler" class="headerlink" title="Assembler"></a>Assembler</h2><figure class="highlight arm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">#include</span> &lt;stdio.h&gt;</div><div class="line"></div><div class="line"><span class="symbol">char</span> format[] = <span class="string">"%s %s\n"</span><span class="comment">;</span></div><div class="line"><span class="symbol">char</span> hello[] = <span class="string">"Hello"</span><span class="comment">;</span></div><div class="line"><span class="symbol">char</span> world[] = <span class="string">"world"</span><span class="comment">;</span></div><div class="line"><span class="symbol">void</span> main( void )</div><div class="line">&#123;</div><div class="line">   __asm</div><div class="line">   &#123;</div><div class="line">      <span class="keyword">mov </span> eax, offset world</div><div class="line">      <span class="keyword">push </span>eax</div><div class="line">      <span class="keyword">mov </span> eax, offset hello</div><div class="line">      <span class="keyword">push </span>eax</div><div class="line">      <span class="keyword">mov </span> eax, offset format</div><div class="line">      <span class="keyword">push </span>eax</div><div class="line">      call printf</div><div class="line">      <span class="keyword">pop </span> ebx</div><div class="line">      <span class="keyword">pop </span> ebx</div><div class="line">      <span class="keyword">pop </span> ebx</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="Net"><a href="#Net" class="headerlink" title=".Net"></a>.Net</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// Hello World .NET</div><div class="line"></div><div class="line">#using &lt;mscorlib.dll&gt;</div><div class="line">using namespace System;</div><div class="line"></div><div class="line">int _tmain()</div><div class="line">&#123;</div><div class="line">    Console::WriteLine(S"Hello World");</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure><h2 id="Erlang"><a href="#Erlang" class="headerlink" title="Erlang"></a>Erlang</h2><figure class="highlight erlang"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">-module</span><span class="params">(hello)</span>.</div><div class="line"><span class="keyword">-export</span><span class="params">([world/<span class="number">0</span>])</span>.</div><div class="line"></div><div class="line"><span class="function"><span class="title">world</span><span class="params">()</span> -&gt;</span> io:format(<span class="string">"Hello World"</span>).</div></pre></td></tr></table></figure><h2 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h2><figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/local/bin/ruby -w</span></div><div class="line">puts <span class="string">"Hello World"</span></div></pre></td></tr></table></figure><h2 id="BASIC"><a href="#BASIC" class="headerlink" title="BASIC"></a>BASIC</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">// Texas Instruments TI-81 BASIC</div><div class="line">Prgm1:HELLO...</div><div class="line">:Disp "HELLO WORLD"</div></pre></td></tr></table></figure><h2 id="Perl"><a href="#Perl" class="headerlink" title="Perl"></a>Perl</h2><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin perl -w  </span></div><div class="line"><span class="keyword">print</span> (<span class="string">"Hello World"</span>);</div></pre></td></tr></table></figure><h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/bin/python</span></div><div class="line">print(<span class="string">"Hello World"</span>)</div></pre></td></tr></table></figure><h2 id="Bash"><a href="#Bash" class="headerlink" title="Bash"></a>Bash</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"Hello World"</span></div></pre></td></tr></table></figure><h2 id="Brainfuck"><a href="#Brainfuck" class="headerlink" title="Brainfuck"></a>Brainfuck</h2><figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&gt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="title">[</span>&lt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span>&gt;<span class="literal">-</span><span class="title">]</span>&lt;<span class="string">.</span>&gt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="title">[</span>&lt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span>&gt;<span class="literal">-</span><span class="title">]</span>&lt;<span class="literal">+</span><span class="string">.</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="string">.</span><span class="string">.</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="string">.</span><span class="title">[</span><span class="literal">-</span><span class="title">]</span></div><div class="line">&gt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="title">[</span>&lt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span>&gt;<span class="literal">-</span><span class="title">]</span> &lt;<span class="string">.</span>&gt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="title">[</span>&lt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span>&gt;<span class="literal">-</span><span class="title">]</span>&lt;<span class="literal">-</span><span class="string">.</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="string">.</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span></div><div class="line"><span class="string">.</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="string">.</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="literal">-</span><span class="string">.</span><span class="title">[</span><span class="literal">-</span><span class="title">]</span>&gt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="title">[</span>&lt;<span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span>&gt;<span class="literal">-</span> <span class="title">]</span>&lt;<span class="literal">+</span><span class="string">.</span><span class="title">[</span><span class="literal">-</span><span class="title">]</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="literal">+</span><span class="string">.</span></div></pre></td></tr></table></figure><h2 id="php"><a href="#php" class="headerlink" title="php"></a>php</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?</span>=<span class="string">"Hello world\n"</span> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure><h2 id="Pascal"><a href="#Pascal" class="headerlink" title="Pascal"></a>Pascal</h2><figure class="highlight pascal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">Program</span> HelloWorld;</div><div class="line"></div><div class="line"><span class="keyword">Begin</span></div><div class="line">  Writeln (<span class="string">'Hello World!'</span>);</div><div class="line"><span class="keyword">End</span>.</div></pre></td></tr></table></figure><h2 id="Delphi"><a href="#Delphi" class="headerlink" title="Delphi"></a>Delphi</h2><figure class="highlight delphi"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Delphi, thanks to C0derr</span></div><div class="line"><span class="keyword">program</span> Project1;</div><div class="line"><span class="keyword">uses</span></div><div class="line">  qdialogs;</div><div class="line"><span class="keyword">const</span></div><div class="line">  s=<span class="string">'Hello, World!'</span>;</div><div class="line"><span class="keyword">begin</span></div><div class="line">  showmessage(s);</div><div class="line"><span class="keyword">end</span>.</div></pre></td></tr></table></figure>]]></content>
-      
+      <tags>
+        <tag>FSM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Verilog快速上手</title>
+    <url>/2026/06/21/fpga-verilog-intro/</url>
+    <content><![CDATA[介绍Verilog是一种HDL(Hardware Description Language)，即硬件描述语言，用于设计和验证逻辑电路。
+与C&#x2F;C++,Java,Python等编程语言不同，HDL所描述的是电路结构和行为，相当于用结构化的语言来描述一个电路，这比电路图描述电路要更加自动化大规模化，最终综合得到的产物是可以直接映射到实际的电路结构上的。
+这篇文章主要介绍verilog代码的基本写法：
+1.1模块模块(module)​是Verilog的基本结构。模块就像集成电路芯片，一个电路就是一个模块，而一个模块内部可以由若干个小模块组成，这些小模块内部也可以由更小的模块组成。实现功能的电路结构一定要包裹在module &lt;模块名&gt;(&lt;输入输出端口列表&gt;)...endmodule里。
+下面我们用这个来描述一个电路，比如一个与门元件。与门有两个输入一个输出。所以我们将与门模块命名成model and_gate(input a, input b, output c)
+比如一个1位半加器：
+module half_adder( 	input a, 	input b,	output sum, 	output cy	)assign sum = a ^ b; //和assign cy = a &amp; b;// 进位endmodule
+
+上面的Verilog代码模块对应的就是下面这个方框里的电路，这个方框就是我们定义的半加器模块。
+
+在half_adder的括号里定义的a,b,sum,cy就是端口，可以看到相当于芯片的引脚。
+1.2 数据类型Verilog主要有两种数据类型：
+
+线网型（wire）：相当于导线，用于传导信号，连接各个端口和模块。
+寄存器型（reg）:  表示一个存储单元，与wire最大的区别就是有记忆存储功能，能保存当前状态。
+
+1.2 assign语句assign语句用于标记连续赋值的两端信号，等号相当于“连接”，用一根导线将左右两边的端点相连。例如下面这个模块：
+module example(a,b,c,d,o)	input a,b,c,d;	output o;	wire ab, cd;	assign ab = a &amp; b;	assign cd = c ^ d;	assign o = ~(ab | cd);endmodule
+
+]]></content>
       <categories>
-          
-          <category> Demo </category>
-          
+        <category>FPGA</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> highlight </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>Lorem Ipsum</title>
-      <link href="/hexo-theme-freemind-blog/2014/03/15/lorem-ipsum/"/>
-      <url>/hexo-theme-freemind-blog/2014/03/15/lorem-ipsum/</url>
-      <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p><p><img src="/hexo-theme-freemind-blog/images/lorem-ipsum/lorem-ipsum.jpg" alt="Lorem Ipsum"></p><a id="more"></a><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>]]></content>
-      
+      <tags>
+        <tag>FPGA</tag>
+        <tag>Verilog</tag>
+        <tag>HDL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C/C++中文乱码问题</title>
+    <url>/2026/07/25/C-Cpp-fix-ChineseMessyCode/</url>
+    <content><![CDATA[用VS Code写C语言程序时输出中文乱码的问题，接触过几次这种问题，问题的根本也多多少少摸清了。VS code将默认C语言程序保存为UTF-8，而window的终端输出默认是GBK编码。这里编码不统一就造成了乱码问题。
+解决这个问题的思路是统一编码，要么统一成UTF-8，要么统一成GBK。一般来说UTF-8更广泛，那就统一使用UTF-8，那么解决方法就是让终端也使用UTF-8。
+这里有几种方案：
+方案一：在代码中强制设置终端编码这个方法最彻底，无论程序是在VS Code里运行，还是被双击运行，都能保证中文正常显示。
+
+在C程序的开头，包含 &lt;windows.h&gt; 头文件。
+在 main 函数的最开始处，调用 SetConsoleOutputCP();，参数设置成CP_UTF8或65001，将终端的输出代码页设置为UTF-8。
+
+#include &lt;stdio.h&gt;#include &lt;windows.h&gt; // 添加这个头文件int main() &#123;    SetConsoleOutputCP(CP_UTF8); // 设置控制台输出编码为UTF-8        printf(&quot;你好，世界！\n&quot;);    return 0;&#125;
+
+
+原理：SetConsoleOutputCP(CP_UTF8) 这行代码让程序自己告诉Windows终端：“我要输出UTF-8编码的内容，请用UTF-8来解码”。这样就从根源上解决了编码不一致的问题。只要是在Windows平台上运行，都能正确输出中文内容。
+
+方案二：使用编译器参数如果你使用的是GCC编译器，可以在编译时通过参数指定源文件编码和运行时字符编码。
+gcc -o output.exe main.c -finput-charset=UTF-8 -fexec-charset=GBK
+
+这个命令告诉编译器，源文件是UTF-8编码，但生成的程序在运行时，其中的字符串常量使用GBK编码。这相当于把转换工作交给了编译器，但需要在每次编译时都加上这些参数，稍显繁琐。
+方案三：配置VS Code终端自动切换如果你不想修改代码，可以配置VS Code，让它在每次打开终端时自动执行 chcp 65001 命令，将终端编码临时切换为UTF-8。
+
+在VS Code中，按下 Ctrl + Shift + P，输入并选择 Preferences: Open Settings (JSON)，打开设置文件。
+在 settings.json 文件中，添加或修改以下配置：
+
+&#123;    &quot;terminal.integrated.defaultProfile.windows&quot;: &quot;PowerShell with UTF-8&quot;,    &quot;terminal.integrated.profiles.windows&quot;: &#123;        &quot;PowerShell with UTF-8&quot;: &#123;            &quot;path&quot;: &quot;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe&quot;,            &quot;args&quot;: [                &quot;-NoExit&quot;,                &quot;-Command&quot;,                &quot;chcp 65001 | Out-Null&quot;            ]        &#125;    &#125;&#125;
+
+
+注意：这个方案只对在VS Code内部打开的终端有效。如果你直接双击运行编译好的 .exe 文件，依然会出现乱码
+
+方案四：结合 CMake在CLion里习惯改 CMakeLists.txt，那么在VS Code里完全可以保留这套工作流。
+
+在 CMakeLists.txt 中固定编译参数：
+
+cmake_minimum_required(VERSION 3.10)project(MyProject)add_compile_options(-fexec-charset=GBK -finput-charset=UTF-8)add_executable($&#123;PROJECT_NAME&#125; main.c)
+
+
+
+方案五：修改VS Code文件编码为GBK (不推荐)这是一个“向下兼容”的方案，将源文件保存为终端认识的GBK格式。但这样做会丢失UTF-8的通用性，不推荐。
+
+点击VS Code右下角状态栏的编码标识（例如“UTF-8”）。
+在弹出的菜单中选择“通过编码保存” (Save with Encoding)。
+选择“GBK”或“简体中文(GB2312)”
+
+]]></content>
       <categories>
-          
-          <category> Test </category>
-          
+        <category>C</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> English </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>繁體中文測試</title>
-      <link href="/hexo-theme-freemind-blog/2013/12/25/traditional-chinese-test/"/>
-      <url>/hexo-theme-freemind-blog/2013/12/25/traditional-chinese-test/</url>
-      <content type="html"><![CDATA[<p>觀自在菩薩，行深般若波羅蜜多時，照見五蘊皆空，度一切苦厄。</p><p>舍利子，色不異空，空不異色；色即是空，空即是色。受、想、行、識，亦復如是。</p><p>舍利子，是諸法空相，不生不滅，不垢不淨，不增不減，是故空中無色，無受、想、行、識；無眼、耳、鼻、舌、身、意；無色、聲、香、味、觸、法；無眼界，乃至無意識界；無無明，亦無無明盡；乃至無老死，亦無老死盡。無苦、集、滅、道，無智亦無得，以無所得故。</p><p>菩提薩埵(<code>duǒ</code>)，依般若波羅蜜多故，心無罣礙(<code>guà ài</code>)。無罣礙，故無有恐怖，遠離顛倒夢想，究竟涅槃。三世諸佛，依般若波羅蜜多故，得阿耨多羅三藐三菩提。</p><p>故知般若波羅蜜多，是大神咒，是大明咒，是無上咒，是無等等咒，能除一切苦，真實不虛。</p><p>故說般若波羅蜜多咒，即說咒曰：</p><blockquote><p>揭諦、揭諦，波羅揭諦，波羅僧揭諦，菩提薩婆訶。</p></blockquote>]]></content>
-      
+      <tags>
+        <tag>C</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML快速入门基础</title>
+    <url>/2026/07/02/HTML-primer/</url>
+    <content><![CDATA[我们在浏览器里打开的网页，一个网页上有内容部分（文段、图片……）有可交互部分（按钮，链接……），那么它们是怎么被排版到特定的位置？这篇文章的主要内容就是介绍书写网页使用的基本工具，排版网页内容用到的是一种标记语言——HTML ，全名“超文本标记语言”(Hypertext Markup Language)。
+下面来简单介绍HTML文件应该怎么书写，怎么入门写网页。
+1.HTML的本质一个HTML文件的内容都是由一个个**标签（Tag）**组成。你大可把这些标签看成“积木块”，写网页的过程类似于用这些积木搭建你想要的呈现的效果。标签的格式类型主要分为以下两类：
+
+成对出现的：&lt;标签名&gt;内容&lt;/标签名&gt; ，比如：&lt;p&gt;这是一段文字&lt;/p&gt;
+单个出现的：&lt;标签名 /&gt;，比如：&lt;br /&gt;（换行）
+
+用尖括号来标记标签类型，中间写展示的内容，结尾需要加斜杠/。
+2. HTML基本标签类型要展示的内容不同，所以需要用到不同类型的标签，还有一点是标签名称不区分大小写，但是习惯上使用全小写，这里只介绍一些常用的标签：
+内容排版类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+标题
+&lt;h1&gt; … &lt;h6&gt;
+定义标题大小、级别
+&lt;h1&gt;一级标题&lt;/h1&gt; &lt;h2&gt;二级标题&lt;/h2&gt;
+
+
+文段
+&lt;p&gt;
+定义一个文字段落
+&lt;p&gt;这是一句文段&lt;/p&gt;
+
+
+换行
+&lt;br&gt;
+插入一个换行符
+第一行&lt;br&gt;第二行或是&lt;br/&gt;
+
+
+分割线
+&lt;hr&gt;
+插入一条水平分割线
+&lt;hr&gt;
+
+
+注释
+&lt;!-- ... --&gt;
+定义HTML代码的注释内容
+&lt;!-- 这是注释 --&gt;
+
+
+多媒体类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+超链接
+&lt;a&gt;
+定义超链接，点击可跳转
+&lt;a href=&quot;https://example.com&quot;&gt;这是一个链接&lt;/a&gt;
+
+
+图片
+&lt;img&gt;
+插入图片
+&lt;img src=&quot;图片文件路径或链接&quot;, alt=&quot;图片描述&quot;/&gt;
+
+
+音频
+audio
+插入音频
+&lt;audio src=&quot;音频文件路径或链接&quot; controls&gt;&lt;/audio&gt;
+
+
+视频
+video
+插入视频
+&lt;video src=&quot;视频文件路径或链接&quot; controls&gt;&lt;/video&gt;
+
+
+文本格式类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+黑体加粗
+&lt;strong&gt; &#x2F; &lt;b&gt;
+给文本加粗
+&lt;b&gt;这一行加粗&lt;/b&gt;
+
+
+斜体
+&lt;em&gt; &#x2F; &lt;i&gt;
+将文本显示为斜体
+&lt;i&gt;这行是斜体字&lt;/i&gt;
+
+
+下划线
+&lt;ins&gt; &#x2F; &lt;u&gt;
+给文本加下划线
+&lt;u&gt;这行有下划线&lt;/u&gt;
+
+
+上下标
+&lt;sup&gt; &#x2F; &lt;sub&gt;
+给文本加上下标
+H&lt;sub&gt;2&lt;/sub&gt;O &#x2F; x&lt;sup&gt;2&lt;/sup&gt;
+
+
+删除线
+&lt;del&gt; &#x2F; &lt;s&gt;
+给文本划上删除线
+&lt;del&gt;已删除内容&lt;/del&gt;
+
+
+框架类标签：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+声明类型
+&lt;!DOCTYPE html&gt;
+声明文档类型为HTML5，必须放在第一行。
+&lt;!DOCTYPE html&gt;
+
+
+根部分
+&lt;html&gt;
+HTML文档的根元素。
+&lt;html&gt; ... &lt;/html&gt;
+
+
+头部分
+&lt;head&gt;
+包含文档的元数据（如标题、编码等），不显示在页面中。
+&lt;head&gt; ... &lt;/head&gt;
+
+
+标题部分
+&lt;title&gt;
+定义网页的标题，显示在浏览器标签栏上。
+&lt;title&gt;我的网页&lt;/title&gt;
+
+
+元数据
+&lt;meta&gt;
+提供页面的元信息，如字符编码、视口设置等。
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+
+
+身体部分
+&lt;body&gt;
+定义文档的主体，所有可见内容都写在这里。
+&lt;body&gt; ... &lt;/body&gt;
+
+
+布局类：
+
+
+
+内容类型
+标签
+描述
+例子
+
+
+
+块
+&lt;div&gt;
+块级容器，用于对页面进行分区或布局，独占一行。
+&lt;div&gt; ... &lt;/div&gt;
+
+
+行
+&lt;span&gt;
+行内容器，用于包裹一小段文本或内联元素，无默认样式。
+&lt;span&gt;姓名：张三&lt;/span&gt;
+
+
+列表标签：
+
+
+
+标签
+描述
+示例
+
+
+
+&lt;ul&gt;
+定义无序列表，通常以项目符号呈现。
+&lt;ul&gt;&lt;li&gt;项目一&lt;/li&gt;&lt;/ul&gt;
+
+
+&lt;ol&gt;
+定义有序列表，通常以数字序号呈现。
+&lt;ol&gt;&lt;li&gt;第一步&lt;/li&gt;&lt;/ol&gt;
+
+
+&lt;dl&gt;
+定义描述列表，用于展示术语及其描述。
+&lt;dl&gt;&lt;dt&gt;术语&lt;/dt&gt;&lt;dd&gt;描述&lt;/dd&gt;&lt;/dl&gt;
+
+
+&lt;li&gt;
+定义列表项，用在 &lt;ul&gt; 或 &lt;ol&gt; 中。
+见上例
+
+
+表格标签：
+
+
+
+标签
+描述
+示例
+
+
+
+&lt;table&gt;
+定义一个表格。
+&lt;table&gt; ... &lt;/table&gt;
+
+
+&lt;tr&gt;
+定义表格中的一行。
+&lt;tr&gt; ... &lt;/tr&gt;
+
+
+&lt;td&gt;
+定义表格中的一个标准单元格。
+&lt;td&gt;数据&lt;/td&gt;
+
+
+&lt;th&gt;
+定义表格中的表头单元格，通常加粗居中。
+&lt;th&gt;表头&lt;/th&gt;
+
+
+3. 标签的属性 标签的属性是写在标签里的配置参数，调整属性可以精确控制标签的行为，也叫做样式(style)，样式代码描述了标签的外观
+4. 网页基本架构一个网页的HTML文件基本上都是下面这样的格式：
+&lt;!DOCTYPE html&gt;    &lt;!-- 声明文档类型，告诉浏览器这是HTML5 --&gt;&lt;html&gt;              &lt;!-- 网页的根，所有内容都写在里面 --&gt;    &lt;head&gt;          &lt;!-- 头部：给浏览器看的配置信息（标题、编码） --&gt;        &lt;meta charset=&quot;UTF-8&quot;&gt;   &lt;!-- 设置编码为UTF-8，防止乱码 --&gt;        &lt;title&gt;我的第一个网页&lt;/title&gt;  &lt;!-- 浏览器标签栏显示的标题 --&gt;    &lt;/head&gt;    &lt;body&gt;          &lt;!-- 身体：给用户看的所有内容（文字、图片、按钮） --&gt;        这里写用户能看到的一切内容！    &lt;/body&gt;&lt;/html&gt;
+
+]]></content>
       <categories>
-          
-          <category> Test </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 繁體 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    <entry>
-      <title>简体中文测试</title>
-      <link href="/hexo-theme-freemind-blog/2013/12/25/simplified-chinese-test/"/>
-      <url>/hexo-theme-freemind-blog/2013/12/25/simplified-chinese-test/</url>
-      <content type="html"><![CDATA[<p>观自在菩萨，行深般若波罗蜜多时，照见五蕴皆空，度一切苦厄。</p><p>舍利子，色不异空，空不异色；色即是空，空即是色。受、想、行、识，亦复如是。</p><p>舍利子，是诸法空相，不生不灭，不垢不净，不增不减，是故空中无色，无受、想、行、识；无眼、耳、鼻、舌、身、意；无色、声、香、味、触、法；无眼界，乃至无意识界；无无明，亦无无明尽；乃至无老死，亦无老死尽。无苦、集、灭、道，无智亦无得，以无所得故。</p><p>菩提萨埵(<code>duǒ</code>)，依般若波罗蜜多故，心无罣碍(<code>guà ài</code>)。无罣碍，故无有恐怖，远离颠倒梦想，究竟涅盘。三世诸佛，依般若波罗蜜多故，得阿耨多罗三藐三菩提。</p><p>故知般若波罗蜜多，大神咒，是大明咒，是无上咒，是无等等咒，能除一切苦，真实不虚。</p><p>故说般若波罗蜜多咒， 即说咒曰，</p><blockquote><p>揭谛揭谛 波罗揭谛 波罗僧揭谛 菩提萨婆诃</p></blockquote>]]></content>
-      
+      <tags>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>容器化技术Docke的安装与使用</title>
+    <url>/2026/07/26/docker-reinstall-course/</url>
+    <content><![CDATA[我之前写了一个Python小项目，本来在我电脑上运行得好好的，但是发给我朋友，虽然他那边也有装好的Python环境，但是还是不能直接运行，不是依赖库缺失，就是某个环节变量没设置，倒腾环境配置半天才能跑起来。所以那时我就在想，要是能把我电脑的环境一起发过去的话，是不是就能直接运行。
+本文章讲的是如何在Windows系统(家庭版)上安装&#x2F;卸载Docker Desktop。
+Docker的官网：https://docker.com/
+]]></content>
       <categories>
-          
-          <category> Test </category>
-          
+        <category>教程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 简体 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-  
-  
-    
-    <entry>
-      <title></title>
-      <link href="/hexo-theme-freemind-blog/404.html"/>
-      <url>/hexo-theme-freemind-blog/404.html</url>
-      <content type="html"><![CDATA[<!DOCTYPE HTML><html>  <head><meta charset="utf-8"><title>404 | hexo-theme-freemind</title><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta property="og:site_name" content="hexo-theme-freemind"><meta property="og:image" content="undefined"><link href="favicon.png" rel="icon"><link rel="stylesheet" href="/hexo-theme-freemind/css/themes/bootstrap.css" media="screen" type="text/css">  <link rel="stylesheet" href="/hexo-theme-freemind/css/style.css" media="screen" type="text/css">  <script src="/hexo-theme-freemind/js/jquery-2.0.3.min.js"></script>  </head>  <body><nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">  <div class="container"><button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">  <span class="sr-only">Toggle navigation</span>          <span class="icon-bar"></span>          <span class="icon-bar"></span>          <span class="icon-bar"></span></button><a class="navbar-brand" href="/hexo-theme-freemind/">Freemind</a><div class="collapse navbar-collapse nav-menu">  <ul class="nav navbar-nav"><li>  <a href="/hexo-theme-freemind/archives" title="All the articles."><i class="fa fa-archive"></i>Archives  </a></li><li>  <a href="/hexo-theme-freemind/categories" title="All the categories."><i class="fa fa-folder"></i>Categories  </a></li><li>  <a href="/hexo-theme-freemind/tags" title="All the tags."><i class="fa fa-tags"></i>Tags  </a></li><li>  <a href="/hexo-theme-freemind/about" title="About me."><i class="fa fa-user"></i>About  </a></li>  </ul></div>  </div></nav><div class="clearfix"></div>    <div class="container">    <div class="content">    <div class="page-header">  <h1>OMG, failed to find this article! </h1></div><div class="row-fluid page">  <div style="text-align: center"><div class="spell-img">  <img src="/hexo-theme-freemind/images/404.png"></div><input type="text" id="local-search-input" name="q" results="0" placeholder="Don't worry, search articles here!" class="st-search-input st-default-search-input form-control" style="margin-bottom:1em">  </div>  <div id="local-search-result"></div></div>  </div>    </div> <!-- container --><div class="container-narrow">  <footer> <p>  &copy; 2014 Joseph Pan    with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/" target="_blank" rel="external">Freemind</a>.    </p> </footer></div> <!-- container-narrow --><script src="/hexo-theme-freemind/js/bootstrap.min.js"></script><script src="/hexo-theme-freemind/js/search.js"></script> <script type="text/javascript">           var path = "/hexo-theme-freemind/search.xml";     searchFunc(path, 'local-search-input', 'local-search-result');   </script>  </body></html>]]></content>
-    </entry>
-    
-    <entry>
-      <title>About</title>
-      <link href="/hexo-theme-freemind-blog/about/index.html"/>
-      <url>/hexo-theme-freemind-blog/about/index.html</url>
-      <content type="html"><![CDATA[Something about me. ;-)]]></content>
-    </entry>
-    
-    <entry>
-      <title>Categories</title>
-      <link href="/hexo-theme-freemind-blog/categories/index.html"/>
-      <url>/hexo-theme-freemind-blog/categories/index.html</url>
-      <content type="html"><![CDATA[]]></content>
-    </entry>
-    
-    <entry>
-      <title>Tags</title>
-      <link href="/hexo-theme-freemind-blog/tags/index.html"/>
-      <url>/hexo-theme-freemind-blog/tags/index.html</url>
-      <content type="html"><![CDATA[]]></content>
-    </entry>
-    
-  
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CMake基础指南</title>
+    <url>/2026/08/06/cmake-primer/</url>
+    <content><![CDATA[
+CMake我是在CLion上第一次用的，CLion里编译程序前都要在一个叫CMamkeLists.txt的文件夹里写下面这样的代码：
+cmake_minimum_required(VERSION 4.2)project(MyCpp)set(CMAKE_CXX_STANDARD 23)add_executable(MyCpp main.cpp)
+
+然后就可以运行编译了，VSCode里也是，安装上CMakeTools的插件，也是一样的流程。
+
+在开发C&#x2F;C++项目时，完成代码后需要对源文件进行编译，这个环节由编译器负责。那我手动输入编译命令不就行了吗？但是在有多个源文件或者引入了多个第三方库时，需要每次手动输入很长的编译命令，每个文件之间还有复杂的依赖关系，很容易写错，还需要把编译指令记录下来。这样很不方便项目的管理，所以需要一套工具根据我们的需求去指挥编译器完成编译任务。
+那CMake是个什么东西？用来做什么的？
+CMake是一个跨平台的开源构建工具，和编译器不同，它并不是一个直接的“编译器”，而是一个构建系统的生成器，一般用于C&#x2F;C++项目的构建。使用CMake可以更自动化更标准更方便地完成C&#x2F;C++的项目编译和构建。这篇文章介绍一下CMake主要的基本用法，不会涉及太多进阶的内容。
+先理一下在C&#x2F;C++项目的构建环节里各个工具的作用：
+
+编译器（如GCC&#x2F;MSVC）：负责把C&#x2F;C++代码翻译成机器能懂的二进制程序。
+Make&#x2F;Ninja ：负责指挥编译器先翻译哪个文件、后翻译哪个，并协调依赖关系。
+CMake ：而是根据CMakeLists.txt文件和不同平台（Windows、Linux、macOS），生成相应的“构建方案”（Makefile或VS工程文件）。
+
+编译器除外，CMake这套工具是包含两部分的：CMake和Make&#x2F;ninja，CMake的作用仅仅是生成一套构建方案，而不直接调用编译器，需要Make&#x2F;Ninja去调用。我们只跟CMake进行直接的交互，这个关键文件就是CMakeLists.txt。
+
+注：平常我们说用 ”CMake构建 ”，其实准确说指的是这套工具链。就像用 “GCC编译 ”，这也是指一套工具链，除了编译器还有链接器等，只不过我们在*非必要情况下不需要关心过多的底层细节。*
+
+一. 命令行工作流IDE里一般会使用图形化界面代替，这部分可以选择跳过。在创建好项目根文件夹后，在根目录下打开终端，输入如下命令：
+#注意Cmake版本，CMake3.13+推荐的命令行一体化构建：# 1. 配置：让CMake生成构建方案，-B 指定构建目录名，自动创建目录 cmake -B build# 2. 构建：这一步需要先写完CMakeLists.txt，再让Ninja/Make开始编译，--build 指定目录名cmake --build build#需要指定模式时：Debug调试（默认） / Release发布cmake -B build -DCMAKE_BUILD_TYPE=Releasecmake --build build
+
+
+
+二. CMakeLists.txt基本命令首先提一点，CMake 是一门解释型脚本语言，它的解析器是顺序执行的（从上往下读），所以代码顺序是有严格要求的。
+假设项目只有一个main文件（单文件且没有外部库的情况），用CMake构建项目，CMakeLists.txt是唯一要写的文件，它有专门的语法，CMakeLists.txt里需要写下面这样的命令：
+cmake_minimum_required(VERSION 3.10) # 项目使用的CMake的最低版本要求project(MyApp)                       # 项目名称add_executable(app main.cpp)         # 声明可执行文件名与需要编译的源文件
+
+这是最简单的可使用的CMakeLists.txt，不能再省了。
+假设项目目录结构是这样的（多文件且没有第三方库的情况）：
+MyProject/├── CMakeLists.txt├── main.cpp├── include/│   └── module.h└── src/    └── module.cpp
+CMakeLists.txt：
+cmake_minimum_required(VERSION 3.10) # 项目使用的CMake的最低版本要求project(MyApp)                       # 项目名称set(CMAKE_CXX_STANDARD 17)           # 项目使用的C++标准# 1.生成一个静态库（把src里的cpp编成库）add_library(module_lib src/module.cpp)# 2.告诉module_lib，它的头文件在哪里（PUBLIC会让链接器自动找到）target_include_directories(module_lib PUBLIC $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)# 3.生成主程序可执行文件，第一个参数是最后生成的exe文件的文件名add_executable(my_app main.cpp)# 4.将库链接给主程序（有了这行，my_app自动获得include路径）target_link_libraries(my_app PRIVATE module_lib)
+
+大概的顺序就是：版本第一，项目第二，设完标准再建目标（add_executable），最后才能链接（target_link_libraries）
+解释一下基本的命令：
+1. 固定头三句cmake_minimum_required(VERSION 3.10)  # 锁定最低版本project(MyProject)                    # 给工程命名set(CMAKE_CXX_STANDARD 17)            # 声明C++标准
+
+project()：设置项目的基本信息project(&lt;项目名称&gt; [语言...])project(&lt;项目名称&gt;        [VERSION &lt;主版本号&gt;[.&lt;次版本号&gt;[.&lt;修订号&gt;[.&lt;构建号&gt;]]]]        [DESCRIPTION &lt;项目描述&gt;]        [HOMEPAGE_URL &lt;项目主页URL&gt;]        [LANGUAGES &lt;语言&gt;...])
+
+
+项目名称（必填）：工程名称，会赋值给变量 PROJECT_NAME。
+语言（选填）：指定启用的编程语言（如 C, CXX, Fortran 等）。如果不指定，默认启用 C 和 CXX。
+VERSION：设置项目版本号，会生成 PROJECT_VERSION 等变量，关于版本号详细规则，参考
+DESCRIPTION：项目描述文本。
+HOMEPAGE_URL：项目主页 URL。
+
+示例：
+project(MyProject)                              # 仅名称，默认语言 C/C++project(MyProject VERSION 1.2.3 LANGUAGES CXX)  # 指定版本和语言project(MyProject DESCRIPTION &quot;My awesome project&quot; HOMEPAGE_URL &quot;https://example.com&quot;)
+
+
+注意：project 会设置一系列变量（如 PROJECT_SOURCE_DIR、CMAKE_PROJECT_NAME 等），并且会影响编译器的检查，这些是项目的元信息，要让项目看上去正规一些，那就严格设置。
+
+set()：设置语言标准set(&lt;变量&gt; &lt;值&gt;... [PARENT_SCOPE])
+
+
+&lt;变量&gt;：要设置的变量名。
+&lt;值&gt;：要赋给变量的值（可以是多个，会被拼接成字符串，默认用分号分隔）。
+[PARENT_SCOPE]：可选，将变量设置到父作用域（常用于函数或宏中）。
+
+下面举设置C&#x2F;C++标准的例子：
+set(CMAKE_CXX_STANDARD 17)              # 要求使用 C++17set(CMAKE_CXX_STANDARD_REQUIRED ON)     # 强制要求，不降级set(CMAKE_CXX_EXTENSIONS OFF)           # 禁用编译器扩展set(CMAKE_C_STANDARD 99)                # 设置 C 标准为 C99set(CMAKE_C_STANDARD_REQUIRED ON)       # 强制要求，不降级set(CMAKE_C_EXTENSIONS OFF)             # 禁用编译器扩展 
+
+
+
+2. 生成库不建议把所有的.c&#x2F;.cpp文件都塞进一个add_executable里。推荐的做法是：把功能模块单独编成库，再让主程序去链接它。
+比如生成一个名为 module 的静态库，这个库只包含一个源文件：
+add_library(module STATIC src/module.cpp)# 语法：add_library(&lt;库名&gt; &lt;库类型&gt; [EXCLUDE_FROM_ALL] [库文件路径列表...])
+
+库类型参数：
+
+STATIC：静态库 .a&#x2F;.lib
+SHARED：动态库 .so&#x2F;.dll
+INTERFACE：仅头文件库，如 header-only 的模板库
+OBJECT：对象文件集合，较少直接用
+
+EXCLUDE_FROM_ALL（选填）：
+
+不带 EXCLUDE_FROM_ALL：该库会随着 make 命令被构建。
+带了 EXCLUDE_FROM_ALL：make 命令不会构建它。但是仍然可以通过**make明确指定目标名**来单独构建它
+
+
+注：库文件路径默认是从CMakeLists.txt的所在目录开始的
+
+3. 指定头文件路径让编译器找得到头文件，同时控制路径依赖的传播。
+# 告诉 module 这个目标：你的头文件在 $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include 目录下target_include_directories(module PUBLIC $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)# 语法：target_include_directories(&lt;目标对象&gt; [SYSTEM] [AFTER | BEFORE] [&lt;作用域关键字&gt; [目录路径列表...]...] )
+
+目标对象：由 add_executable() 或 add_library() 创建的目标名称。
+SYSTEM（可选）：加在作用域关键字之前。告诉编译器这些目录是系统级目录，编译器会抑制该目录下头文件的警告（比如第三方库的警告不再干扰你的编译输出）。
+AFTER | BEFORE（可选）：控制目录添加到编译器搜索路径的顺序（默认是 AFTER，即追加到列表末尾）。除非有特殊的覆盖需求，否则极少使用。
+作用域关键字（必填，至少一个）：
+
+PUBLIC：既用于该目标，也传递给依赖它的目标。
+
+PRIVATE：只用于该目标自身，不传递给依赖它的其他目标
+
+INTERFACE：不用于该目标，只传递给依赖它的目标。
+
+
+目录路径列表（必填）：要添加的目录路径。可以是绝对路径或相对路径。
+
+CMake 官方建议：不要直接写裸的相对路径！
+
+不推荐的写法：target_include_directories(mylib PUBLIC include) 这种写法依赖于当前工作目录，极其不稳定（尤其是在 IDE 中或外部构建时）。
+推荐写法：使用变量将相对路径转换为绝对路径。
+
+ # $&#123;CMAKE_CURRENT_SOURCE_DIR&#125; 代表当前正在处理的 CMakeLists.txt 所在的目录target_include_directories(mylib PUBLIC     $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include)
+关于为什么 add_library 不需要加 ${CMAKE_CURRENT_SOURCE_DIR}，而 target_include_directories 推荐加，核心区别在于：
+
+add_library 的路径只在 CMake 配置时被解析，CMake 自己知道当前目录是哪里，拼接很稳。
+target_include_directories 的路径是写给编译器看的字符串，编译器运行时不知道 CMake 的当前目录，所以必须指明它绝对路径才能找到文件。
+
+再举一个有多个依赖项的例子：
+target_include_directories(mylib    PUBLIC        $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/include          # 外部使用者也需要    PRIVATE        $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/src              # 仅内部编译需要        $&#123;CMAKE_CURRENT_SOURCE_DIR&#125;/src/third_party  # 仅内部需要的第三方库)
+
+这有点像C++类的访问控制符区分字段
+4. 生成可执行文件add_executable(app main.cpp)#语法：add_executable(&lt;可执行文件名称&gt; [源文件列表...])
+
+如果有多个源文件，直接全部列出来。
+ 源码文件很多怎么办？ 用变量临时存一下：
+set(SOURCES src/math.cpp src/other.cpp src/main.cpp)add_executable(app $&#123;SOURCES&#125;)
+
+
+注意一定要区分大小写：CMake命令不区分大小写（ADD_EXECUTABLE也行），但变量和路径严格区分。
+
+5. 链接库可执行文件与库或者库与库之间可能会有调用依赖的关系，需要将它们链接到一起
+# 告诉 app：你依赖 module 这个库target_link_libraries(app PRIVATE module)# 语法：target_link_libraries(&lt;目标对象&gt; [&lt;作用域关键字&gt; [依赖库列表...]...])
+
+目标对象：
+
+可执行文件：由 add_executable() 创建。
+库：由 add_library() 创建
+
+作用域关键字（控制依赖传播范围）：
+
+PRIVATE：依赖只用于该目标自身，不传递给依赖它的其他目标。
+PUBLIC：依赖既用于该目标，也传递给依赖它的目标。
+INTERFACE：依赖不用于该目标，只传递给依赖它的目标（常用于仅有头文件的接口库）
+
+再举一个有多个依赖项的例子：
+target_link_libraries(my_lib    PUBLIC        core_api      # 外部用户也需要 core_api        interface_cv  # 外部用户也需要 OpenCV接口    PRIVATE        internal_utils # 仅 my_lib 内部编译链接用        logger         # 仅内部日志库    INTERFACE        header_only_lib # 仅头文件库，只影响外部接口)
+
+
+注：依赖关系我建议画个图来梳理会比较直观
+
+三. 总结掌握了上面这些CMake基础内容，用来构建单文件或者多文件项目够用了，多敲几遍就记得了。引入第三方库以及中大型项目分层，看进阶的内容。  
+更多详细的内容可以去看CMake的相关文档：
+
+官方主页地址：https://cmake.org/
+
+官方文档地址：https://cmake.org/documentation
+
+中文文档地址：https://cmake.com.cn/
+
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>博客内容分类管理规则</title>
+    <url>/2026/08/14/blog-content-classify-rule/</url>
+    <content><![CDATA[我想我应该给博客设置一下分类规则，现在看着太乱了，以免以后文章多起来就难找了。
+]]></content>
+      <categories>
+        <category>思考</category>
+      </categories>
+      <tags>
+        <tag>分类</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++基础输入输出操作</title>
+    <url>/2026/07/16/cpp-basic-io/</url>
+    <content><![CDATA[**输入输出（Input Output）**操作（简称为IO操作），入门编程一门编程语言第一个程序就是经典的输出HelloWorld，IO操作是程序里经常用到的：打印输出、读取用户输入、读写文件……。除了很常用的那几个函数写多几遍了也就记住了，但是比较细致的操作总是忘记怎么写，比如格式化输出，每次都要回去查，比较麻烦。我C++也是最近才学的，所以我在这里梳理一下C++中的最基本的IO操作。
+
+一些碎碎念：我之前学的C，一些小项目是直接用C的，写洛谷力扣也是用C，C比较简陋简单。学C++的契机是一次数学建模比赛吧（也不是正式的比赛，类似于那种上机考试而已）
+
+首先涉及IO操作就需要用到的3个标准库：
+
+&lt;iostream&gt;：控制台终端的输入输出等
+&lt;iomanip&gt;：控制输出格式（宽度，精度等）
+&lt;fstream&gt;：文件读写操作
+
+1. 标准输入输出&lt;iostream&gt;1.1 控制台输出：std::coutcout（console output）搭配**插入运算符 &lt;&lt; **使用，可以连续输出不同数据类型。
+#include &lt;iostream&gt;int main() &#123;    int age = 18;    double height = 1.75;    std::string name = &quot;小明&quot;;    std::cout &lt;&lt; &quot;姓名：&quot; &lt;&lt; name &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; &quot;年龄：&quot; &lt;&lt; age &lt;&lt; &quot; 岁\n&quot;;      std::cout &lt;&lt; &quot;身高：&quot; &lt;&lt; height &lt;&lt; &quot; 米&quot; &lt;&lt; std::endl;    return 0;&#125;
+
+
+\n 是换行符，std::endl 也换行并立即刷新缓冲区。
+初学建议简单使用 \n 即可；需要立即显示且不影响性能时再用 std::endl。
+
+1.2 控制台输入：std::cincin（console input）搭配提取运算符 &gt;&gt;，默认以空格、Tab、换行作为分隔符。
+#include &lt;iostream&gt;#include &lt;string&gt;int main() &#123;    int age;    std::string name;    std::cout &lt;&lt; &quot;请输入姓名和年龄（用空格分开）：&quot;;    std::cin &gt;&gt; name &gt;&gt; age;        return 0;&#125;
+
+注意：cin &gt;&gt; 读到空格就会停止，因此输入 “张三 20” 时，name 只得到 “张三”。如果姓名中间有空格（如 “张 三”），需要用 std::getline。
+1.3 读取整行：std::getline()getline() 可以读取包含空格的一整行，直到遇到换行符**\n**。getline是个函数，调用格式是std::getline(&lt;输入流源&gt;, &lt;输出目标&gt;)。
+#include &lt;iostream&gt;#include &lt;string&gt;int main() &#123;    std::string fullName;    std::cout &lt;&lt; &quot;请输入全名（可含空格）：&quot;;    std::getline(std::cin, fullName);    std::cout &lt;&lt; &quot;你的全名是：&quot; &lt;&lt; fullName &lt;&lt; std::endl;    return 0;&#125;
+
+注意： 当混合使用 cin &gt;&gt; 和 getline 时，由于 cin &gt;&gt; 读取数字后，输入缓冲区会残留一个换行符。紧接的 getline 可能直接读到一个空行。
+解决方法：在两者之间添加 cin.ignore() 丢弃残留换行符。
+int age;std::string name;std::cout &lt;&lt; &quot;年龄：&quot;;std::cin &gt;&gt; age;std::cin.ignore();  // 忽略换行符std::cout &lt;&lt; &quot;全名：&quot;;std::getline(std::cin, name);
+
+
+
+1.4 错误与日志的输出：std::cerr与std::clog除了标准输出流还有其他用固定用途的输出流，比如标准错误流：
+
+std::cerr：无缓冲的错误流，用立即显示错误信息。
+std::clog：带缓冲的错误流，一般用于日志信息输出。
+
+std::cerr &lt;&lt; &quot;[Error]: 这是一条错误信息&quot; &lt;&lt; std::endl;std::clog &lt;&lt; &quot;[Info]: 这是一条日志信息&quot; &lt;&lt; std::endl;
+
+
+
+2. 格式化输出&lt;iomanip&gt;需要引入 &lt;iomanip&gt;，常用的控制符：
+
+
+
+控制符
+作用
+示例
+
+
+
+std::setw(n)
+设置输出宽度（仅对下一个输出有效）
+std::cout &lt;&lt; std::setw(10) &lt;&lt; 123;
+
+
+std::setprecision(n)
+设置浮点数有效数字位数
+配合 std::fixed 使用
+
+
+std::fixed
+固定小数点表示
+std::cout &lt;&lt; std::fixed &lt;&lt; 3.14159;
+
+
+std::left&#x2F;std::right
+左&#x2F;右对齐
+std::cout &lt;&lt; std::left &lt;&lt; std::setw(10) &lt;&lt; &quot;hi&quot;;
+
+
+#include &lt;iostream&gt;#include &lt;iomanip&gt;int main() &#123;    double pi = 3.14159265;    std::cout &lt;&lt; &quot;默认：&quot; &lt;&lt; pi &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; &quot;保留3位小数：&quot; &lt;&lt; std::fixed &lt;&lt; std::setprecision(3) &lt;&lt; pi &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; std::left  &lt;&lt; std::setw(10) &lt;&lt; &quot;姓名&quot;              &lt;&lt; std::right &lt;&lt; std::setw(10) &lt;&lt; &quot;分数&quot; &lt;&lt; &quot;\n&quot;;    std::cout &lt;&lt; std::left  &lt;&lt; std::setw(10) &lt;&lt; &quot;小明&quot;              &lt;&lt; std::right &lt;&lt; std::setw(10) &lt;&lt; 95 &lt;&lt; &quot;\n&quot;;    return 0;&#125;
+
+
+
+3. 文件IO操作&lt;fstream&gt;文件读写的基本流程就是：打开 → 读写 → 关闭。记得及时关闭那些已经不要使用了的文件资源，资源泄漏也是一种常见的程序错误。
+三个基本对象类型：
+
+fstream：可读可写
+ifstream：只读取
+ofstream：只写入
+
+写入：
+#include &lt;fstream&gt;#include &lt;iostream&gt;int main()&#123;    std::ofstream outFile(&quot;example.txt&quot;); //创建文件输出流对象，参数填入文件对象的路径，如果文件存在会直接清空覆盖    if (outFile.is_open())    &#123;        outFile &lt;&lt; &quot;Hello, File\n&quot;;        outFile &lt;&lt; &quot;第二行内容\n&quot;;        outFile.close(); //关闭文件    &#125;        return 0;&#125;
+
+追加写入模式：在创建文件对象时加入参数std::ios:app
+std::ofstream outFile(&quot;log.txt&quot;, std::ios::app);outFile &lt;&lt; &quot;这一行会追加在末尾&quot; &lt;&lt; std::endl;
+
+
+
+读取：
+#include &lt;fstream&gt;#include &lt;iostream&gt;#include &lt;string&gt;int main()&#123;    std::ifstream inFile(&quot;example.txt&quot;); //创建一个文件输入流对象，参数填入文件对象的路径    std::string line;    if (inFile.is_open())    &#123;    	std::string line;    	while (std::getline(inFile, line))  // 循环条件直接判断读取是否成功        &#123;         	std::cout &lt;&lt; &quot;读取到: &quot; &lt;&lt; line &lt;&lt; std::endl;    	&#125;        inFile.close(); //关闭文件    &#125;        return 0;&#125;
+
+按空格&#x2F;单词读取：使用 &gt;&gt; 运算符。
+std::string word;while (inFile &gt;&gt; word)  // 自动跳过空白符，直到读取到末尾&#123;    std::cout &lt;&lt; word &lt;&lt; std::endl;&#125;
+
+
+
+结尾以上就是C++里最基本的IO操作，这里暂时不提及太复杂的操作，那些就留到专门的篇章里仔细讲解吧。
+]]></content>
+      <categories>
+        <category>Cpp</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++面向对象基础</title>
+    <url>/2026/08/16/cpp-oop-primer/</url>
+    <content><![CDATA[**OOP（面向对象编程）**我是先用Python学的，我学的第一门编程语言是C，众所周知C是过程式编程语言没有原生的面向对象特性。而最初的C++就是C with class，现在看来C++已经不是C with class那么简单了。现在的C++发展成了一门多范式编程语言，不光有过程式，面向对象式，还有函数式等等，总是就是大杂烩 究极缝合怪 ……
+咳咳，说回正题。OOP三大基本特性：封装、继承、多态，C++该有的都有，而且也是比Python要更完善更严格。C++OOP有两个关键字struct 和class，虽然都能定义对象，但是它们最大的区别是默认访问权限，struct默认是public的，而class默认是private的
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CMake基础教程2：导入第三方库</title>
+    <url>/2026/08/18/cmake-primer-2/</url>
+    <content><![CDATA[第一篇CMake基础教程讲了如何用CMake构建生成单&#x2F;多文件项目，这篇就继续讲最重要的一种情况——导入第三库。
+一、使用 find_package这种情况是第三库的作者已经提供了CMake的配置文件（&lt;库名&gt;Config.cmake或Find&lt;库名&gt;.cmake）
+find_package(SomeLibrary REQUIRED) # REQUIRED 表示该库是必需的，找不到则报错[reference:1]# ... 之后链接你的目标target_link_libraries(MyApp SomeLibrary::SomeLibrary) # 使用库提供的导入目标 (IMPORTED target)[reference:2]
+
+
+工作原理：find_package 会自动在系统标准路径或 CMAKE_PREFIX_PATH 指定的路径中搜索库。
+版本指定：可以指定所需版本，例如 find_package(SomeLibrary 1.2.3 REQUIRED)。
+组件（COMPONENTS）：对于包含多个组件的库（如 Qt），可以只请求需要的部分。
+
+如果库没有安装在系统标准路径，可以通过设置 CMAKE_PREFIX_PATH 变量来帮助 CMake 找到它：
+list(APPEND CMAKE_PREFIX_PATH &quot;/path/to/your/library&quot;)]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>CMake</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树莓派pico：Vscode C++开发环境配置</title>
+    <url>/2026/08/26/raspberry-pi-pico-vscode-cpp-devEnvConfig/</url>
+    <content><![CDATA[上个月买了一块树莓派RP2040的开发板来捣鼓捣鼓，没想到开发环境配置还真是头疼，花了我整整一天
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>嵌入式</tag>
+        <tag>树莓派</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++模板指南</title>
+    <url>/2026/08/27/cpp-template-primer/</url>
+    <content><![CDATA[模板(template )——C++的最大特色之一，C++元编程和泛型编程的基石，STL（标准模板库）的核心就是建立在模板上的。
+到C++23为止，模板已经发展成了一个包含 5 种核心模板的家族，它们按引入标准的时间顺序分别是：
+
+
+
+模板类型
+引入标准
+核心作用
+
+
+
+函数模板
+C++98
+定义通用函数
+
+
+类模板
+C++98
+定义通用类
+
+
+别名模板
+C++11
+为一族类型创建别名
+
+
+变量模板
+C++14
+定义一族变量
+
+
+概念 (Concept)
+C++20
+对模板参数施加编译期约束
+
+
+这里主要介绍一下模板的基本写法：
+关键字template
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++中导入windows.h导致的宏污染问题</title>
+    <url>/2026/08/30/cpp-windowsh-macro-definition-pollution/</url>
+    <content><![CDATA[我在写一个用到winAPI的C++程序时遇到了这样的报错：
+[1/3] Building CXX object CMakeFiles\Main.dir\main.cpp.objFAILED: [code=2] CMakeFiles/Main.dir/main.cpp.obj E:\CBuildTools\MSVC\Build\VC\Tools\MSVC\14.51.36231\bin\Hostx64\x64\cl.exe  /nologo /TP  -external:IE:\CBuildTools\vcpkg\installed\x64-windows\include -external:IE:\CBuildTools\vcpkg\installed\x64-windows\include\opencv4 -external:IE:\CBuildTools\vcpkg\installed\x64-windows\include\eigen3 -external:W0 /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -std:c++20 -MDd /utf-8 /showIncludes /FoCMakeFiles\Main.dir\main.cpp.obj /FdCMakeFiles\Main.dir\ /FS -c E:\myCodeHub\Cpp\DeepLearningCpp\main.cppE:\CBuildTools\vcpkg\installed\x64-windows\include\xtensor\core\../core/xstrides.hpp(730): error C2589: “(”:“::”右边的非法标记E:\CBuildTools\vcpkg\installed\x64-windows\include\xtensor\core\../core/xstrides.hpp(120): note: 此诊断出现在编译器生成的函数“S xt::uninitialized_shape(size_type)”中E:\CBuildTools\vcpkg\installed\x64-windows\include\xtensor\core\../core/xstrides.hpp(730): error C3878: 语法错误:“expression”后出现意外标记“(”E:\CBuildTools\vcpkg\installed\x64-windows\include\xtensor\core\../core/xstrides.hpp(120): note: 此诊断出现在编译器生成的函数“S xt::uninitialized_shape(size_type)”中E:\CBuildTools\vcpkg\installed\x64-windows\include\xtensor\core\../core/xstrides.hpp(730): error C2760: 语法错误: 此处出现意外的“)”；应为“;”...
+
+看上去匪夷所思的，跳转到报错的代码行是这样的：
+
+return xtl::make_sequence&lt;S&gt;(static_cast&lt;size_type&gt;(size), std::numeric_limits&lt;value_type&gt;::max());
+
+if (output[output_index - 1] == std::numeric_limits&lt;value_type&gt;::max())
+
+for (; i &lt; std::min(sizeof...(S), m_e.strides().size()); ++i)
+
+
+报错结果看应该是在预处理阶段出现了语法错误，可是库作者不会犯这种连编译都过不了的低级错误。那导致这种语法错误的元凶最大嫌疑就是宏了。
+好吧，诊断结果是我在前面导入了windows.h，windows.h里定义了两个宏：min(a,b)和max(a,b)，因为宏是全局作用的，这两个宏导致了上面的几行代码在预处理阶段被错误替换，于是就报错了。
+这就是C&#x2F;C++里常见的宏污染问题， 特别是在windows平台写C&#x2F;C++这问题很常见，windows.h库还有一堆这种命名图方便的宏，在C&#x2F;C++里也是臭名昭著了。
+解决办法这种历史遗留石山代码问题微软也提供了补丁，在windows.h里有专门取消这些会造成污染的宏的宏。
+取消掉这两个宏，下面的方法任选一个：
+
+用CMake的话，在CMakeLists.txt里加add_definitions(-DNOMINMAX)，注意要放在add_executable()之前；
+在#include &lt;windows.h&gt;之前加#define NOMINMAX
+
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
 </search>
