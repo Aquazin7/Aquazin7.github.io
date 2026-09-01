@@ -1147,8 +1147,9 @@ list(APPEND CMAKE_PREFIX_PATH &quot;/path/to/your/library&quot;)]]></content>
   <entry>
     <title>C++模板指南</title>
     <url>/2026/08/27/cpp-template-primer/</url>
-    <content><![CDATA[模板(template )——C++的最大特色之一，C++元编程和泛型编程的基石，STL（标准模板库）的核心就是建立在模板上的。
-到C++23为止，模板已经发展成了一个包含 5 种核心模板的家族，它们按引入标准的时间顺序分别是：
+    <content><![CDATA[模板(template )——C++的最大特色之一，C++泛型编程和元编程的基石，STL（标准模板库）的核心就是建立在模板上的。
+泛型编程就是写出可以适用于不限定数据类型的代码，比如STL里的各种通用容器std::vector、std::array等等
+到C++26为止，模板可以分成5种核心类型，它们按引入标准的时间顺序分别是：
 
 
 
